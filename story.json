@@ -2,7 +2,7 @@
   {
     "id": "scene1",
     "name": "START",
-    "text": "This is the beginning of your adventure! \nWhen you make choices, the button will pulsate or glow. When it does that you can just sit and jam out while the rest of the band get their shit together. The whole vibe of this is to demonstrate the gapless, seamless audio transitions so it still sounds like you're listening to a complete song.\n\n[[BEGIN YOUR ADVENTURE]]",
+    "text": "<b>This is the beginning of your adventure! </b>\n<br>When you make choices, the button will pulsate or glow.<br> When it does that you can just sit and jam out while the rest of the band get their shit together. <br>The whole vibe of this is to demonstrate the gapless, seamless audio transitions, <br> so it still sounds like you're listening to a complete song.\n\n[[BEGIN YOUR ADVENTURE]]",
     "x": 618.9090902155095,
     "y": 6.145463423295454,
     "choices": [
@@ -19,7 +19,7 @@
   {
     "id": "BEGIN YOUR ADVENTURE",
     "name": "BEGIN YOUR ADVENTURE",
-    "text": "Wow look a saloon bar! \nYou can hear a band playing a set inside. \nThe guitarist sounds cool, but the drummer sounds like he's not really doing much. \nYou should go yell drunkenly at someone to take a solo. \nBut who?\n\n[[GUITAR SOLO]]\n\n[[DRUM SOLO]]",
+    "text": "<b>Wow look a saloon bar! </b>\nYou can hear a band playing a set inside.<br>\nThe guitarist sounds cool, but the drummer sounds like he's not really doing much. <br>\nYou should go yell drunkenly at someone to take a solo. <br>\nBut who?\n\n[[GUITAR SOLO]]\n\n[[DRUM SOLO]]",
     "x": 410,
     "y": 98,
     "choices": [
@@ -40,7 +40,7 @@
   {
     "id": "GUITAR SOLO",
     "name": "GUITAR SOLO",
-    "text": "As you walk in you slam a whiskey and yell \"PLAY A GUITAR SOLO YA SCRAP HEAP\"\nThe dude tries but it doesn't actually sound that good. \nA few mistakes. \nMaybe hassle the drummer instead?\n\n[[DRUM SOLO]]",
+    "text": "As you walk in you slam a whiskey and yell <br><b>\"PLAY A GUITAR SOLO YA SCRAP HEAP\"</b> <br>\nThe dude tries but it doesn't actually sound that good. <br>\nA few mistakes. <br>\nMaybe hassle the drummer instead? <br>\n\n[[DRUM SOLO]]",
     "x": 362,
     "y": 179,
     "choices": [
@@ -57,7 +57,7 @@
   {
     "id": "DRUM SOLO",
     "name": "DRUM SOLO",
-    "text": "\"HEY DRUMMER YOU SLACK BASTARD SHOW US WHAT YOU GOT\"\n\nHeck yeah this drummer is sick! \nSurely the band could get a bit heavier though. \nOr maybe this piano player could lighten up the mood with some honky-tonk?\n\n[[LETS GO DOWN]]\n\n[[PIANOFY]]",
+    "text": "\"HEY DRUMMER YOU SLACK BASTARD SHOW US WHAT YOU GOT\"\n\nHeck yeah this drummer is sick! <br>\nSurely the band could get a bit heavier though. <br>\nOr maybe this piano player could lighten up the mood with some honky-tonk? <br>\n\n[[LETS GO DOWN]]\n\n[[PIANOFY]]",
     "x": 544,
     "y": 176,
     "choices": [
@@ -78,13 +78,17 @@
   {
     "id": "LETS GO DOWN",
     "name": "LETS GO DOWN",
-    "text": "\"HEAVIER! HE-VI-ER!! C'MON WIMPS\"\nThe band try to go heavier but as their riff steps down the stupid cowboy cyborg gets his circuits scrambled and thinks he wants him to literally go down. So he takes off his guitar and starts digging right into the floorboards and into the dirt using his guitar as a shovel. What an IDIOT hahahah.\n\nDammit, he's fucked the whole vibe of this joint. Do you wanna see if the piano player can lift everyone's spirits again?\n\n[[PIANOFY]]",
+    "text": "\"HEAVIER! HE-VI-ER!! C'MON WIMPS\"<br>\nThe band try to go heavier but as their riff steps down, <br> the stupid cowboy cyborg gets his circuits scrambled and thinks you want him to <i>literally</i> go down.<br> So he takes off his guitar and starts digging right into the floorboards and into the dirt using his <br> guitar as a shovel. What an IDIOT hahahah.\n<br>\nDammit, he's fucked the whole vibe of this joint.<br> Do you wanna see if the piano player can lift everyone's spirits again?<br> or should we follow the robot down this damn hole its digging?\n\n[[PIANOFY]]\n[[DOWN THE HOLE]]",
     "x": 504.363635670055,
     "y": 250.69091796874997,
     "choices": [
       {
         "label": "PIANOFY",
         "next": "PIANOFY"
+      },
+      {
+        "label": "DOWN THE HOLE",
+        "next": "DOWN THE HOLE"
       }
     ],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/downwardriff.mp3",
@@ -95,7 +99,7 @@
   {
     "id": "PIANOFY",
     "name": "PIANOFY",
-    "text": "Well it ain't no honky-tonk, \nbut the ethereal arpeggios this guy is playing is certainly lifting everyone's spirits again \n(and by \"lifting spirits\"\nI mean people are literally lifting their spirits (whiskey) to their lips and getting SMASHED)\n\nWhoa wait, who's that guy over there?\n\n[[CHECK OUT THE GUY WITH 6 ARMS]]",
+    "text": "Well it ain't no honky-tonk, <br>\nbut the ethereal arpeggios this guy is playing is certainly lifting everyone's spirits again <br>\n(and by \"lifting spirits\"\nI mean people are literally lifting their spirits (whiskey) to their lips <br> and getting <i>SMASHED</i>)\n<br>\nWhoa wait, who's that guy over there?\n\n[[CHECK OUT THE GUY WITH 6 ARMS]]",
     "x": 782,
     "y": 273,
     "choices": [
@@ -112,17 +116,84 @@
   {
     "id": "CHECK OUT THE GUY WITH 6 ARMS",
     "name": "CHECK OUT THE GUY WITH 6 ARMS",
-    "text": "Wow this guy appears to be playing the exact same solo on 3 different instruments, that's pretty crazy.\nClick around and instantly hear him change instruments. This dude is so good.\n\nYour journey ends here... for now. \nYou can sit and jam out with this psycho\nor you can just reload the page and\ntry it all again if you want.\n",
+    "text": "Wow this guy appears to be playing the exact same solo on <br><i>3 different instruments</i>, that's pretty crazy.<br>\nClick around and instantly hear him change instruments. <b>This dude is so good.</b>\n<br>\n\nYou can sit and jam out with this psycho\n<br> OR you can leave the saloon if you want. Totally up to you.<br>\n[[LEAVE THE SALOON]]\n",
     "x": 915,
     "y": 339,
-    "choices": [],
+    "choices": [
+      {
+        "label": "LEAVE THE SALOON",
+        "next": "LEAVE THE SALOON"
+      }
+    ],
     "audio": "",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/6arms.png",
-    "loopAudio": false,
+    "loopAudio": true,
     "multiAudio": {
       "guitar": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-guitar.mp3",
       "keyboards": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-keyboards.mp3",
       "saxophone": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-sax.mp3"
     }
+  },
+  {
+    "id": "DOWN THE HOLE",
+    "name": "DOWN THE HOLE",
+    "text": "It's so dusty down here,<br> what the hell is this drunken robot cowboy doing?<br> It keeps digging, digging, digging.\n<br>\n[[KEEP DIGGING?]]\n[[NAH]]\n",
+    "x": 458,
+    "y": 337,
+    "choices": [
+      {
+        "label": "KEEP DIGGING?",
+        "next": "KEEP DIGGING?"
+      },
+      {
+        "label": "NAH",
+        "next": "NAH"
+      }
+    ],
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/epictunnel.mp3",
+    "image": "",
+    "loopAudio": true,
+    "multiAudio": {}
+  },
+  {
+    "id": "KEEP DIGGING?",
+    "name": "KEEP DIGGING?",
+    "text": "The Cowboy Robot keeps digging <br> and you follow him all the way out!<br> You're free!<br>\nThe end I guess... unless you want to go back to the start of the game again?\n<br>\n[[BEGIN YOUR ADVENTURE]]",
+    "x": 377,
+    "y": 413,
+    "choices": [
+      {
+        "label": "BEGIN YOUR ADVENTURE",
+        "next": "BEGIN YOUR ADVENTURE"
+      }
+    ],
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/keepdigging.mp3",
+    "image": "",
+    "loopAudio": true,
+    "multiAudio": {}
+  },
+  {
+    "id": "NAH",
+    "name": "NAH",
+    "text": "Nah fair enough.<br>\nTHE END",
+    "x": 532,
+    "y": 416,
+    "choices": [],
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.mp3",
+    "image": "",
+    "loopAudio": false,
+    "multiAudio": {}
+  },
+  {
+    "id": "LEAVE THE SALOON",
+    "name": "LEAVE THE SALOON",
+    "text": "Did the audio change nicely? Or did it jolt?",
+    "x": 893,
+    "y": 495.20000076293945,
+    "choices": [],
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/leavethesaloon.mp3",
+    "image": "",
+    "loopAudio": true,
+    "multiAudio": {}
   }
 ]
