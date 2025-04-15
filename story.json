@@ -19,7 +19,7 @@
   {
     "id": "BEGIN YOUR ADVENTURE",
     "name": "BEGIN YOUR ADVENTURE",
-    "text": "Wow look a saloon bar! You can hear a band playing a set inside. The guitarist sounds cool, but the drummer sounds like he's not really doing much. You should go yell drunkenly at someone to take a solo. But who?\n\n[[GUITAR SOLO]]\n\n[[DRUM SOLO]]",
+    "text": "Wow look a saloon bar! \nYou can hear a band playing a set inside. \nThe guitarist sounds cool, but the drummer sounds like he's not really doing much. \nYou should go yell drunkenly at someone to take a solo. \nBut who?\n\n[[GUITAR SOLO]]\n\n[[DRUM SOLO]]",
     "x": 410,
     "y": 98,
     "choices": [
@@ -40,7 +40,7 @@
   {
     "id": "GUITAR SOLO",
     "name": "GUITAR SOLO",
-    "text": "As you walk in you slam a whiskey and yell \"PLAY A GUITAR SOLO YA SCRAP HEAP\"\nThe dude tries but it doesn't actually sound that good. A few mistakes. Maybe hassle the drummer instead?\n\n[[DRUM SOLO]]",
+    "text": "As you walk in you slam a whiskey and yell \"PLAY A GUITAR SOLO YA SCRAP HEAP\"\nThe dude tries but it doesn't actually sound that good. \nA few mistakes. \nMaybe hassle the drummer instead?\n\n[[DRUM SOLO]]",
     "x": 362,
     "y": 179,
     "choices": [
@@ -57,7 +57,7 @@
   {
     "id": "DRUM SOLO",
     "name": "DRUM SOLO",
-    "text": "\"HEY DRUMMER YOU SLACK BASTARD SHOW US WHAT YOU GOT\"\n\nHeck yeah this drummer is sick! Surely the band could get a bit heavier though. Or maybe this piano player could lighten up the mood with some honky-tonk?\n\n[[LETS GO DOWN]]\n\n[[PIANOFY]]",
+    "text": "\"HEY DRUMMER YOU SLACK BASTARD SHOW US WHAT YOU GOT\"\n\nHeck yeah this drummer is sick! \nSurely the band could get a bit heavier though. \nOr maybe this piano player could lighten up the mood with some honky-tonk?\n\n[[LETS GO DOWN]]\n\n[[PIANOFY]]",
     "x": 544,
     "y": 176,
     "choices": [
@@ -95,7 +95,7 @@
   {
     "id": "PIANOFY",
     "name": "PIANOFY",
-    "text": "Well it ain't no honky-tonk, but the ethereal arpeggios this guy is playing is certainly lifting everyone's spirits again (and by \"lifting spirits\" I mean people are literally lifting their spirits (whiskey) to their lips and getting SMASHED)\n\nWhoa wait, who's that guy over there?\n\n[[CHECK OUT THE GUY WITH 6 ARMS]]",
+    "text": "Well it ain't no honky-tonk, \nbut the ethereal arpeggios this guy is playing is certainly lifting everyone's spirits again \n(and by \"lifting spirits\"\nI mean people are literally lifting their spirits (whiskey) to their lips and getting SMASHED)\n\nWhoa wait, who's that guy over there?\n\n[[CHECK OUT THE GUY WITH 6 ARMS]]",
     "x": 782,
     "y": 273,
     "choices": [
@@ -112,7 +112,7 @@
   {
     "id": "CHECK OUT THE GUY WITH 6 ARMS",
     "name": "CHECK OUT THE GUY WITH 6 ARMS",
-    "text": "Wow this guy appears to be playing the exact same solo on 3 different instruments, that's pretty crazy.\nClick around and instantly hear him change instruments. This dude is so good.\n\nYour journey ends here... for now. You can sit and jam out with this psycho or you can just reload the page and try it all again if you want.\n",
+    "text": "Wow this guy appears to be playing the exact same solo on 3 different instruments, that's pretty crazy.\nClick around and instantly hear him change instruments. This dude is so good.\n\nYour journey ends here... for now. \nYou can sit and jam out with this psycho\nor you can just reload the page and\ntry it all again if you want.\n",
     "x": 915,
     "y": 339,
     "choices": [],
