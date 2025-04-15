@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>The Stupid Saloon Cyborg Band</title>
+    <style>
+        @font-face {
+            font-family: 'IM Fell English';
+            src: url('IMFellEnglish.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body,
+        #text,
+        button,
+        .prompt,
+        .option,
+        .title {
+            font-family: 'IM Fell English', serif !important;
+        }
+
+        body {
+            font-family: "IM Fell English", serif;
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 2em;
+        }
+
+        img {
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 1em;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(to bottom, #3e2f23, #2a1f16);
+            border: 1px solid #a57c57;
+            border-radius: 4px;
+            color: #f4e7d0;
+            font-family: 'IM Fell English', serif;
+            letter-spacing: 0.5px;
+            padding: 10px 16px;
+            margin: 1em;
+            cursor: pointer;
+            box-shadow: inset 0 0 4px #00000088, 0 0 6px #3defff44;
+            transition: all 0.2s ease-in-out;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background: #4c372a;
+            border-color: #ffc56f;
+            box-shadow: inset 0 0 6px #000000aa, 0 0 10px #00ffe655;
+            transform: translateY(-1px);
+        }
+
+        .button:active {
+            transform: scale(0.97);
+            box-shadow: inset 0 0 3px #000000cc, 0 0 4px #ffaa0088;
+        }
+
+        .button.waiting {
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 6px #3defff33;
+                background-color: #3e2f23;
+            }
+
+            50% {
+                box-shadow: 0 0 20px #3defffbb;
+                background-color: #4c372a;
+            }
+
+            100% {
+                box-shadow: 0 0 6px #3defff33;
+                background-color: #3e2f23;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="game">
+        <p>Loading story...</p>
+    </div>
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let buffers = {};
+        let currentSource = null;
+    
+        let choiceMade = null;
+        let isLoopingScene = false;
+        let currentScene = null;
+        let storyData = [];
+
+        function loadAudio(url) {
+            return fetch(url)
+                .then(res => res.arrayBuffer())
+                .then(buf => audioContext.decodeAudioData(buf));
+        }
+
+        async function playAudio(name, loop, onEnded) {
+            stopAudio();
+            const buffer = buffers[name];
+            if (!buffer) return;
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            source.loop = loop;
+            if (onEnded) {
+    source.onended = () => {
+        document.querySelectorAll('.button.waiting').forEach(btn => {
+            btn.classList.remove('waiting');
+        });
+        onEnded();
+    };
+}
+            source.start(0);
+            currentSource = source;
+        }
+
+        function stopAudio() {
+            if (currentSource) {
+                try {
+                    currentSource.stop();
+                } catch (e) {}
+                currentSource.disconnect();
+                currentSource = null;
+    stopMultiAudio();
+            }
+        }
+
+        function showScene(sceneId) {
+            const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
+            if (!scene) {
+                document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
+                return;
+            }
+            currentScene = scene;
+            let html = '';
+
+            if (scene.image) {
+                html += `<img src="${scene.image}" alt="">`;
+            }
+
+            if (scene.text) {
+                const cleanText = scene.text
+                    .replace(/\n/g, '<br>')
+                    .replace(/\[\[.*?\]\]/g, '');
+                html += `<p>${cleanText}</p>`;
+            }
+
+            if (scene.choices && scene.choices.length > 0) {
+                scene.choices.forEach(choice => {
+                    html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
+                });
+            }
+
+            
+if (scene.multiAudio) {
+    isLoopingScene = true;
+    playMultiAudio(scene.multiAudio, () => {
+        if (choiceMade) {
+            showScene(choiceMade);
+            choiceMade = null;
+        }
+    });
+    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
+        `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
+    ).join("");
+    html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+}
+
+    document.getElementById("game").innerHTML = html;
+
+            if (scene.audio) {
+                isLoopingScene = scene.loopAudio;
+                playAudio(scene.audio, scene.loopAudio, () => {
+                    if (choiceMade) {
+                        showScene(choiceMade);
+                        choiceMade = null;
+                    }
+                });
+            }
+        }
+
+        function handleChoice(nextId) {
+            if (isLoopingScene) {
+                choiceMade = nextId;
+                if (currentSource) {
+                    currentSource.loop = false;
+                }
+
+                const buttons = document.querySelectorAll(".button");
+                buttons.forEach(btn => {
+                    if (btn.textContent === currentScene.choices.find(c => c.next === nextId)?.label) {
+                        btn.classList.add("waiting");
+                    }
+                });
+
+                return;
+            }
+            showScene(nextId);
+        }
+
+        async function loadStory() {
+            try {
+                const res = await fetch("story.json");
+                storyData = await res.json();
+
+                const urls = [];
+
+storyData.forEach(scene => {
+  if (scene.audio) urls.push(scene.audio);
+  if (scene.multiAudio) {
+    for (let key in scene.multiAudio) {
+      urls.push(scene.multiAudio[key]);
+    }
+  }
+});
+
+const uniqueUrls = [...new Set(urls)];
+for (let url of uniqueUrls) {
+    buffers[url] = await loadAudio(url);
+}
+
+                const start = storyData.find(s => s.name === "START");
+
+                const startText = (start?.text || 'Welcome adventurer...')
+                    .replace(/\n/g, '<br>')
+                    .replace(/\[\[.*?\]\]/g, '');
+
+                document.getElementById("game").innerHTML = `
+                    <img src="${start?.image || ''}" alt="">
+                    <p>${startText}</p>
+                    <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+                `;
+            } catch (err) {
+                document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+                console.error(err);
+            }
+        }
+
+        function startScene() {
+            showScene("BEGIN YOUR ADVENTURE");
+        }
+
+        loadStory();
+    
+let multiAudioSources = {};
+let multiAudioGains = {};
+let currentMultiAudio = null;
+
+async function playMultiAudio(multiAudioMap, onEnded) {
+    stopAudio(); // stop regular audio
+    stopMultiAudio(); // stop any previous multiaudio
+    multiAudioSources = {};
+    multiAudioGains = {};
+    const now = audioContext.currentTime;
+    const startTime = now + 0.1;
+    const promises = [];
+
+    for (let label in multiAudioMap) {
+        const url = multiAudioMap[label];
+        const promise = loadAudio(url).then(buffer => {
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
+
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 0;
+
+            source.connect(gainNode).connect(audioContext.destination);
+            multiAudioSources[label] = source;
+            multiAudioGains[label] = gainNode;
+        });
+        promises.push(promise);
+    }
+
+    await Promise.all(promises);
+
+    Object.values(multiAudioSources).forEach(src => src.start(0));
+    currentMultiAudio = true;
+    const firstTrack = Object.keys(multiAudioSources)[0];
+    multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+}
+
+function stopMultiAudio() {
+    for (let label in multiAudioSources) {
+        try { multiAudioSources[label].stop(); } catch (e) {}
+        multiAudioSources[label].disconnect();
+    }
+    multiAudioSources = {};
+    multiAudioGains = {};
+    currentMultiAudio = null;
+}
+
+function switchToTrack(label) {
+    if (!multiAudioGains[label]) return;
+    for (let l in multiAudioGains) {
+        multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
+    }
+}
+
+</script>
+</body>
+
+</html>
