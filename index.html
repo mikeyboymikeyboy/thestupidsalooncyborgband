@@ -132,6 +132,36 @@ font-size: 1.5em;
   }
 }
 
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+}
+.fade-in.loaded {
+  opacity: 1;
+}
+
+
+
+
+.scrolling-container {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin: 2em auto;
+}
+
+.scrolling-inner {
+  position: relative;
+  text-align: center;
+  white-space: pre-line;
+}
+
+}
+
+}
+
 </style>
 </head>
 
@@ -196,15 +226,22 @@ font-size: 1.5em;
             currentScene = scene;
             let html = '';
 
+            
             if (scene.image || scene.text) {
                 const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                const isFinal = !scene.choices || scene.choices.length === 0;
                 html += `
                     <div class="image-text-container">
-                        ${scene.image ? `<img src="${scene.image}" alt="">` : ''}
-                        <div class="text-block">${cleanText}</div>
+                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+                        <div class="text-block">
+  ${scene.scrollText === true
+    ? `<div class="scrolling-container"><div class="scrolling-inner">${cleanText}</div></div>`
+    : cleanText}
+</div>
                     </div>
                 `;
             }
+
 
 
             if (scene.choices && scene.choices.length > 0) {
@@ -229,6 +266,19 @@ if (scene.multiAudio) {
 }
 
     document.getElementById("game").innerHTML = html;
+
+    if (scene.scrollText === true) {
+        const container = document.querySelector('.scrolling-container');
+        const inner = document.querySelector('.scrolling-inner');
+        if (container && inner) {
+            const distance = inner.scrollHeight + container.clientHeight;
+            inner.style.transform = 'translateY(0px)';
+            inner.style.transition = `transform ${distance / 50}s linear`;
+            requestAnimationFrame(() => {
+                inner.style.transform = `translateY(-${distance}px)`;
+            });
+        }
+    }
 
             if (scene.audio) {
                 isLoopingScene = scene.loopAudio;
@@ -279,10 +329,26 @@ if (scene.multiAudio) {
 }
 
 
-        async function loadStory() {
+        
+function preloadImages(imageUrls) {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+
+async function loadStory() {
             try {
                 const res = await fetch("story.json");
                 storyData = await res.json();
+
+// Preload images
+const imageUrls = storyData
+    .filter(scene => scene.image)
+    .map(scene => scene.image);
+preloadImages(imageUrls);
+
 
                 const urls = [];
 
@@ -308,7 +374,7 @@ for (let url of uniqueUrls) {
 
                 document.getElementById("game").innerHTML = `
   <div class="image-text-container">
-    ${start?.image ? `<img src="${start.image}" alt="">` : ''}
+    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
     <div class="text-block">${startText}</div>
   </div>
   <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
@@ -329,16 +395,21 @@ let multiAudioSources = {};
 let multiAudioGains = {};
 let currentMultiAudio = null;
 
+
 async function playMultiAudio(multiAudioMap, onEnded) {
     stopAudio(); // stop regular audio
     stopMultiAudio(); // stop any previous multiaudio
     multiAudioSources = {};
     multiAudioGains = {};
+
+    const labels = Object.keys(multiAudioMap || {});
+    if (labels.length === 0) return;
+
     const now = audioContext.currentTime;
     const startTime = now + 0.1;
     const promises = [];
 
-    for (let label in multiAudioMap) {
+    for (let label of labels) {
         const url = multiAudioMap[label];
         const promise = loadAudio(url).then(buffer => {
             const source = audioContext.createBufferSource();
@@ -360,8 +431,18 @@ async function playMultiAudio(multiAudioMap, onEnded) {
     Object.values(multiAudioSources).forEach(src => src.start(0));
     currentMultiAudio = true;
     const firstTrack = Object.keys(multiAudioSources)[0];
-    multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+    if (firstTrack) {
+        multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+    }
+
+    if (onEnded) {
+        // Attach ended callback to all sources
+        Object.values(multiAudioSources).forEach(source => {
+            source.onended = onEnded;
+        });
+    }
 }
+
 
 function stopMultiAudio() {
     for (let label in multiAudioSources) {

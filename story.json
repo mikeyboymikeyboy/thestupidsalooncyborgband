@@ -79,8 +79,8 @@
     "id": "LETS GO DOWN",
     "name": "LETS GO DOWN",
     "text": "\"HEAVIER! HE-VI-ER!! C'MON WIMPS\"<br>\nThe band try to go heavier but as their riff steps down, <br> the stupid cowboy cyborg gets his circuits scrambled and thinks you want him to <i>literally</i> go down.<br> So he takes off his guitar and starts digging right into the floorboards and into the dirt using his <br> guitar as a shovel. What an IDIOT hahahah.\n<br>\nDammit, he's fucked the whole vibe of this joint.<br> Do you wanna see if the piano player can lift everyone's spirits again?<br> or should we follow the robot down this damn hole its digging?\n\n[[PIANOFY]]\n[[DOWN THE HOLE]]",
-    "x": 504.363635670055,
-    "y": 250.69091796874997,
+    "x": 506,
+    "y": 254,
     "choices": [
       {
         "label": "PIANOFY",
@@ -151,7 +151,7 @@
       }
     ],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/epictunnel.mp3",
-    "image": "",
+    "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/dig1.png",
     "loopAudio": true,
     "multiAudio": {}
   },
@@ -168,32 +168,34 @@
       }
     ],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/keepdigging.mp3",
-    "image": "",
+    "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/dig2.png",
     "loopAudio": true,
     "multiAudio": {}
   },
   {
     "id": "NAH",
     "name": "NAH",
-    "text": "Nah fair enough.<br>\nTHE END",
-    "x": 532,
-    "y": 416,
+    "text": "Nah? Ok fair enough\n<br>\n\nTHE END.<br>\n\nDirected by Mike Mills<br>\nWritten by Andrew Saltmarsh<br>\nProduced by Malcolm Dustem<br>\nExecutive Producer Fikkis MkKikkis<br>\nAssociate Producer Syd<br>\nDirector of Photography GIANT SHOEBILL STORK<br>\nProduction Designer Dake<br>\nEditor Dan Egg<br>\nCasting by Irina Vostrikova<br>\nMusic by Satoshi Komurai<br>\nSound Design by Lars Henningsson<br>\nCostume Design by Yuki Takamori<br>\nVisual Effects Supervisor Oleg Mirovski<br>\n1st Assistant Director Helena Nyström<br>\n2nd Assistant Director Mike Mills<br>\nScript Supervisor Dasha Kuznetsova<br>\nGaffer Anton Petrovich<br>\nKey Grip Jens Halvorsen<br>\nBest Boy Electric Akiko Suda<br>\nProduction Sound Mixer Dan Egg<br>\nBoom Operator Syd<br>\nSet Decorator Olga Ivanenko<br>\nArt Director Rikard Skoglund<br>\nProps Master Mika Tanabe<br>\nMakeup Department Head Ludmila Zaytseva<br>\nHair Stylist Fikkis MkKikkis<br>\nStunt Coordinator Kazuo Yamashita<br>\nFight Choreographer Katya Melnichenko<br>\nUnit Publicist Haruto Shibasaki<br>\nProduction Coordinator Eva Bergström<br>\nTransportation Captain GIANT SHOEBILL STORK<br>\nCatering by Yumiko Nishida<br>\nTowel Enjoyer Malcolm Dustem<br>\nTrain Driver Satoshi von Beepbeep<br>\nOfficial Biscuit Consultant Dake<br>\nRubber Chicken Technician Andrei Vasov<br>\nDigital Imaging Technician Mikhail Drozdov<br>\nColorist Nozomi Haneda<br>\nBackup Colorist Dan Egg<br>\nButton Presser Andrew Saltmarsh<br>\nTitle Design by Jörgen Ekdal<br>\nMarketing Consultant Natsuki Hoshino<br>\nLegal Counsel Dmitri Orlov<br>\nLadder Holder Fikkis MkKikkis<br>\nLocation Manager Anna Sokolova<br>\nStudio Liaison Dake<br>\nEmergency Croissant Wrangler Sven Alriksson<br>\nEmotion Coach GIANT SHOEBILL STORK<br>\nUmbrella Strategist Irina Vostrikova<br>\nThanks to: The Residents of Shoebill Gulch<br>\nSpecial Thanks: Ludvig’s Discount Fireworks<br>\nEven More Thanks: The Swedish National Shoebill Society<br>\nIn Loving Memory of: Our beloved tea kettle “Gloria”<br>\nFilmed on Location in: The Windswept Valleys of Mount Creaturous<br>\nNo Shoebills Were Harmed in the Making of This Film<br>\nSponsored in part by: The Ghost of Dan Egg’s Sandwich<br>\nUnsolicited Advice by Syd<br>\nChair Stacker Mike Mills<br>\nSpaghetti Realist Malcolm Dustem<br>\nQuantum Muffin Advisor Fikkis MkKikkis<br>\nCrow Wrangler GIANT SHOEBILL STORK<br>\nHigh-Five Choreographer Dake<br>\nFog Supervisor Andrew Saltmarsh<br>\nCopyright Tension Specialist Dan Egg<br>\nApology Coordinator Syd<br>\n©Toehider Productions. MMXXV All Rights Reserved. Hit refresh to play again.\n\n",
+    "x": 545,
+    "y": 420,
     "choices": [],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.mp3",
     "image": "",
     "loopAudio": false,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": true
   },
   {
     "id": "LEAVE THE SALOON",
     "name": "LEAVE THE SALOON",
-    "text": "Did the audio change nicely? Or did it jolt?",
-    "x": 893,
-    "y": 495.20000076293945,
+    "text": "<br>\n<br>\n<br>\n<br>\n<br>You leave the bar<br>\n<br> off to another adventure.<br>\n<br>\nWhat did you learn?<br>\n<br>\nThat cowboy robot bands jam hard.<br>\n<br>\nAnd that cowboy robot circuits jam hard too.<br>\n<br>\nOh well, they'll figure it out eventually.<br>\n<br>\nFor now, go sign up to the Toehider Patreon.<br>\n<br>\npatreon.com/toehider<br>\n<br>\nTHE END.<br>\n<br>\n<br>\nDirected by Mike Mills<br>\nWritten by Andrew Saltmarsh<br>\nProduced by Malcolm Dustem<br>\nExecutive Producer Fikkis MkKikkis<br>\nAssociate Producer Syd<br>\nDirector of Photography GIANT SHOEBILL STORK<br>\nProduction Designer Dake<br>\nEditor Dan Egg<br>\nCasting by Irina Vostrikova<br>\nMusic by Satoshi Komurai<br>\nSound Design by Lars Henningsson<br>\nCostume Design by Yuki Takamori<br>\nVisual Effects Supervisor Oleg Mirovski<br>\n1st Assistant Director Helena Nyström<br>\n2nd Assistant Director Mike Mills<br>\nScript Supervisor Dasha Kuznetsova<br>\nGaffer Anton Petrovich<br>\nKey Grip Jens Halvorsen<br>\nBest Boy Electric Akiko Suda<br>\nProduction Sound Mixer Dan Egg<br>\nBoom Operator Syd<br>\nSet Decorator Olga Ivanenko<br>\nArt Director Rikard Skoglund<br>\nProps Master Mika Tanabe<br>\nMakeup Department Head Ludmila Zaytseva<br>\nHair Stylist Fikkis MkKikkis<br>\nStunt Coordinator Kazuo Yamashita<br>\nFight Choreographer Katya Melnichenko<br>\nUnit Publicist Haruto Shibasaki<br>\nProduction Coordinator Eva Bergström<br>\nTransportation Captain GIANT SHOEBILL STORK<br>\nCatering by Yumiko Nishida<br>\nTowel Enjoyer Malcolm Dustem<br>\nTrain Driver Satoshi von Beepbeep<br>\nOfficial Biscuit Consultant Dake<br>\nRubber Chicken Technician Andrei Vasov<br>\nDigital Imaging Technician Mikhail Drozdov<br>\nColorist Nozomi Haneda<br>\nBackup Colorist Dan Egg<br>\nButton Presser Andrew Saltmarsh<br>\nTitle Design by Jörgen Ekdal<br>\nMarketing Consultant Natsuki Hoshino<br>\nLegal Counsel Dmitri Orlov<br>\nLadder Holder Fikkis MkKikkis<br>\nLocation Manager Anna Sokolova<br>\nStudio Liaison Dake<br>\nEmergency Croissant Wrangler Sven Alriksson<br>\nEmotion Coach GIANT SHOEBILL STORK<br>\nUmbrella Strategist Irina Vostrikova<br>\nThanks to: The Residents of Shoebill Gulch<br>\nSpecial Thanks: Ludvig’s Discount Fireworks<br>\nEven More Thanks: The Swedish National Shoebill Society<br>\nIn Loving Memory of: Our beloved tea kettle “Gloria”<br>\nFilmed on Location in: The Windswept Valleys of Mount Creaturous<br>\nNo Shoebills Were Harmed in the Making of This Film<br>\nSponsored in part by: The Ghost of Dan Egg’s Sandwich<br>\nUnsolicited Advice by Syd<br>\nChair Stacker Mike Mills<br>\nSpaghetti Realist Malcolm Dustem<br>\nQuantum Muffin Advisor Fikkis MkKikkis<br>\nCrow Wrangler GIANT SHOEBILL STORK<br>\nHigh-Five Choreographer Dake<br>\nFog Supervisor Andrew Saltmarsh<br>\nCopyright Tension Specialist Dan Egg<br>\nApology Coordinator Syd<br>\n©Toehider Productions. MMXXV All Rights Reserved. Hit refresh to play again.\n\n",
+    "x": 896,
+    "y": 498,
     "choices": [],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/leavethesaloon.mp3",
     "image": "",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": true
   }
 ]
