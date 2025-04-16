@@ -27,6 +27,7 @@
             color: white;
             text-align: center;
             padding: 2em;
+font-size: 1.5em;
         }
 
         img {
@@ -83,7 +84,36 @@
                 background-color: #3e2f23;
             }
         }
-    </style>
+    
+.image-text-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2em;
+  margin-bottom: 1.5em;
+  flex-wrap: wrap;
+}
+.image-text-container img {
+  max-width: 100%;
+  height: auto;
+}
+.text-block {
+  max-width: 600px;
+  text-align: left;
+}
+
+
+@media (max-width: 768px) {
+  .image-text-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .text-block {
+    text-align: center;
+  }
+}
+
+</style>
 </head>
 
 <body>
@@ -147,16 +177,16 @@
             currentScene = scene;
             let html = '';
 
-            if (scene.image) {
-                html += `<img src="${scene.image}" alt="">`;
+            if (scene.image || scene.text) {
+                const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                html += `
+                    <div class="image-text-container">
+                        ${scene.image ? `<img src="${scene.image}" alt="">` : ''}
+                        <div class="text-block">${cleanText}</div>
+                    </div>
+                `;
             }
 
-            if (scene.text) {
-                const cleanText = scene.text
-                    .replace(/\n/g, '<br>')
-                    .replace(/\[\[.*?\]\]/g, '');
-                html += `<p>${cleanText}</p>`;
-            }
 
             if (scene.choices && scene.choices.length > 0) {
                 scene.choices.forEach(choice => {
@@ -193,23 +223,42 @@ if (scene.multiAudio) {
         }
 
         function handleChoice(nextId) {
-            if (isLoopingScene) {
-                choiceMade = nextId;
-                if (currentSource) {
-                    currentSource.loop = false;
-                }
+    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
 
-                const buttons = document.querySelectorAll(".button");
-                buttons.forEach(btn => {
-                    if (btn.textContent === currentScene.choices.find(c => c.next === nextId)?.label) {
-                        btn.classList.add("waiting");
-                    }
-                });
+    if (isLoopingScene) {
+        choiceMade = nextId;
 
-                return;
+        const buttons = document.querySelectorAll(".button");
+        buttons.forEach(btn => {
+            if (btn.textContent === selectedChoice?.label) {
+                btn.classList.add("waiting");
             }
-            showScene(nextId);
+        });
+
+        if (currentSource) {
+            currentSource.loop = false;
+            return; // Let the normal audio finish and trigger the transition
         }
+
+        if (currentMultiAudio) {
+            // Fade out multi-audio and go to next scene after short pause
+            for (let label in multiAudioGains) {
+                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
+            }
+
+            setTimeout(() => {
+                stopMultiAudio();
+                showScene(choiceMade);
+                choiceMade = null;
+            }, 1000);
+
+            return;
+        }
+    }
+
+    showScene(nextId);
+}
+
 
         async function loadStory() {
             try {
@@ -239,10 +288,12 @@ for (let url of uniqueUrls) {
                     .replace(/\[\[.*?\]\]/g, '');
 
                 document.getElementById("game").innerHTML = `
-                    <img src="${start?.image || ''}" alt="">
-                    <p>${startText}</p>
-                    <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-                `;
+  <div class="image-text-container">
+    ${start?.image ? `<img src="${start.image}" alt="">` : ''}
+    <div class="text-block">${startText}</div>
+  </div>
+  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+`;
             } catch (err) {
                 document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
                 console.error(err);
