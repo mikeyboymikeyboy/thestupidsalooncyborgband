@@ -138,7 +138,7 @@ font-size: 1.5em;
   transition: opacity 0.8s ease-in;
 }
 .fade-in.loaded {
-  opacity: 1;
+  opacity: 0.4;
 }
 
 
@@ -162,6 +162,108 @@ font-size: 1.5em;
 
 }
 
+
+.scrolling-preview {
+  position: absolute;
+  
+  left: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.scrolling-preview img {
+  max-height: 200px;
+  border: 2px solid red;
+  opacity: 0.4;
+}
+
+
+
+
+
+
+
+
+.slideshow-container {
+  position: fixed;
+  
+  max-height: 400px;
+  width: 400px;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatUp 6s ease-in-out infinite alternate;
+}
+
+.slideshow-container.left-fixed {
+  left: 60px;
+}
+
+.slideshow-container.right {
+  right: 60px;
+}
+
+.slideshow-image {
+  max-height: 400px;
+  width: auto;
+  opacity: 0;
+  transition: opacity 4s ease-in-out;
+}
+
+.slideshow-image.visible {
+  opacity: 0.4;
+}
+
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
+@keyframes floatDown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+
+@keyframes floatLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20px); }
+}
+
+@keyframes floatRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes floatDiagonalLeft {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-20px, -20px); }
+}
+
+@keyframes floatDiagonalRight {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, -20px); }
+}
+
+.floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
+.floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
+.floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
+.floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
+.floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
+.floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
+
+  100% { transform: translateY(-20px); }
+}
+
+  100% { transform: translateY(-20px); }
+}
+
+  100% { transform: translateY(-20px); }
+}
+
+
+
+
+
 </style>
 </head>
 
@@ -179,6 +281,7 @@ font-size: 1.5em;
         let isLoopingScene = false;
         let currentScene = null;
         let storyData = [];
+let visitedImages = [];
 
         function loadAudio(url) {
             return fetch(url)
@@ -224,6 +327,10 @@ font-size: 1.5em;
                 return;
             }
             currentScene = scene;
+    if (scene.image && !visitedImages.includes(scene.image)) {
+        visitedImages.push(scene.image);
+        console.log("Tracked image:", scene.image);
+    }
             let html = '';
 
             
@@ -235,7 +342,9 @@ font-size: 1.5em;
                         ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
                         <div class="text-block">
   ${scene.scrollText === true
-    ? `<div class="scrolling-container"><div class="scrolling-inner">${cleanText}</div></div>`
+    ? `<div class="scrolling-container">
+  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
+  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
     : cleanText}
 </div>
                     </div>
@@ -268,6 +377,93 @@ if (scene.multiAudio) {
     document.getElementById("game").innerHTML = html;
 
     if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
+
+
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
+
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+
+if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
+
+
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
+
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+    const preview = document.getElementById("slideshowPreview");
+    if (visitedImages.length > 0 && preview) {
+        preview.src = visitedImages[0];
+        console.log("Showing preview image:", visitedImages[0]);
+    }
+}
+
         const container = document.querySelector('.scrolling-container');
         const inner = document.querySelector('.scrolling-inner');
         if (container && inner) {
@@ -406,7 +602,7 @@ async function playMultiAudio(multiAudioMap, onEnded) {
     if (labels.length === 0) return;
 
     const now = audioContext.currentTime;
-    const startTime = now + 0.1;
+    const startTime = now;
     const promises = [];
 
     for (let label of labels) {
