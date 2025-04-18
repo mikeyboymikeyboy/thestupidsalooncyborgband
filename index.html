@@ -323,6 +323,7 @@ let visitedImages = [];
         }
 
         function showScene(sceneId) {
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
             const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
             if (!scene) {
                 document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
