@@ -328,32 +328,18 @@ let visitedImages = [];
         function showScene(sceneId) {
             const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
             if (!scene) {
-                document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
-                return;
-            }
-            currentScene = scene;
-    if (scene.image && !visitedImages.includes(scene.image)) {
-        visitedImages.push(scene.image);
-        console.log("Tracked image:", scene.image);
+                document.getElementById("game").innerHTML = `
+        <div class="image-text-container">
+            ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+            <div class="text-block">${startText}</div>
+        </div>
+        <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+    `;
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }
-            let html = '';
-
-            
-            if (scene.image || scene.text) {
-                const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
-                const isFinal = !scene.choices || scene.choices.length === 0;
-                html += `
-                    <div class="image-text-container">
-                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-                        <div class="text-block">
-  ${scene.scrollText === true
-    ? `<div class="scrolling-container">
-  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
-  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
-    : cleanText}
-</div>
-                    </div>
-                `;
+}
             }
 
 
@@ -540,9 +526,9 @@ function preloadImages(imageUrls) {
 
 
 async function loadStory() {
-            try {
-                const res = await fetch("story.json");
-                storyData = await res.json();
+    try {
+        const res = await fetch("story.json");
+        storyData = await res.json();
 
 // Preload images
 const imageUrls = storyData
@@ -577,12 +563,17 @@ for (let url of uniqueUrls) {
                     .replace(/\[\[.*?\]\]/g, '');
 
                 document.getElementById("game").innerHTML = `
-  <div class="image-text-container">
-    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-    <div class="text-block">${startText}</div>
-  </div>
-  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-`;
+        <div class="image-text-container">
+            ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+            <div class="text-block">${startText}</div>
+        </div>
+        <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+    `;
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    }
+}
         
                 console.error(err);
             }
@@ -762,9 +753,9 @@ function preloadImages(imageUrls) {
 
 
 async function loadStory() {
-            try {
-                const res = await fetch("story.json");
-                storyData = await res.json();
+    try {
+        const res = await fetch("story.json");
+        storyData = await res.json();
 
 // Preload images
 const imageUrls = storyData
@@ -800,10 +791,15 @@ storyData.forEach(scene => {
         </div>
         <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
     `;
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    }
+}
 
 } catch (err) {
     console.error("❌ Failed to load story:", err);
-    document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}
 }
 </script>
 </body>
