@@ -319,14 +319,30 @@ let visitedImages = [];
     stopMultiAudio();
             }
         }
+
+        function showScene(sceneId) {
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
+            const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
+            if (!scene) {
+                document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
+                return;
             }
+            currentScene = scene;
+    if (scene.image && !visitedImages.includes(scene.image)) {
+        visitedImages.push(scene.image);
+        console.log("Tracked image:", scene.image);
     }
             let html = '';
 
             
+            if (scene.image || scene.text) {
+                const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                const isFinal = !scene.choices || scene.choices.length === 0;
                 html += `
                     <div class="image-text-container">
+                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
                         <div class="text-block">
+  ${scene.scrollText === true
     ? `<div class="scrolling-container">
   <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
   <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
@@ -338,17 +354,22 @@ let visitedImages = [];
 
 
 
+            if (scene.choices && scene.choices.length > 0) {
+                scene.choices.forEach(choice => {
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
             }
 
             
+if (scene.multiAudio) {
     isLoopingScene = true;
+    playMultiAudio(scene.multiAudio, () => {
         if (choiceMade) {
             showScene(choiceMade);
             choiceMade = null;
         }
     });
+    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
         `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
     ).join("");
     html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
@@ -356,6 +377,7 @@ let visitedImages = [];
 
     document.getElementById("game").innerHTML = html;
 
+    if (scene.scrollText === true) {
 
         const img1 = document.getElementById("slideshowImage1");
         const img2 = document.getElementById("slideshowImage2");
@@ -396,6 +418,7 @@ let slideshowIndex = 0;
         }
 
 
+if (scene.scrollText === true) {
 
         const img1 = document.getElementById("slideshowImage1");
         const img2 = document.getElementById("slideshowImage2");
@@ -440,7 +463,6 @@ let slideshowIndex = 0;
         preview.src = visitedImages[0];
         console.log("Showing preview image:", visitedImages[0]);
     }
-    
 }
 
         const container = document.querySelector('.scrolling-container');
@@ -455,6 +477,9 @@ let slideshowIndex = 0;
         }
     }
 
+            if (scene.audio) {
+                isLoopingScene = scene.loopAudio;
+                playAudio(scene.audio, scene.loopAudio, () => {
                     if (choiceMade) {
                         showScene(choiceMade);
                         choiceMade = null;
@@ -482,6 +507,7 @@ let slideshowIndex = 0;
         }
 
         if (currentMultiAudio) {
+            // Fade out multi-audio and go to next scene after short pause
             for (let label in multiAudioGains) {
                 multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
             }
@@ -491,6 +517,8 @@ let slideshowIndex = 0;
                 showScene(choiceMade);
                 choiceMade = null;
             }, 1000);
+
+            return;
         }
     }
 
@@ -514,11 +542,18 @@ async function loadStory() {
 
 // Preload images
 const imageUrls = storyData
+    .filter(scene => scene.image)
+    .map(scene => scene.image);
 preloadImages(imageUrls);
 
 
                 const urls = [];
 
+storyData.forEach(scene => {
+  if (scene.audio) urls.push(scene.audio);
+  if (scene.multiAudio) {
+    for (let key in scene.multiAudio) {
+      urls.push(scene.multiAudio[key]);
     }
   }
 });
@@ -603,7 +638,6 @@ async function playMultiAudio(multiAudioMap, onEnded) {
             source.onended = onEnded;
         });
     }
-    
 }
 
 
@@ -622,12 +656,15 @@ function switchToTrack(label) {
     for (let l in multiAudioGains) {
         multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
     }
-    
 }
 
 </script>
 
+<!-- Comic Export Support -->
+<div id="comic-export-container" style="display:none;"></div>
 <script>
+const visitedImages = [];
+
 function generateComicSVG(images) {
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
@@ -650,53 +687,29 @@ function generateComicSVG(images) {
     return svg;
 }
 
-    if (document.getElementById("comic-download-button")) return;
-
-    const gameDiv = document.getElementById("game");
-    const btn = document.createElement("button");
-    btn.id = "comic-download-button";
-    btn.className = "button";
-    btn.textContent = "📥 Download Your Comic Journey";
-    btn.onclick = () => exportComicPDF(visitedImages);
-    gameDiv.appendChild(btn);
-}
-
 function exportComicPDF(images) {
     console.log("💥 Comic export triggered!", images);
-
     const container = document.getElementById("comic-export-container");
     container.innerHTML = '';
     const svg = generateComicSVG(images);
     container.appendChild(svg);
 
-    console.log("📐 SVG created. Loading libraries...");
-
     Promise.all([
         new Promise((resolve) => {
-            if (window.svg2pdf) {
-                console.log("🟢 svg2pdf already loaded");
-                return resolve();
-            }
+            if (window.svg2pdf) return resolve();
             const script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js";
             script.onload = () => {
-                console.log("✅ svg2pdf loaded");
                 window.svg2pdf = window["svg2pdf"];
                 resolve();
             };
             document.head.appendChild(script);
         }),
         new Promise((resolve) => {
-            if (window.jspdf) {
-                console.log("🟢 jsPDF already loaded");
-                return resolve();
-            }
+            if (window.jspdf) return resolve();
             const script = document.createElement("script");
             script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-            script.onload = () => {
-                console.log("✅ jsPDF loaded");
-                resolve();
-            };
+            script.onload = resolve;
             document.head.appendChild(script);
         }),
     ]).then(() => {
@@ -709,8 +722,21 @@ function exportComicPDF(images) {
         }).catch(err => console.error("⚠️ PDF generation failed:", err));
     });
 }
+
+function maybeInjectDownloadComic(scene) {
+    if (!scene || typeof scene !== "object") return;
+    if (scene.choices && scene.choices.length > 0) return;
+    if (document.getElementById("comic-download-button")) return;
+
+    const gameDiv = document.getElementById("game");
+    const btn = document.createElement("button");
+    btn.id = "comic-download-button";
+    btn.className = "button";
+    btn.textContent = "📥 Download Your Comic Journey";
+    btn.onclick = () => exportComicPDF(visitedImages);
+    gameDiv.appendChild(btn);
+}
 </script>
-<div id="comic-export-container" style="display:none;"></div>
 
 </body>
 
