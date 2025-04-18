@@ -753,54 +753,6 @@ function preloadImages(imageUrls) {
         const img = new Image();
         img.src = url;
     });
-}
-
-
- {
-    try {
-        const res = await fetch("story.json");
-        storyData = await res.json();
-
-// Preload images
-const imageUrls = storyData
-    .filter(scene => scene.image)
-    .map(scene => scene.image);
-preloadImages(imageUrls);
-
-
-                const urls = [];
-
-storyData.forEach(scene => {
-  if (scene.audio) urls.push(scene.audio);
-  if (scene.multiAudio) {
-    for (let key in scene.multiAudio) {
-      urls.push(scene.multiAudio[key]);
-
-    }
-}
-  }
-});
-
-
-
-    const start = storyData.find(s => s.name === "START");
-    const startText = (start?.text || 'Welcome adventurer...')
-        .replace(/\n/g, '<br>')
-        .replace(/\[\[.*?\]\]/g, '');
-
-    document.getElementById("game").innerHTML = `
-        <div class="image-text-container">
-            ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-            <div class="text-block">${startText}</div>
-        </div>
-        <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-    `;
-    
-
-    
-     catch (err) {
-        console.error("❌ Failed to load story:", err);
-        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
-    }</script>
+}</script>
 </body>
 </html>
