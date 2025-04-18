@@ -698,35 +698,51 @@ function maybeInjectDownloadComic(scene) {
 }
 
 function exportComicPDF(images) {
+    console.log("💥 Comic export triggered!", images);
+
     const container = document.getElementById("comic-export-container");
     container.innerHTML = '';
     const svg = generateComicSVG(images);
     container.appendChild(svg);
 
+    console.log("📐 SVG created. Loading libraries...");
+
     Promise.all([
         new Promise((resolve) => {
-            if (window.svg2pdf) return resolve();
+            if (window.svg2pdf) {
+                console.log("🟢 svg2pdf already loaded");
+                return resolve();
+            }
             const script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js";
             script.onload = () => {
+                console.log("✅ svg2pdf loaded");
                 window.svg2pdf = window["svg2pdf"];
                 resolve();
             };
             document.head.appendChild(script);
         }),
         new Promise((resolve) => {
-            if (window.jspdf) return resolve();
+            if (window.jspdf) {
+                console.log("🟢 jsPDF already loaded");
+                return resolve();
+            }
             const script = document.createElement("script");
             script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-            script.onload = resolve;
+            script.onload = () => {
+                console.log("✅ jsPDF loaded");
+                resolve();
+            };
             document.head.appendChild(script);
         }),
     ]).then(() => {
         const { jsPDF } = window.jspdf;
+        console.log("🖨️ Exporting to PDF...");
         const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
         window.svg2pdf.svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 }).then(() => {
+            console.log("📄 PDF ready, saving...");
             pdf.save("your-cybersaloon-comic.pdf");
-        });
+        }).catch(err => console.error("⚠️ PDF generation failed:", err));
     });
 }
 </script>
