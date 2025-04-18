@@ -330,20 +330,7 @@ function exportComicPDF(images) {
     // Defer execution slightly to ensure external libraries have had time to attach
     setTimeout(tryExport, 500);
 }
-
-        const container = document.querySelector('.scrolling-container');
-        const inner = document.querySelector('.scrolling-inner');
-        if (container && inner) {
-            const distance = inner.scrollHeight + container.clientHeight;
-            inner.style.transform = 'translateY(0px)';
-            inner.style.transition = `transform ${distance / 50}s linear`;
-            requestAnimationFrame(() => {
-                inner.style.transform = `translateY(-${distance}px)`;
-            });
-        }
-    }
-
-            if (scene.audio) {
+if (scene.audio) {
                 isLoopingScene = scene.loopAudio;
                 playAudio(scene.audio, scene.loopAudio, () => {
                     if (choiceMade) {
