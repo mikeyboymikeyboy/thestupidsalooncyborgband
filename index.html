@@ -462,7 +462,7 @@ let slideshowIndex = 0;
         preview.src = visitedImages[0];
         console.log("Showing preview image:", visitedImages[0]);
     }
-    setTimeout(() => maybeInjectDownloadComic(scene), 50);
+    
 }
 
         const container = document.querySelector('.scrolling-container');
@@ -638,7 +638,7 @@ async function playMultiAudio(multiAudioMap, onEnded) {
             source.onended = onEnded;
         });
     }
-    setTimeout(() => maybeInjectDownloadComic(scene), 50);
+    
 }
 
 
@@ -657,7 +657,7 @@ function switchToTrack(label) {
     for (let l in multiAudioGains) {
         multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
     }
-    setTimeout(() => maybeInjectDownloadComic(scene), 50);
+    
 }
 
 </script>
