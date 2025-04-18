@@ -309,7 +309,7 @@ function exportComicPDF(images) {
     const svg = generateComicSVG(images);
     container.appendChild(svg);
 
-    function tryExport() {
+    setTimeout(() => {
         const jsPDF = window.jspdf?.jsPDF;
         const svg2pdf = window["svg2pdf"];
         if (!jsPDF || !svg2pdf) {
@@ -325,10 +325,7 @@ function exportComicPDF(images) {
                 pdf.save("your-cybersaloon-comic.pdf");
             })
             .catch(err => console.error("⚠️ PDF generation failed:", err));
-    }
-
-    // Defer execution slightly to ensure external libraries have had time to attach
-    setTimeout(tryExport, 500);
+    }, 500);
 }
 if (scene.audio) {
                 isLoopingScene = scene.loopAudio;
