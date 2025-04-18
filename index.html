@@ -111,6 +111,7 @@ font-size: 1.5em;
   .text-block {
     text-align: center;
   }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 
@@ -130,6 +131,7 @@ font-size: 1.5em;
     padding: 12px 20px;
     font-size: 1.25em;
   }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 
@@ -217,31 +219,37 @@ font-size: 1.5em;
 @keyframes floatUp {
   0% { transform: translateY(0); }
   100% { transform: translateY(-20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 @keyframes floatDown {
   0% { transform: translateY(0); }
   100% { transform: translateY(20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 @keyframes floatLeft {
   0% { transform: translateX(0); }
   100% { transform: translateX(-20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 @keyframes floatRight {
   0% { transform: translateX(0); }
   100% { transform: translateX(20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 @keyframes floatDiagonalLeft {
   0% { transform: translate(0, 0); }
   100% { transform: translate(-20px, -20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 @keyframes floatDiagonalRight {
   0% { transform: translate(0, 0); }
   100% { transform: translate(20px, -20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 .floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
@@ -252,12 +260,15 @@ font-size: 1.5em;
 .floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
 
   100% { transform: translateY(-20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
   100% { transform: translateY(-20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
   100% { transform: translateY(-20px); }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 
@@ -462,6 +473,7 @@ let slideshowIndex = 0;
         preview.src = visitedImages[0];
         console.log("Showing preview image:", visitedImages[0]);
     }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
         const container = document.querySelector('.scrolling-container');
@@ -555,6 +567,7 @@ storyData.forEach(scene => {
       urls.push(scene.multiAudio[key]);
     }
   }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 });
 
 const uniqueUrls = [...new Set(urls)];
@@ -637,6 +650,7 @@ async function playMultiAudio(multiAudioMap, onEnded) {
             source.onended = onEnded;
         });
     }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 
@@ -655,6 +669,7 @@ function switchToTrack(label) {
     for (let l in multiAudioGains) {
         multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
     }
+    setTimeout(() => maybeInjectDownloadComic(scene), 50);
 }
 
 </script>
