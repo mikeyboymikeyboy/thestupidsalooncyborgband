@@ -660,8 +660,6 @@ function switchToTrack(label) {
 
 </script>
 
-<!-- Comic Export Support -->
-<div id="comic-export-container" style="display:none;"></div>
 <script>
 function generateComicSVG(images) {
     const svgNS = "http://www.w3.org/2000/svg";
@@ -685,44 +683,10 @@ function generateComicSVG(images) {
     return svg;
 }
 
-async function exportComicPDF(images) {
-    const container = document.getElementById("comic-export-container");
-    container.innerHTML = '';
-    const svg = generateComicSVG(images);
-    container.appendChild(svg);
-
-    if (!window.svg2pdf || !window.jspdf) {
-        await Promise.all([
-            new Promise((resolve) => {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js";
-                script.onload = () => {
-                    window.svg2pdf = window["svg2pdf"];
-                    resolve();
-                };
-                document.head.appendChild(script);
-            }),
-            new Promise((resolve) => {
-                const script = document.createElement("script");
-                script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-                script.onload = resolve;
-                document.head.appendChild(script);
-            }),
-        ]);
-    }
-
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
-    await window.svg2pdf.svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 });
-    pdf.save("your-cybersaloon-comic.pdf");
-}
-
 function maybeInjectDownloadComic(scene) {
     if (!scene || typeof scene !== "object") return;
     if (scene.choices && scene.choices.length > 0) return;
-
-    const existing = document.getElementById("comic-download-button");
-    if (existing) return;
+    if (document.getElementById("comic-download-button")) return;
 
     const gameDiv = document.getElementById("game");
     const btn = document.createElement("button");
@@ -732,7 +696,41 @@ function maybeInjectDownloadComic(scene) {
     btn.onclick = () => exportComicPDF(visitedImages);
     gameDiv.appendChild(btn);
 }
+
+function exportComicPDF(images) {
+    const container = document.getElementById("comic-export-container");
+    container.innerHTML = '';
+    const svg = generateComicSVG(images);
+    container.appendChild(svg);
+
+    Promise.all([
+        new Promise((resolve) => {
+            if (window.svg2pdf) return resolve();
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js";
+            script.onload = () => {
+                window.svg2pdf = window["svg2pdf"];
+                resolve();
+            };
+            document.head.appendChild(script);
+        }),
+        new Promise((resolve) => {
+            if (window.jspdf) return resolve();
+            const script = document.createElement("script");
+            script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+            script.onload = resolve;
+            document.head.appendChild(script);
+        }),
+    ]).then(() => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+        window.svg2pdf.svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 }).then(() => {
+            pdf.save("your-cybersaloon-comic.pdf");
+        });
+    });
+}
 </script>
+<div id="comic-export-container" style="display:none;"></div>
 
 </body>
 
