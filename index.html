@@ -559,9 +559,7 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
-    } catch (err) {
-        console.error("❌ Failed to load story:", err);
-        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    </p>`;
     }
 }
   }
@@ -585,8 +583,7 @@ for (let url of uniqueUrls) {
   </div>
   <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
 `;
-            } catch (err) {
-                document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+            </p>`;
                 console.error(err);
             }
         }
@@ -783,14 +780,31 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
-    } catch (err) {
-        console.error("❌ Failed to load story:", err);
-        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    </p>`;
     }
 }
   }
 });
 
+
+
+    const start = storyData.find(s => s.name === "START");
+    const startText = (start?.text || 'Welcome adventurer...')
+        .replace(/
+/g, '<br>')
+        .replace(/\[\[.*?\]\]/g, '');
+
+    document.getElementById("game").innerHTML = `
+        <div class="image-text-container">
+            ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+            <div class="text-block">${startText}</div>
+        </div>
+        <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+    `;
+
+} catch (err) {
+    console.error("❌ Failed to load story:", err);
+    document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
 }
 </script>
 </body>
