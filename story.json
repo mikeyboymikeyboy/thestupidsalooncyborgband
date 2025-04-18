@@ -41,19 +41,24 @@
   {
     "id": "GUITAR SOLO",
     "name": "GUITAR SOLO",
-    "text": "As you walk in you slam a whiskey and yell <br><b>\"PLAY A GUITAR SOLO YA SCRAP HEAP\"</b> <br>\nThe dude tries but it doesn't actually sound that good. <br>\nA few mistakes. <br>\nMaybe hassle the drummer instead? <br>\n\n[[DRUM SOLO]]",
+    "text": "As you walk in you slam a whiskey and yell <br><b>\"PLAY A GUITAR SOLO YA SCRAP HEAP\"</b> <br>\nThe dude tries but it doesn't actually sound that good. <br>\nA few mistakes. <br>\nMaybe hassle the drummer instead? <br>\n\n[[DRUM SOLO]]\n[[GO ORDER A DRINK]]",
     "x": 2.2857121058872765,
     "y": 112.45713370186941,
     "choices": [
       {
         "label": "DRUM SOLO",
         "next": "DRUM SOLO"
+      },
+      {
+        "label": "GO ORDER A DRINK",
+        "next": "GO ORDER A DRINK"
       }
     ],
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/guitarsolo.mp3",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/guitar_solo_robot.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "DRUM SOLO",
@@ -215,6 +220,19 @@
     "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.mp3",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/fullband.png",
     "loopAudio": true,
+    "multiAudio": {},
+    "scrollText": true
+  },
+  {
+    "id": "GO ORDER A DRINK",
+    "name": "GO ORDER A DRINK",
+    "text": "<br>\n<br>\n<br>\n<br>\n<br>You order a drink<br>\n<br> The drink tastes like dusty oil.<br>\n<br>\n\"This place sucks\" you think.<br>\n<br>\nThe band sucks.<br>\n<br>\nThe drinks suck.<br>\n<br>\nWhat are you even doing here?<br>\n<br>\nTime to go home. You've got whiskey at home.<br>\n<br>\nAnd you've got a PS5. Why are you playing this bullshit game that looks like it was made in 2003?<br>\n<br>\nTHE END.<br>\n<br>\n<br>\nWritten by Andrew Saltmarsh and Mike Mills<br>\nIllustrated by Andrew Saltmarsh<br>\nMusic by Mike Mills<br>\nProduced by Malcolm Dustem<br>\nExecutive Producer Fikkis MkKikkis<br>\nAssociate Producer Syd<br>\nDirector of Photography GIANT SHOEBILL STORK<br>\nProduction Designer Dake<br>\nEditor Dan Egg<br>\nCasting by Irina Vostrikova<br>\nMusic by Satoshi Komurai<br>\nSound Design by Lars Henningsson<br>\nCostume Design by Yuki Takamori<br>\nVisual Effects Supervisor Oleg Mirovski<br>\n1st Assistant Director Helena Nyström<br>\n2nd Assistant Director Mike Mills<br>\nScript Supervisor Dasha Kuznetsova<br>\nGaffer Anton Petrovich<br>\nKey Grip Jens Halvorsen<br>\nBest Boy Electric Akiko Suda<br>\nProduction Sound Mixer Dan Egg<br>\nBoom Operator Syd<br>\nSet Decorator Olga Ivanenko<br>\nArt Director Rikard Skoglund<br>\nProps Master Mika Tanabe<br>\nMakeup Department Head Ludmila Zaytseva<br>\nHair Stylist Fikkis MkKikkis<br>\nStunt Coordinator Kazuo Yamashita<br>\nFight Choreographer Katya Melnichenko<br>\nUnit Publicist Haruto Shibasaki<br>\nProduction Coordinator Eva Bergström<br>\nTransportation Captain GIANT SHOEBILL STORK<br>\nCatering by Yumiko Nishida<br>\nTowel Enjoyer Malcolm Dustem<br>\nTrain Driver Satoshi von Beepbeep<br>\nOfficial Biscuit Consultant Dake<br>\nRubber Chicken Technician Andrei Vasov<br>\nDigital Imaging Technician Mikhail Drozdov<br>\nColorist Nozomi Haneda<br>\nBackup Colorist Dan Egg<br>\nButton Presser Andrew Saltmarsh<br>\nTitle Design by Jörgen Ekdal<br>\nMarketing Consultant Natsuki Hoshino<br>\nLegal Counsel Dmitri Orlov<br>\nLadder Holder Fikkis MkKikkis<br>\nLocation Manager Anna Sokolova<br>\nStudio Liaison Dake<br>\nEmergency Croissant Wrangler Sven Alriksson<br>\nEmotion Coach GIANT SHOEBILL STORK<br>\nUmbrella Strategist Irina Vostrikova<br>\nThanks to: The Residents of Shoebill Gulch<br>\nSpecial Thanks: Ludvig’s Discount Fireworks<br>\nEven More Thanks: The Swedish National Shoebill Society<br>\nIn Loving Memory of: Our beloved tea kettle “Gloria”<br>\nFilmed on Location in: The Windswept Valleys of Mount Creaturous<br>\nNo Shoebills Were Harmed in the Making of This Film<br>\nSponsored in part by: The Ghost of Dan Egg’s Sandwich<br>\nUnsolicited Advice by Syd<br>\nChair Stacker Mike Mills<br>\nSpaghetti Realist Malcolm Dustem<br>\nQuantum Muffin Advisor Fikkis MkKikkis<br>\nCrow Wrangler GIANT SHOEBILL STORK<br>\nHigh-Five Choreographer Dake<br>\nFog Supervisor Andrew Saltmarsh<br>\nCopyright Tension Specialist Dan Egg<br>\nApology Coordinator Syd<br>\n©Toehider Productions. MMXXV All Rights Reserved. Hit refresh to play again.\n\n",
+    "x": 9,
+    "y": 225,
+    "choices": [],
+    "audio": "",
+    "image": "",
+    "loopAudio": false,
     "multiAudio": {},
     "scrollText": true
   }
