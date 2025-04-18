@@ -337,11 +337,12 @@ let visitedImages = [];
     `;
     
 
+    
+            
     } catch (err) {
         console.error("❌ Failed to load story:", err);
         document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }
-            }
 
 
 
@@ -573,10 +574,7 @@ for (let url of uniqueUrls) {
     
 
     
-    } catch (err) {
-        console.error("❌ Failed to load story:", err);
-        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
-    } catch (err) {
+     catch (err) {
         console.error("❌ Failed to load story:", err);
         document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }
@@ -758,7 +756,7 @@ function preloadImages(imageUrls) {
 }
 
 
-async function loadStory() {
+ {
     try {
         const res = await fetch("story.json");
         storyData = await res.json();
@@ -800,10 +798,7 @@ storyData.forEach(scene => {
     
 
     
-    } catch (err) {
-        console.error("❌ Failed to load story:", err);
-        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
-    } catch (err) {
+     catch (err) {
         console.error("❌ Failed to load story:", err);
         document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }</script>
