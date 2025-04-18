@@ -157,9 +157,6 @@ font-size: 1.5em;
   text-align: center;
   white-space: pre-line;
 }
-
-}
-
 }
 
 
@@ -216,9 +213,6 @@ font-size: 1.5em;
 
 @keyframes floatUp {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-20px); }
-}
-
 @keyframes floatDown {
   0% { transform: translateY(0); }
   100% { transform: translateY(20px); }
@@ -250,15 +244,6 @@ font-size: 1.5em;
 .floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
 .floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
 .floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
-
-  100% { transform: translateY(-20px); }
-}
-
-  100% { transform: translateY(-20px); }
-}
-
-  100% { transform: translateY(-20px); }
-}
 
 
 
@@ -417,54 +402,7 @@ let slideshowIndex = 0;
         }
 
 
-if (scene.scrollText === true) {
-
-        const img1 = document.getElementById("slideshowImage1");
-        const img2 = document.getElementById("slideshowImage2");
-        if (visitedImages.length > 0 && img1 && img2) {
-            
-const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
-function applyRandomFloatClass(img) {
-    floatClasses.forEach(cls => img.classList.remove(cls));
-    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
-    img.classList.add(randomClass);
-}
-
-
-function randomizePosition(container) {
-    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
-    container.style.top = top + '%';
-}
-
-let slideshowIndex = 0;
-            setInterval(() => {
-                const src = visitedImages[slideshowIndex % visitedImages.length];
-                const isEven = slideshowIndex % 2 === 0;
-                if (isEven) {
-                    img1.src = src;
-                    applyRandomFloatClass(img1);
-                    randomizePosition(img1.parentElement);
-                    img1.classList.add("visible");
-                    img2.classList.remove("visible");
-                } else {
-                    img2.src = src;
-                    applyRandomFloatClass(img2);
-                    randomizePosition(img2.parentElement);
-                    img2.classList.add("visible");
-                    img1.classList.remove("visible");
-                }
-                slideshowIndex++;
-            }, 4000);
-        }
-
-    const preview = document.getElementById("slideshowPreview");
-    if (visitedImages.length > 0 && preview) {
-        preview.src = visitedImages[0];
-        console.log("Showing preview image:", visitedImages[0]);
-    }
-}
-
-        const container = document.querySelector('.scrolling-container');
+const container = document.querySelector('.scrolling-container');
         const inner = document.querySelector('.scrolling-inner');
         if (container && inner) {
             const distance = inner.scrollHeight + container.clientHeight;
