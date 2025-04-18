@@ -559,7 +559,11 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }
+}
   }
 });
 
@@ -779,7 +783,11 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }
+}
   }
 });
 
