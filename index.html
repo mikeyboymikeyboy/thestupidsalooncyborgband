@@ -343,9 +343,12 @@ let visitedImages = [];
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
 
+    // ✅ Show download button on ending scenes
     if (!scene.choices || scene.choices.length === 0) {
         html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
     }
+
+    
 
     
 
