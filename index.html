@@ -559,7 +559,7 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
-    </p>`;
+
     }
 }
   }
@@ -583,7 +583,7 @@ for (let url of uniqueUrls) {
   </div>
   <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
 `;
-            </p>`;
+        
                 console.error(err);
             }
         }
@@ -780,7 +780,7 @@ storyData.forEach(scene => {
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
-    </p>`;
+
     }
 }
   }
@@ -790,8 +790,7 @@ storyData.forEach(scene => {
 
     const start = storyData.find(s => s.name === "START");
     const startText = (start?.text || 'Welcome adventurer...')
-        .replace(/
-/g, '<br>')
+        .replace(/\n/g, '<br>')
         .replace(/\[\[.*?\]\]/g, '');
 
     document.getElementById("game").innerHTML = `
