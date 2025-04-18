@@ -343,10 +343,13 @@ let visitedImages = [];
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
 
-    // ✅ Show download button on ending scenes
+    // ✅ Add comic button if this is an ending scene
     if (!scene.choices || scene.choices.length === 0) {
         html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
     }
+
+    // ✅ Show download button on ending scenes
+    
 
     
 
@@ -544,6 +547,11 @@ let currentMultiAudio = null;
 async function playMultiAudio(multiAudioMap, onEnded) {
     stopAudio(); // stop regular audio
     stopMultiAudio(); // stop any previous multiaudio
+
+function downloadComic() {
+    alert("📄 Download Comic button clicked!");
+}
+
     multiAudioSources = {};
     multiAudioGains = {};
 
