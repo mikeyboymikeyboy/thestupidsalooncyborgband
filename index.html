@@ -336,7 +336,11 @@ let visitedImages = [];
         <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
     `;
     
-}
+
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+    }
             }
 
 
@@ -568,6 +572,10 @@ for (let url of uniqueUrls) {
     `;
     
 
+    
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     } catch (err) {
         console.error("❌ Failed to load story:", err);
         document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
@@ -791,13 +799,13 @@ storyData.forEach(scene => {
     `;
     
 
+    
+    } catch (err) {
+        console.error("❌ Failed to load story:", err);
+        document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     } catch (err) {
         console.error("❌ Failed to load story:", err);
         document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
     }</script>
-</body>
-
-</html>
-</script>
 </body>
 </html>
