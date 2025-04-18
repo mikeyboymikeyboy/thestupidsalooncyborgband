@@ -711,9 +711,7 @@ function exportComicPDF(images) {
             })
             .catch(err => console.error("⚠️ PDF generation failed:", err));
     }, 500);
-
-            }
-        }
+}
 
         function handleChoice(nextId) {
     const selectedChoice = currentScene.choices.find(c => c.next === nextId);
