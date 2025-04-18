@@ -696,7 +696,41 @@ function generateComicSVG(images) {
     return svg;
 }
 
+
 async function exportComicPDF(images) {
+    const container = document.getElementById("comic-export-container");
+    container.innerHTML = '';
+
+    // Dynamically load svg2pdf and jsPDF if not already loaded
+    if (!window.jspdf || !window.svg2pdf) {
+        await Promise.all([
+            new Promise((resolve) => {
+                const script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js";
+                script.onload = () => {
+                    window.svg2pdf = window["svg2pdf"];
+                    resolve();
+                };
+                document.head.appendChild(script);
+            }),
+            new Promise((resolve) => {
+                const script = document.createElement("script");
+                script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+                script.onload = resolve;
+                document.head.appendChild(script);
+            }),
+        ]);
+    }
+
+    const svg = generateComicSVG(images);
+    container.appendChild(svg);
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+    await window.svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 });
+    pdf.save("your-cybersaloon-comic.pdf");
+}
+
     const svg = generateComicSVG(images);
     const container = document.getElementById("comic-export-container");
     container.innerHTML = '';
