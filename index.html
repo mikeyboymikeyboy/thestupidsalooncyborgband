@@ -4,10 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>The Stupid Saloon Cyborg Band</title>
-    <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>
+    <style>
         @font-face {
             font-family: 'IM Fell English';
             src: url('IMFellEnglish.woff2') format('woff2');
@@ -268,65 +265,230 @@ font-size: 1.5em;
 
 
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
     
     <div id="game">
+    <!-- Comic Export Support -->
+    <div id="comic-export-container" style="display:none;"></div>
         <p>Loading story...</p>
     </div>
-    <!-- Comic Export Support -->
-<div id="comic-export-container" style="display:none;"></div>
-<script>
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let buffers = {};
+        let currentSource = null;
+    
+        let choiceMade = null;
+        let isLoopingScene = false;
+        let currentScene = null;
+        let storyData = [];
+let visitedImages = [];
 
-
-function generateComicSVG(images) {
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("width", "210mm");
-    svg.setAttribute("height", "297mm");
-    svg.setAttribute("viewBox", "0 0 2048 2860");
-
-    images.slice(0, 5).forEach((url, i) => {
-        const img = document.createElementNS(svgNS, "image");
-        img.setAttributeNS(null, "href", url);
-        img.setAttributeNS(null, "preserveAspectRatio", "xMidYMid slice");
-        if (i === 0) img.setAttribute("x", -76), img.setAttribute("y", 169), img.setAttribute("width", 1110), img.setAttribute("height", 992);
-        if (i === 1) img.setAttribute("x", 436), img.setAttribute("y", 170), img.setAttribute("width", 1756), img.setAttribute("height", 993);
-        if (i === 2) img.setAttribute("x", 1183), img.setAttribute("y", 1027), img.setAttribute("width", 939), img.setAttribute("height", 1118);
-        if (i === 3) img.setAttribute("x", -101), img.setAttribute("y", 1014), img.setAttribute("width", 1442), img.setAttribute("height", 1291);
-        if (i === 4) img.setAttribute("x", -184), img.setAttribute("y", 1922), img.setAttribute("width", 2431), img.setAttribute("height", 1022);
-        svg.appendChild(img);
-    });
-
-    return svg;
-}
-
-function exportComicPDF(images) {
-    console.log("💥 Comic export triggered!", images);
-    const container = document.getElementById("comic-export-container");
-    container.innerHTML = '';
-    const svg = generateComicSVG(images);
-    container.appendChild(svg);
-
-    setTimeout(() => {
-        const jsPDF = window.jspdf?.jsPDF;
-        const svg2pdf = window["svg2pdf"];
-        if (!jsPDF || !svg2pdf) {
-            console.error("❌ PDF export libraries not loaded");
-            return;
+        function loadAudio(url) {
+            return fetch(url)
+                .then(res => res.arrayBuffer())
+                .then(buf => audioContext.decodeAudioData(buf));
         }
 
-        const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+        async function playAudio(name, loop, onEnded) {
+            stopAudio();
+            const buffer = buffers[name];
+            if (!buffer) return;
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            source.loop = loop;
+            if (onEnded) {
+    source.onended = () => {
+        document.querySelectorAll('.button.waiting').forEach(btn => {
+            btn.classList.remove('waiting');
+        });
+        onEnded();
+    };
+}
+            source.start(0);
+            currentSource = source;
+        }
 
-        svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 })
-            .then(() => {
-                console.log("📄 PDF ready, saving...");
-                pdf.save("your-cybersaloon-comic.pdf");
-            })
-            .catch(err => console.error("⚠️ PDF generation failed:", err));
-    }, 500);
+        function stopAudio() {
+            if (currentSource) {
+                try {
+                    currentSource.stop();
+                } catch (e) {}
+                currentSource.disconnect();
+                currentSource = null;
+    stopMultiAudio();
+            }
+        }
 
+        function showScene(sceneId) {
+            const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
+            if (!scene) {
+                document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
+                return;
+            }
+            currentScene = scene;
+    if (scene.image && !visitedImages.includes(scene.image)) {
+        visitedImages.push(scene.image);
+        console.log("Tracked image:", scene.image);
+    }
+            let html = '';
+
+            
+            if (scene.image || scene.text) {
+                const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                const isFinal = !scene.choices || scene.choices.length === 0;
+                html += `
+                    <div class="image-text-container">
+                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+                        <div class="text-block">
+  ${scene.scrollText === true
+    ? `<div class="scrolling-container">
+  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
+  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
+    : cleanText}
+</div>
+                    </div>
+                `;
+            }
+
+
+
+            if (scene.choices && scene.choices.length > 0) {
+                scene.choices.forEach(choice => {
+                    html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
+                });
+            }
+
+            
+if (scene.multiAudio) {
+    isLoopingScene = true;
+    playMultiAudio(scene.multiAudio, () => {
+        if (choiceMade) {
+            showScene(choiceMade);
+            choiceMade = null;
+        }
+    });
+    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
+        `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
+    ).join("");
+    html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+}
+
+    document.getElementById("game").innerHTML = html;
+
+    if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
+
+
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
+
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+
+if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
+
+
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
+
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+    const preview = document.getElementById("slideshowPreview");
+    if (visitedImages.length > 0 && preview) {
+        preview.src = visitedImages[0];
+        console.log("Showing preview image:", visitedImages[0]);
+    }
+}
+
+        const container = document.querySelector('.scrolling-container');
+        const inner = document.querySelector('.scrolling-inner');
+        if (container && inner) {
+            const distance = inner.scrollHeight + container.clientHeight;
+            inner.style.transform = 'translateY(0px)';
+            inner.style.transition = `transform ${distance / 50}s linear`;
+            requestAnimationFrame(() => {
+                inner.style.transform = `translateY(-${distance}px)`;
+            });
+        }
+    }
+
+            if (scene.audio) {
+                isLoopingScene = scene.loopAudio;
+                playAudio(scene.audio, scene.loopAudio, () => {
+                    if (choiceMade) {
+                        showScene(choiceMade);
+                        choiceMade = null;
+                    }
+                });
             }
         }
 
@@ -500,10 +662,129 @@ function switchToTrack(label) {
     }
 }
 
+
+
+function generateComicSVG(images) {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width", "210mm");
+    svg.setAttribute("height", "297mm");
+    svg.setAttribute("viewBox", "0 0 2048 2860");
+
+    images.slice(0, 5).forEach((url, i) => {
+        const img = document.createElementNS(svgNS, "image");
+        img.setAttributeNS(null, "href", url);
+        img.setAttributeNS(null, "preserveAspectRatio", "xMidYMid slice");
+        if (i === 0) img.setAttribute("x", -76), img.setAttribute("y", 169), img.setAttribute("width", 1110), img.setAttribute("height", 992);
+        if (i === 1) img.setAttribute("x", 436), img.setAttribute("y", 170), img.setAttribute("width", 1756), img.setAttribute("height", 993);
+        if (i === 2) img.setAttribute("x", 1183), img.setAttribute("y", 1027), img.setAttribute("width", 939), img.setAttribute("height", 1118);
+        if (i === 3) img.setAttribute("x", -101), img.setAttribute("y", 1014), img.setAttribute("width", 1442), img.setAttribute("height", 1291);
+        if (i === 4) img.setAttribute("x", -184), img.setAttribute("y", 1922), img.setAttribute("width", 2431), img.setAttribute("height", 1022);
+        svg.appendChild(img);
+    });
+
+    return svg;
+}
+
+function exportComicPDF(images) {
+    console.log("💥 Comic export triggered!", images);
+    const container = document.getElementById("comic-export-container");
+    container.innerHTML = '';
+    const svg = generateComicSVG(images);
+    container.appendChild(svg);
+
+    setTimeout(() => {
+        const jsPDF = window.jspdf?.jsPDF;
+        const svg2pdf = window["svg2pdf"];
+        if (!jsPDF || !svg2pdf) {
+            console.error("❌ PDF export libraries not loaded");
+            return;
+        }
+
+        const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+
+        svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 })
+            .then(() => {
+                console.log("📄 PDF ready, saving...");
+                pdf.save("your-cybersaloon-comic.pdf");
+            })
+            .catch(err => console.error("⚠️ PDF generation failed:", err));
+    }, 500);
+
+            }
+        }
+
+        function handleChoice(nextId) {
+    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
+
+    if (isLoopingScene) {
+        choiceMade = nextId;
+
+        const buttons = document.querySelectorAll(".button");
+        buttons.forEach(btn => {
+            if (btn.textContent === selectedChoice?.label) {
+                btn.classList.add("waiting");
+            }
+        });
+
+        if (currentSource) {
+            currentSource.loop = false;
+            return; // Let the normal audio finish and trigger the transition
+        }
+
+        if (currentMultiAudio) {
+            // Fade out multi-audio and go to next scene after short pause
+            for (let label in multiAudioGains) {
+                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
+            }
+
+            setTimeout(() => {
+                stopMultiAudio();
+                showScene(choiceMade);
+                choiceMade = null;
+            }, 1000);
+
+            return;
+        }
+    }
+
+    showScene(nextId);
+}
+
+
+        
+function preloadImages(imageUrls) {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+
+async function loadStory() {
+            try {
+                const res = await fetch("story.json");
+                storyData = await res.json();
+
+// Preload images
+const imageUrls = storyData
+    .filter(scene => scene.image)
+    .map(scene => scene.image);
+preloadImages(imageUrls);
+
+
+                const urls = [];
+
+storyData.forEach(scene => {
+  if (scene.audio) urls.push(scene.audio);
+  if (scene.multiAudio) {
+    for (let key in scene.multiAudio) {
+      urls.push(scene.multiAudio[key]);
+    }
+  }
+}
+
 </script>
-
-
-
 </body>
 
 </html>
