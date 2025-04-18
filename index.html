@@ -312,10 +312,17 @@ function exportComicPDF(images) {
     const svg = generateComicSVG(images);
     container.appendChild(svg);
 
-    const { jsPDF } = window.jspdf;
+    const jsPDF = window.jspdf?.jsPDF;
+    const svg2pdf = window["svg2pdf"];
+
+    if (!jsPDF || !svg2pdf) {
+        console.error("❌ PDF export libraries not loaded");
+        return;
+    }
+
     const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
 
-    window.svg2pdf.svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 })
+    svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 })
         .then(() => {
             console.log("📄 PDF ready, saving...");
             pdf.save("your-cybersaloon-comic.pdf");
