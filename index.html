@@ -557,8 +557,38 @@ async function playMultiAudio(multiAudioMap, onEnded) {
     stopAudio(); // stop regular audio
     stopMultiAudio(); // stop any previous multiaudio
 
-function downloadComic() {
-    alert("📄 Download Comic button clicked!");
+async function downloadComic() {
+    const svg = document.querySelector("#comicSvgWrapper svg");
+    const panels = Array.from(svg.querySelectorAll("image[id^='panel']"));
+
+    panels.forEach((panel, i) => {
+        if (visitedImages[i]) {
+            panel.setAttribute("href", visitedImages[i]);
+        } else {
+            panel.removeAttribute("href");
+        }
+    });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 2048;
+    canvas.height = 2860;
+    const ctx = canvas.getContext("2d");
+
+    await canvg.Canvg.fromString(ctx, svg.outerHTML).render();
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    const img = await pdfDoc.embedPng(imgData);
+    const page = pdfDoc.addPage([img.width, img.height]);
+    page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "your-adventure-comic.pdf";
+    link.click();
 }
 
     multiAudioSources = {};
@@ -657,6 +687,10 @@ function switchToTrack(label) {
 
 </svg>
 </div>
+
+
+<script src="https://unpkg.com/pdf-lib"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
 
 </body>
 
