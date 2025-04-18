@@ -661,3 +661,60 @@ function switchToTrack(label) {
 </body>
 
 </html>
+<!-- Comic Export Tools -->
+<script src="https://unpkg.com/svg2pdf.js/dist/svg2pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<div id="comic-export-container" style="display:none;"></div>
+<script>
+function generateComicSVG(images) {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width", "210mm");
+    svg.setAttribute("height", "297mm");
+    svg.setAttribute("viewBox", "0 0 2048 2860");
+
+    images.slice(0, 5).forEach((url, i) => {
+        const img = document.createElementNS(svgNS, "image");
+        img.setAttributeNS(null, "href", url);
+        img.setAttributeNS(null, "preserveAspectRatio", "xMidYMid slice");
+        if (i === 0) img.setAttribute("x", -76), img.setAttribute("y", 169), img.setAttribute("width", 1110), img.setAttribute("height", 992);
+        if (i === 1) img.setAttribute("x", 436), img.setAttribute("y", 170), img.setAttribute("width", 1756), img.setAttribute("height", 993);
+        if (i === 2) img.setAttribute("x", 1183), img.setAttribute("y", 1027), img.setAttribute("width", 939), img.setAttribute("height", 1118);
+        if (i === 3) img.setAttribute("x", -101), img.setAttribute("y", 1014), img.setAttribute("width", 1442), img.setAttribute("height", 1291);
+        if (i === 4) img.setAttribute("x", -184), img.setAttribute("y", 1922), img.setAttribute("width", 2431), img.setAttribute("height", 1022);
+        svg.appendChild(img);
+    });
+
+    return svg;
+}
+
+async function exportComicPDF(images) {
+    const svg = generateComicSVG(images);
+    const container = document.getElementById("comic-export-container");
+    container.innerHTML = '';
+    container.appendChild(svg);
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+
+    await svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 });
+    pdf.save("your-cybersaloon-comic.pdf");
+}
+
+// Attach this inside showScene once we're sure scene is valid and complete
+function maybeInjectDownloadComic(scene) {
+    if (!scene || typeof scene !== 'object') return;
+    if ((scene.choices && scene.choices.length > 0)) return;
+
+    const gameDiv = document.getElementById("game");
+    const already = document.getElementById("comic-download-button");
+    if (already) return;
+
+    const btn = document.createElement("button");
+    btn.id = "comic-download-button";
+    btn.textContent = "📥 Download Your Comic Journey";
+    btn.className = "button";
+    btn.onclick = () => exportComicPDF(visitedImages);
+    gameDiv.appendChild(btn);
+}
+</script>
