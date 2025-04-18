@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <title>The Stupid Saloon Cyborg Band</title>
     <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@2.1.4/dist/svg2pdf.umd.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
         @font-face {
             font-family: 'IM Fell English';
             src: url('IMFellEnglish.woff2') format('woff2');
@@ -30,7 +29,7 @@
             color: white;
             text-align: center;
             padding: 2em;
-font-size: 1.5em;
+            font-size: 1.5em;
         }
 
         img {
@@ -87,431 +86,366 @@ font-size: 1.5em;
                 background-color: #3e2f23;
             }
         }
-    
-.image-text-container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2em;
-  margin-bottom: 1.5em;
-  flex-wrap: wrap;
-}
-.image-text-container img {
-  max-width: 100%;
-  height: auto;
-}
-.text-block {
-  max-width: 600px;
-  text-align: left;
-}
 
+        .image-text-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2em;
+            margin-bottom: 1.5em;
+            flex-wrap: wrap;
+        }
 
-@media (max-width: 768px) {
-  .image-text-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .text-block {
-    text-align: center;
-  }
-}
+        .image-text-container img {
+            max-width: 100%;
+            height: auto;
+        }
 
+        .text-block {
+            max-width: 600px;
+            text-align: left;
+        }
 
-@media (max-width: 768px) {
-  body {
-    font-size: 1.875em; /* 25% bigger than original 1.5em */
-  }
-  .image-text-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5em;
-  }
-  .text-block {
-    text-align: center;
-  }
-  .button {
-    padding: 12px 20px;
-    font-size: 1.25em;
-  }
-}
+        @media (max-width: 768px) {
+            .image-text-container {
+                flex-direction: column;
+                align-items: center;
+            }
 
+            .text-block {
+                text-align: center;
+            }
+        }
 
-.fade-in {
-  opacity: 0;
-  transition: opacity 0.8s ease-in;
-}
-.fade-in.loaded {
-  opacity: 0.4;
-}
+        @media (max-width: 768px) {
+            body {
+                font-size: 1.875em;
+                /* 25% bigger than original 1.5em */
+            }
 
+            .image-text-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2.5em;
+            }
 
+            .text-block {
+                text-align: center;
+            }
 
+            .button {
+                padding: 12px 20px;
+                font-size: 1.25em;
+            }
+        }
 
-.scrolling-container {
-  height: 300px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  margin: 2em auto;
-}
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
 
-.scrolling-inner {
-  position: relative;
-  text-align: center;
-  white-space: pre-line;
-}
+        .fade-in.loaded {
+            opacity: 0.4;
+        }
 
-}
+        .scrolling-container {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            margin: 2em auto;
+        }
 
-}
+        .scrolling-inner {
+            position: relative;
+            text-align: center;
+            white-space: pre-line;
+        }
 
+        .scrolling-preview {
+            position: absolute;
 
-.scrolling-preview {
-  position: absolute;
-  
-  left: 10px;
-  z-index: 5;
-  pointer-events: none;
-}
+            left: 10px;
+            z-index: 5;
+            pointer-events: none;
+        }
 
-.scrolling-preview img {
-  max-height: 200px;
-  border: 2px solid red;
-  opacity: 0.4;
-}
+        .scrolling-preview img {
+            max-height: 200px;
+            border: 2px solid red;
+            opacity: 0.4;
+        }
 
+        .slideshow-container {
+            position: fixed;
 
+            max-height: 400px;
+            width: 400px;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp 6s ease-in-out infinite alternate;
+        }
 
+        .slideshow-container.left-fixed {
+            left: 60px;
+        }
 
+        .slideshow-container.right {
+            right: 60px;
+        }
 
+        .slideshow-image {
+            max-height: 400px;
+            width: auto;
+            opacity: 0;
+            transition: opacity 4s ease-in-out;
+        }
 
+        .slideshow-image.visible {
+            opacity: 0.4;
+        }
 
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+            }
 
-.slideshow-container {
-  position: fixed;
-  
-  max-height: 400px;
-  width: 400px;
-  pointer-events: none;
-  z-index: 0;
-  animation: floatUp 6s ease-in-out infinite alternate;
-}
+            100% {
+                transform: translateY(-20px);
+            }
+        }
 
-.slideshow-container.left-fixed {
-  left: 60px;
-}
+        @keyframes floatDown {
+            0% {
+                transform: translateY(0);
+            }
 
-.slideshow-container.right {
-  right: 60px;
-}
+            100% {
+                transform: translateY(20px);
+            }
+        }
 
-.slideshow-image {
-  max-height: 400px;
-  width: auto;
-  opacity: 0;
-  transition: opacity 4s ease-in-out;
-}
+        @keyframes floatLeft {
+            0% {
+                transform: translateX(0);
+            }
 
-.slideshow-image.visible {
-  opacity: 0.4;
-}
+            100% {
+                transform: translateX(-20px);
+            }
+        }
 
+        @keyframes floatRight {
+            0% {
+                transform: translateX(0);
+            }
 
-@keyframes floatUp {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-20px); }
-}
+            100% {
+                transform: translateX(20px);
+            }
+        }
 
-@keyframes floatDown {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(20px); }
-}
+        @keyframes floatDiagonalLeft {
+            0% {
+                transform: translate(0, 0);
+            }
 
-@keyframes floatLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-20px); }
-}
+            100% {
+                transform: translate(-20px, -20px);
+            }
+        }
 
-@keyframes floatRight {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(20px); }
-}
+        @keyframes floatDiagonalRight {
+            0% {
+                transform: translate(0, 0);
+            }
 
-@keyframes floatDiagonalLeft {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-20px, -20px); }
-}
+            100% {
+                transform: translate(20px, -20px);
+            }
+        }
 
-@keyframes floatDiagonalRight {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(20px, -20px); }
-}
+        .floatUp {
+            animation: floatUp 6s ease-in-out infinite alternate;
+        }
 
-.floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
-.floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
-.floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
-.floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
-.floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
-.floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
+        .floatDown {
+            animation: floatDown 6s ease-in-out infinite alternate;
+        }
 
-  100% { transform: translateY(-20px); }
-}
+        .floatLeft {
+            animation: floatLeft 6s ease-in-out infinite alternate;
+        }
 
-  100% { transform: translateY(-20px); }
-}
+        .floatRight {
+            animation: floatRight 6s ease-in-out infinite alternate;
+        }
 
-  100% { transform: translateY(-20px); }
-}
+        .floatDiagonalLeft {
+            animation: floatDiagonalLeft 6s ease-in-out infinite alternate;
+        }
 
-
-
-
-
-</style>
+        .floatDiagonalRight {
+            animation: floatDiagonalRight 6s ease-in-out infinite alternate;
+        }
+    </style>
 </head>
 
 <body>
-    
+
     <div id="game">
         <p>Loading story...</p>
     </div>
-    <!-- Comic Export Support -->
-<div id="comic-export-container" style="display:none;"></div>
-<script>
+    <div id="comic-export-container" style="display:none;"></div>
+    <script>
+        const gameDiv = document.getElementById('game');
+        let storyData;
+        let currentScene;
+        let currentAudio;
+        let currentSource;
+        let audioContext;
+        let buffers = {};
+        let choiceMade = null;
+        let isLoopingScene = false;
+        let images = []; // Track images
 
+        function generateComicSVG(images) {
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("width", "210mm");
+            svg.setAttribute("height", "297mm");
+            svg.setAttribute("viewBox", "0 0 2048 2860");
 
-function generateComicSVG(images) {
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("width", "210mm");
-    svg.setAttribute("height", "297mm");
-    svg.setAttribute("viewBox", "0 0 2048 2860");
+            images.slice(0, 5).forEach((url, i) => {
+                const img = document.createElementNS(svgNS, "image");
+                img.setAttributeNS(null, "href", url);
+                img.setAttributeNS(null, "preserveAspectRatio", "xMidYMid slice");
+                if (i === 0) img.setAttribute("x", -76), img.setAttribute("y", 169), img.setAttribute("width", 1110), img.setAttribute("height", 992);
+                if (i === 1) img.setAttribute("x", 436), img.setAttribute("y", 170), img.setAttribute("width", 1756), img.setAttribute("height", 993);
+                if (i === 2) img.setAttribute("x", 1183), img.setAttribute("y", 1027), img.setAttribute("width", 939), img.setAttribute("height", 1118);
+                if (i === 3) img.setAttribute("x", -101), img.setAttribute("y", 1014), img.setAttribute("width", 1442), img.setAttribute("height", 1291);
+                if (i === 4) img.setAttribute("x", -184), img.setAttribute("y", 1922), img.setAttribute("width", 2431), img.setAttribute("height", 1022);
+                svg.appendChild(img);
+            });
 
-    images.slice(0, 5).forEach((url, i) => {
-        const img = document.createElementNS(svgNS, "image");
-        img.setAttributeNS(null, "href", url);
-        img.setAttributeNS(null, "preserveAspectRatio", "xMidYMid slice");
-        if (i === 0) img.setAttribute("x", -76), img.setAttribute("y", 169), img.setAttribute("width", 1110), img.setAttribute("height", 992);
-        if (i === 1) img.setAttribute("x", 436), img.setAttribute("y", 170), img.setAttribute("width", 1756), img.setAttribute("height", 993);
-        if (i === 2) img.setAttribute("x", 1183), img.setAttribute("y", 1027), img.setAttribute("width", 939), img.setAttribute("height", 1118);
-        if (i === 3) img.setAttribute("x", -101), img.setAttribute("y", 1014), img.setAttribute("width", 1442), img.setAttribute("height", 1291);
-        if (i === 4) img.setAttribute("x", -184), img.setAttribute("y", 1922), img.setAttribute("width", 2431), img.setAttribute("height", 1022);
-        svg.appendChild(img);
-    });
-
-    return svg;
-}
-
-function exportComicPDF(images) {
-    console.log("💥 Comic export triggered!", images);
-    const container = document.getElementById("comic-export-container");
-    container.innerHTML = '';
-    const svg = generateComicSVG(images);
-    container.appendChild(svg);
-
-    setTimeout(() => {
-        const jsPDF = window.jspdf?.jsPDF;
-        const svg2pdf = window["svg2pdf"];
-        if (!jsPDF || !svg2pdf) {
-            console.error("❌ PDF export libraries not loaded");
-            return;
+            return svg;
         }
 
-        const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
-
-        svg2pdf(svg, pdf, { xOffset: 0, yOffset: 0, scale: 0.25 })
-            .then(() => {
-                console.log("📄 PDF ready, saving...");
-                pdf.save("your-cybersaloon-comic.pdf");
-            })
-            .catch(err => console.error("⚠️ PDF generation failed:", err));
-    }, 500);
-}
-if (scene.audio) {
-                isLoopingScene = scene.loopAudio;
-                playAudio(scene.audio, scene.loopAudio, () => {
-                    if (choiceMade) {
-                        showScene(choiceMade);
-                        choiceMade = null;
-                    }
-                });
-            }
-        }
-
-        function handleChoice(nextId) {
-    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
-
-    if (isLoopingScene) {
-        choiceMade = nextId;
-
-        const buttons = document.querySelectorAll(".button");
-        buttons.forEach(btn => {
-            if (btn.textContent === selectedChoice?.label) {
-                btn.classList.add("waiting");
-            }
-        });
-
-        if (currentSource) {
-            currentSource.loop = false;
-            return; // Let the normal audio finish and trigger the transition
-        }
-
-        if (currentMultiAudio) {
-            // Fade out multi-audio and go to next scene after short pause
-            for (let label in multiAudioGains) {
-                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
-            }
+        function exportComicPDF(images) {
+            console.log("💥 Comic export triggered!", images);
+            const container = document.getElementById("comic-export-container");
+            container.innerHTML = '';
+            const svg = generateComicSVG(images);
+            container.appendChild(svg);
 
             setTimeout(() => {
-                stopMultiAudio();
-                showScene(choiceMade);
-                choiceMade = null;
-            }, 1000);
+                const jsPDF = window.jspdf?.jsPDF;
+                const svg2pdf = window["svg2pdf"];
+                if (!jsPDF || !svg2pdf) {
+                    console.error("❌ PDF export libraries not loaded");
+                    return;
+                }
 
-            return;
+                const pdf = new jsPDF({
+                    orientation: "portrait",
+                    unit: "pt",
+                    format: "a4"
+                });
+
+                svg2pdf(svg, pdf, {
+                        xOffset: 0,
+                        yOffset: 0,
+                        scale: 0.25
+                    })
+                    .then(() => {
+                        console.log("📄 PDF ready, saving...");
+                        pdf.save("your-cybersaloon-comic.pdf");
+                    })
+                    .catch(err => console.error("⚠️ PDF generation failed:", err));
+            }, 500);
         }
-    }
 
-    showScene(nextId);
-}
+        async function loadAudio(url) {
+            if (!audioContext) {
+                try {
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioContext = new AudioContext();
+                } catch (e) {
+                    alert('Web Audio API is not supported in this browser');
+                }
+            }
+            if (buffers[url]) return buffers[url];
+            const res = await fetch(url);
+            const buffer = await res.arrayBuffer();
+            return await audioContext.decodeAudioData(buffer);
+        }
 
+        function playAudio(url, loop, onEnded) {
+            stopAudio();
+            if (!url) return;
+            loadAudio(url).then(buffer => {
+                currentSource = audioContext.createBufferSource();
+                currentSource.buffer = buffer;
+                currentSource.loop = loop;
+                currentSource.connect(audioContext.destination);
+                currentSource.start(0);
+                currentAudio = url;
+                if (onEnded) currentSource.onended = onEnded;
+            });
+        }
 
-        
-function preloadImages(imageUrls) {
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
-    });
-}
-
-
-async function loadStory() {
-            try {
-                const res = await fetch("story.json");
-                storyData = await res.json();
-
-// Preload images
-const imageUrls = storyData
-    .filter(scene => scene.image)
-    .map(scene => scene.image);
-preloadImages(imageUrls);
-
-
-                const urls = [];
-
-storyData.forEach(scene => {
-  if (scene.audio) urls.push(scene.audio);
-  if (scene.multiAudio) {
-    for (let key in scene.multiAudio) {
-      urls.push(scene.multiAudio[key]);
-    }
-  }
-});
-
-const uniqueUrls = [...new Set(urls)];
-for (let url of uniqueUrls) {
-    buffers[url] = await loadAudio(url);
-}
-
-                const start = storyData.find(s => s.name === "START");
-
-                const startText = (start?.text || 'Welcome adventurer...')
-                    .replace(/\n/g, '<br>')
-                    .replace(/\[\[.*?\]\]/g, '');
-
-                document.getElementById("game").innerHTML = `
-  <div class="image-text-container">
-    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-    <div class="text-block">${startText}</div>
-  </div>
-  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-`;
-            } catch (err) {
-                document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
-                console.error(err);
+        function stopAudio() {
+            if (currentSource) {
+                try {
+                    currentSource.stop();
+                } catch (e) {}
+                currentSource.disconnect();
+                currentSource = null;
+                currentAudio = null;
             }
         }
 
-        function startScene() {
-            showScene("BEGIN YOUR ADVENTURE");
-        }
+        function showScene(sceneId) {
+            stopAudio();
+            stopMultiAudio();
+            currentScene = storyData.find(s => s.name === sceneId);
+            if (!currentScene) {
+                gameDiv.innerHTML = `<p>❌ Scene "${sceneId}" not found in story.json</p>`;
+                return;
+            }
 
-        loadStory();
-    
-let multiAudioSources = {};
-let multiAudioGains = {};
-let currentMultiAudio = null;
+            let text = currentScene.text.replace(/\n/g, '<br>');
+            const prompt = text.match(/\[\[.*?\]\]/g);
+            if (prompt) {
+                text = text.replace(/\[\[.*?\]\]/g, `<span class="prompt">${prompt[0].slice(2, -2)}</span>`);
+            }
 
+            let choicesHtml = '';
+            if (currentScene.choices) {
+                choicesHtml = currentScene.choices
+                    .map(choice => `<div class="button" onclick="handleChoice('<span class="math-inline">\{choice\.next\}'\)"\></span>{choice.label}</div>`)
+                    .join('');
+            }
 
-async function playMultiAudio(multiAudioMap, onEnded) {
-    stopAudio(); // stop regular audio
-    stopMultiAudio(); // stop any previous multiaudio
-    multiAudioSources = {};
-    multiAudioGains = {};
+            let imageHtml = currentScene.image ? `<img src="${currentScene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : '';
 
-    const labels = Object.keys(multiAudioMap || {});
-    if (labels.length === 0) return;
+            let scrollTextHtml = currentScene.scrollText ? `<div class="scrolling-container"><div class="scrolling-inner">${text}</div></div>` : `<div class="text-block">${text}</div>`;
 
-    const now = audioContext.currentTime;
-    const startTime = now;
-    const promises = [];
+            gameDiv.innerHTML = `
+        <div class="image-text-container">
+          ${imageHtml}
+          ${scrollTextHtml}
+        </div>
+        ${choicesHtml}
+      `;
 
-    for (let label of labels) {
-        const url = multiAudioMap[label];
-        const promise = loadAudio(url).then(buffer => {
-            const source = audioContext.createBufferSource();
-            source.buffer = buffer;
-            source.loop = true;
+            // Add image to the tracking array
+            if (currentScene.image) {
+                images.push(currentScene.image);
+            }
 
-            const gainNode = audioContext.createGain();
-            gainNode.gain.value = 0;
-
-            source.connect(gainNode).connect(audioContext.destination);
-            multiAudioSources[label] = source;
-            multiAudioGains[label] = gainNode;
-        });
-        promises.push(promise);
-    }
-
-    await Promise.all(promises);
-
-    Object.values(multiAudioSources).forEach(src => src.start(0));
-    currentMultiAudio = true;
-    const firstTrack = Object.keys(multiAudioSources)[0];
-    if (firstTrack) {
-        multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
-    }
-
-    if (onEnded) {
-        // Attach ended callback to all sources
-        Object.values(multiAudioSources).forEach(source => {
-            source.onended = onEnded;
-        });
-    }
-}
-
-
-function stopMultiAudio() {
-    for (let label in multiAudioSources) {
-        try { multiAudioSources[label].stop(); } catch (e) {}
-        multiAudioSources[label].disconnect();
-    }
-    multiAudioSources = {};
-    multiAudioGains = {};
-    currentMultiAudio = null;
-}
-
-function switchToTrack(label) {
-    if (!multiAudioGains[label]) return;
-    for (let l in multiAudioGains) {
-        multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
-    }
-}
-
-</script>
-
-
-
-</body>
-
-</html>
+            // Show export button at "dead ends" (scenes with no choices)
+            if (currentScene.choices.length === 0) {
+                const exportButton = document.createElement('div');
+                exportButton.classList.add('button');
+                exportButton.textContent = 'Export Comic PDF
