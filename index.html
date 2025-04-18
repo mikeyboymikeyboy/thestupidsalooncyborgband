@@ -343,10 +343,13 @@ let visitedImages = [];
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
 
-// ✅ Correctly placed comic button logic outside the choices block
+// ✅ Correctly placed comic button for ending scenes
 if (!scene.choices || scene.choices.length === 0) {
     html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
 }
+
+// ✅ Correctly placed comic button logic outside the choices block
+
 
         
 
