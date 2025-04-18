@@ -777,15 +777,12 @@ preloadImages(imageUrls);
                 const urls = [];
 
 storyData.forEach(scene => {
-
   if (scene.audio) urls.push(scene.audio);
   if (scene.multiAudio) {
     for (let key in scene.multiAudio) {
       urls.push(scene.multiAudio[key]);
     }
   }
-}
-
 });
 </script>
 </body>
