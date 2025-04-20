@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>The Stupid Saloon Cyborg Band</title>
     <style>
-        
         @font-face {
             font-family: 'IM Fell English';
             src: url('IMFellEnglish.woff2') format('woff2');
@@ -28,7 +27,7 @@
             color: white;
             text-align: center;
             padding: 2em;
-            font-size: 1.5em;
+font-size: 1.5em;
         }
 
         img {
@@ -85,152 +84,226 @@
                 background-color: #3e2f23;
             }
         }
+    
+.image-text-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2em;
+  margin-bottom: 1.5em;
+  flex-wrap: wrap;
+}
+.image-text-container img {
+  max-width: 100%;
+  height: auto;
+}
+.text-block {
+  max-width: 600px;
+  text-align: left;
+}
 
-        .image-text-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 2em;
-            margin-bottom: 1.5em;
-            flex-wrap: wrap;
-        }
 
-        .image-text-container img {
-            max-width: 100%;
-            height: auto;
-        }
+@media (max-width: 768px) {
+  .image-text-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .text-block {
+    text-align: center;
+  }
+}
 
-        .text-block {
-            max-width: 600px;
-            text-align: left;
-        }
 
-        @media (max-width: 768px) {
-            .image-text-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 2.5em;
-            }
+@media (max-width: 768px) {
+  body {
+    font-size: 1.875em; /* 25% bigger than original 1.5em */
+  }
+  .image-text-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+  }
+  .text-block {
+    text-align: center;
+  }
+  .button {
+    padding: 12px 20px;
+    font-size: 1.25em;
+  }
+}
 
-            .text-block {
-                text-align: center;
-            }
 
-            .button {
-                padding: 12px 20px;
-                font-size: 1.25em;
-            }
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+}
+.fade-in.loaded {
+  opacity: 0.4;
+}
 
-            body {
-                font-size: 1.875em;
-            }
-        }
 
-        .fade-in {
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
 
-        .fade-in.loaded {
-            opacity: 0.4;
-        }
 
-        .scrolling-container {
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            margin: 2em auto;
-        }
+.scrolling-container {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin: 2em auto;
+}
 
-        .scrolling-inner {
-            position: relative;
-            text-align: center;
-            white-space: pre-line;
-        }
+.scrolling-inner {
+  position: relative;
+  text-align: center;
+  white-space: pre-line;
+}
+}
 
-        .slideshow-container {
-            position: fixed;
-            max-height: 400px;
-            width: 400px;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatUp 6s ease-in-out infinite alternate;
-        }
 
-        .slideshow-container.left-fixed {
-            left: 60px;
-        }
+.scrolling-preview {
+  position: absolute;
+  
+  left: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
 
-        .slideshow-container.right {
-            right: 60px;
-        }
+.scrolling-preview img {
+  max-height: 200px;
+  border: 2px solid red;
+  opacity: 0.4;
+}
 
-        .slideshow-image {
-            max-height: 400px;
-            width: auto;
-            opacity: 0;
-            transition: opacity 4s ease-in-out;
-        }
 
-        .slideshow-image.visible {
-            opacity: 0.4;
-        }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-20px); }
-        }
 
-        @keyframes floatDown {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(20px); }
-        }
 
-        @keyframes floatLeft {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-20px); }
-        }
 
-        @keyframes floatRight {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(20px); }
-        }
 
-        @keyframes floatDiagonalLeft {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-20px, -20px); }
-        }
 
-        @keyframes floatDiagonalRight {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, -20px); }
-        }
+.slideshow-container {
+  position: fixed;
+  
+  max-height: 400px;
+  width: 400px;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatUp 6s ease-in-out infinite alternate;
+}
 
-        .floatUp { animation: floatUp 6s ease-in-out infinite alternate; }
-        .floatDown { animation: floatDown 6s ease-in-out infinite alternate; }
-        .floatLeft { animation: floatLeft 6s ease-in-out infinite alternate; }
-        .floatRight { animation: floatRight 6s ease-in-out infinite alternate; }
-        .floatDiagonalLeft { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
-        .floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
+.slideshow-container.left-fixed {
+  left: 60px;
+}
 
-    </style>
+.slideshow-container.right {
+  right: 60px;
+}
+
+.slideshow-image {
+  max-height: 400px;
+  width: auto;
+  opacity: 0;
+  transition: opacity 4s ease-in-out;
+}
+
+.slideshow-image.visible {
+  opacity: 0.4;
+}
+
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+@keyframes floatDown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+
+@keyframes floatLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20px); }
+}
+
+@keyframes floatRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes floatDiagonalLeft {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-20px, -20px); }
+}
+
+@keyframes floatDiagonalRight {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, -20px); }
+}
+
+.floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
+.floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
+.floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
+.floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
+.floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
+.floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
+
+
+
+
+
+</style>
 </head>
 
 <body>
+    
     <div id="game">
         <p>Loading story...</p>
     </div>
-
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let buffers = {};
         let currentSource = null;
+    
         let choiceMade = null;
         let isLoopingScene = false;
         let currentScene = null;
         let storyData = [];
-        let visitedImages = [];
+let visitedImages = [];
+
+        function loadAudio(url) {
+            return fetch(url)
+                .then(res => res.arrayBuffer())
+                .then(buf => audioContext.decodeAudioData(buf));
+        }
+
+        async function playAudio(name, loop, onEnded) {
+            stopAudio();
+            const buffer = buffers[name];
+            if (!buffer) return;
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            source.loop = loop;
+            if (onEnded) {
+    source.onended = () => {
+        document.querySelectorAll('.button.waiting').forEach(btn => {
+            btn.classList.remove('waiting');
+        });
+        onEnded();
+    };
+}
+            source.start(0);
+            currentSource = source;
+        }
+
+        function stopAudio() {
+            if (currentSource) {
+                try {
+                    currentSource.stop();
+                } catch (e) {}
+                currentSource.disconnect();
+                currentSource = null;
+    stopMultiAudio();
+            }
+        }
 
         function showScene(sceneId) {
             const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
@@ -239,67 +312,348 @@
                 return;
             }
             currentScene = scene;
-            if (scene.image && !visitedImages.includes(scene.image)) {
-                visitedImages.push(scene.image);
-                console.log("Tracked image:", scene.image);
-            }
-
+    if (scene.image && !visitedImages.includes(scene.image)) {
+        visitedImages.push(scene.image);
+        console.log("Tracked image:", scene.image);
+    }
             let html = '';
 
+            
             if (scene.image || scene.text) {
                 const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                const isFinal = !scene.choices || scene.choices.length === 0;
                 html += `
                     <div class="image-text-container">
                         ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
                         <div class="text-block">
-                            ${scene.scrollText === true
-                    ? `<div class="scrolling-container">
-                                <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
-                                <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div>
-                                <div class="scrolling-inner">${cleanText}</div>
-                            </div>`
-                    : cleanText}
-                        </div>
+  ${scene.scrollText === true
+    ? `<div class="scrolling-container">
+  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
+  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
+    : cleanText}
+</div>
                     </div>
                 `;
             }
+
+
 
             if (scene.choices && scene.choices.length > 0) {
                 scene.choices.forEach(choice => {
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
+
+    // ✅ Properly placed comic button for endings
+    if (!scene.choices || scene.choices.length === 0) {
+        html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
+    }
+
+   
+
+    // ✅ Show download button on ending scenes
+    
+
+    
+
+    
+
+    
             }
 
-            // ✅ Comic button for endings
-            if (!scene.choices || scene.choices.length === 0) {
-                html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
-            }
+            
+if (scene.multiAudio) {
+    isLoopingScene = true;
+    playMultiAudio(scene.multiAudio, () => {
+        if (choiceMade) {
+            showScene(choiceMade);
+            choiceMade = null;
+        }
+    });
+    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
+        `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
+    ).join("");
+    html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+}
 
-            if (scene.multiAudio) {
-                isLoopingScene = true;
-                playMultiAudio(scene.multiAudio, () => {
+    document.getElementById("game").innerHTML = html;
+
+    if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
+
+
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
+
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+
+const container = document.querySelector('.scrolling-container');
+        const inner = document.querySelector('.scrolling-inner');
+        if (container && inner) {
+            const distance = inner.scrollHeight + container.clientHeight;
+            inner.style.transform = 'translateY(0px)';
+            inner.style.transition = `transform ${distance / 50}s linear`;
+            requestAnimationFrame(() => {
+                inner.style.transform = `translateY(-${distance}px)`;
+            });
+        }
+    }
+
+            if (scene.audio) {
+                isLoopingScene = scene.loopAudio;
+                playAudio(scene.audio, scene.loopAudio, () => {
                     if (choiceMade) {
                         showScene(choiceMade);
                         choiceMade = null;
                     }
                 });
-                const switcherButtons = Object.keys(scene.multiAudio).map(label =>
-                    `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
-                ).join("");
-                html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+            }
+        }
+
+        function handleChoice(nextId) {
+    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
+
+    if (isLoopingScene) {
+        choiceMade = nextId;
+
+        const buttons = document.querySelectorAll(".button");
+        buttons.forEach(btn => {
+            if (btn.textContent === selectedChoice?.label) {
+                btn.classList.add("waiting");
+            }
+        });
+
+        if (currentSource) {
+            currentSource.loop = false;
+            return; // Let the normal audio finish and trigger the transition
+        }
+
+        if (currentMultiAudio) {
+            // Fade out multi-audio and go to next scene after short pause
+            for (let label in multiAudioGains) {
+                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
             }
 
-            document.getElementById("game").innerHTML = html;
+            setTimeout(() => {
+                stopMultiAudio();
+                showScene(choiceMade);
+                choiceMade = null;
+            }, 1000);
+
+            return;
+        }
+    }
+
+    showScene(nextId);
+}
+
+
+        
+function preloadImages(imageUrls) {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+
+async function loadStory() {
+            try {
+                const res = await fetch("story.json");
+                storyData = await res.json();
+
+// Preload images
+const imageUrls = storyData
+    .filter(scene => scene.image)
+    .map(scene => scene.image);
+preloadImages(imageUrls);
+
+
+                const urls = [];
+
+storyData.forEach(scene => {
+  if (scene.audio) urls.push(scene.audio);
+  if (scene.multiAudio) {
+    for (let key in scene.multiAudio) {
+      urls.push(scene.multiAudio[key]);
+    }
+  }
+});
+
+const uniqueUrls = [...new Set(urls)];
+for (let url of uniqueUrls) {
+    buffers[url] = await loadAudio(url);
+}
+
+                const start = storyData.find(s => s.name === "START");
+
+                const startText = (start?.text || 'Welcome adventurer...')
+                    .replace(/\n/g, '<br>')
+                    .replace(/\[\[.*?\]\]/g, '');
+
+                document.getElementById("game").innerHTML = `
+  <div class="image-text-container">
+    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+    <div class="text-block">${startText}</div>
+  </div>
+  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+`;
+            } catch (err) {
+                document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
+                console.error(err);
+            }
         }
 
-        function downloadComic() {
-            console.log("Download comic triggered. (function placeholder)");
-            // Add comic PDF logic here
+        function startScene() {
+            showScene("BEGIN YOUR ADVENTURE");
         }
-    </script>
 
-    <script src="https://unpkg.com/pdf-lib"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
+        loadStory();
+    
+let multiAudioSources = {};
+let multiAudioGains = {};
+let currentMultiAudio = null;
+
+
+async function playMultiAudio(multiAudioMap, onEnded) {
+    stopAudio(); // stop regular audio
+    stopMultiAudio(); // stop any previous multiaudio
+
+
+
+    multiAudioSources = {};
+    multiAudioGains = {};
+
+    const labels = Object.keys(multiAudioMap || {});
+    if (labels.length === 0) return;
+
+    const now = audioContext.currentTime;
+    const startTime = now;
+    const promises = [];
+
+    for (let label of labels) {
+        const url = multiAudioMap[label];
+        const promise = loadAudio(url).then(buffer => {
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
+
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 0;
+
+            source.connect(gainNode).connect(audioContext.destination);
+            multiAudioSources[label] = source;
+            multiAudioGains[label] = gainNode;
+        });
+        promises.push(promise);
+    }
+
+    await Promise.all(promises);
+
+    Object.values(multiAudioSources).forEach(src => src.start(0));
+    currentMultiAudio = true;
+    const firstTrack = Object.keys(multiAudioSources)[0];
+    if (firstTrack) {
+        multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+    }
+
+    if (onEnded) {
+        // Attach ended callback to all sources
+        Object.values(multiAudioSources).forEach(source => {
+            source.onended = onEnded;
+        });
+    }
+}
+
+
+function stopMultiAudio() {
+    for (let label in multiAudioSources) {
+        try { multiAudioSources[label].stop(); } catch (e) {}
+        multiAudioSources[label].disconnect();
+    }
+    multiAudioSources = {};
+    multiAudioGains = {};
+    currentMultiAudio = null;
+}
+
+function switchToTrack(label) {
+    if (!multiAudioGains[label]) return;
+    for (let l in multiAudioGains) {
+        multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
+    }
+}
+
+
+window.downloadComic = async function downloadComic() {
+    const svg = document.querySelector("#comicSvgWrapper svg");
+    const panels = Array.from(svg.querySelectorAll("image[id^='panel']"));
+
+    panels.forEach((panel, i) => {
+        if (visitedImages[i]) {
+            panel.setAttribute("href", visitedImages[i]);
+        } else {
+            panel.removeAttribute("href");
+        }
+    });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 2048;
+    canvas.height = 2860;
+    const ctx = canvas.getContext("2d");
+
+    await canvg.Canvg.fromString(ctx, svg.outerHTML).render();
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    const img = await pdfDoc.embedPng(imgData);
+    const page = pdfDoc.addPage([img.width, img.height]);
+    page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "your-adventure-comic.pdf";
+    link.click();
+};
+
+</script>
+
+<script src="https://unpkg.com/pdf-lib"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
+
 </body>
 
 </html>
