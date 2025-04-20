@@ -345,6 +345,10 @@ let visitedImages = [];
 
 // ✅ Single correct placement of comic button for endings
 if (!scene.choices || scene.choices.length === 0) {
+}
+
+// ✅ Comic button shown on endings (no choices)
+if (!scene.choices || scene.choices.length === 0) {
     html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
 }
 
