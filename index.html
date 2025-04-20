@@ -343,14 +343,17 @@ let visitedImages = [];
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
 
-// ✅ Correctly injected comic button outside choices block
+// ✅ Single correct placement of comic button for endings
 if (!scene.choices || scene.choices.length === 0) {
     html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
 }
 
+// ✅ Correctly injected comic button outside choices block
+if (!scene.choices || scene.choices.length === 0) {
+}
+
     // ✅ Properly placed comic button for endings
     if (!scene.choices || scene.choices.length === 0) {
-        html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
     }
 
    
