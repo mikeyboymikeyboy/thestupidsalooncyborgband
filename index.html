@@ -27,7 +27,7 @@
             color: white;
             text-align: center;
             padding: 2em;
-            font-size: 1.5em;
+font-size: 1.5em;
         }
 
         img {
@@ -84,240 +84,225 @@
                 background-color: #3e2f23;
             }
         }
+    
+.image-text-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2em;
+  margin-bottom: 1.5em;
+  flex-wrap: wrap;
+}
+.image-text-container img {
+  max-width: 100%;
+  height: auto;
+}
+.text-block {
+  max-width: 600px;
+  text-align: left;
+}
 
-        .image-text-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 2em;
-            margin-bottom: 1.5em;
-            flex-wrap: wrap;
-        }
-        .image-text-container img {
-            max-width: 100%;
-            height: auto;
-        }
-        .text-block {
-            max-width: 600px;
-            text-align: left;
-        }
 
-        @media (max-width: 768px) {
-            body {
-                font-size: 1.875em; /* 25% bigger than original 1.5em */
-            }
-            .image-text-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 2.5em;
-            }
-            .text-block {
-                text-align: center;
-            }
-            .button {
-                padding: 12px 20px;
-                font-size: 1.25em;
-            }
-        }
+@media (max-width: 768px) {
+  .image-text-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .text-block {
+    text-align: center;
+  }
+}
 
-        .fade-in {
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
-        .fade-in.loaded {
-            opacity: 1; /* Changed from 0.4 for better visibility */
-        }
 
-        .scrolling-container {
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            margin: 2em auto;
-            border: 1px dashed #555; /* Added for visibility */
-        }
+@media (max-width: 768px) {
+  body {
+    font-size: 1.875em; /* 25% bigger than original 1.5em */
+  }
+  .image-text-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+  }
+  .text-block {
+    text-align: center;
+  }
+  .button {
+    padding: 12px 20px;
+    font-size: 1.25em;
+  }
+}
 
-        .scrolling-inner {
-            position: relative;
-            text-align: center;
-            white-space: pre-line;
-             /* Added to prevent text overflow issues */
-            padding: 0 10px;
-        }
 
-        .slideshow-container {
-            position: absolute; /* Changed from fixed to work within scrolling */
-            max-height: 150px; /* Reduced size */
-            width: 150px;  /* Reduced size */
-            pointer-events: none;
-            z-index: 0;
-            /* Animation applied dynamically */
-        }
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+}
+.fade-in.loaded {
+  opacity: 0.4;
+}
 
-        .slideshow-container.left-fixed {
-            left: 20px; /* Adjusted position */
-            top: 20%;
-        }
 
-        .slideshow-container.right {
-            right: 20px; /* Adjusted position */
-            top: 40%;
-        }
 
-        .slideshow-image {
-            max-height: 150px; /* Reduced size */
-            width: auto;
-            opacity: 0;
-            transition: opacity 4s ease-in-out;
-            border: 1px solid #666; /* Added border */
-        }
 
-        .slideshow-image.visible {
-            opacity: 0.4;
-        }
+.scrolling-container {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin: 2em auto;
+}
 
-        @keyframes floatUp { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
-        @keyframes floatDown { 0% { transform: translateY(0); } 100% { transform: translateY(15px); } }
-        @keyframes floatLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-15px); } }
-        @keyframes floatRight { 0% { transform: translateX(0); } 100% { transform: translateX(15px); } }
-        @keyframes floatDiagonalLeft { 0% { transform: translate(0, 0); } 100% { transform: translate(-15px, -15px); } }
-        @keyframes floatDiagonalRight { 0% { transform: translate(0, 0); } 100% { transform: translate(15px, -15px); } }
+.scrolling-inner {
+  position: relative;
+  text-align: center;
+  white-space: pre-line;
+}
+}
 
-        .floatUp { animation: floatUp 6s ease-in-out infinite alternate; }
-        .floatDown { animation: floatDown 6s ease-in-out infinite alternate; }
-        .floatLeft { animation: floatLeft 6s ease-in-out infinite alternate; }
-        .floatRight { animation: floatRight 6s ease-in-out infinite alternate; }
-        .floatDiagonalLeft { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
-        .floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
 
-        /* Style for the hidden SVG comic template */
-        #comicSvgWrapper {
-            display: none; /* Keep the template hidden */
-            position: absolute;
-            left: -9999px; /* Move off-screen */
-            top: -9999px;
-        }
+.scrolling-preview {
+  position: absolute;
+  
+  left: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
 
-    </style>
+.scrolling-preview img {
+  max-height: 200px;
+  border: 2px solid red;
+  opacity: 0.4;
+}
+
+
+
+
+
+
+
+
+.slideshow-container {
+  position: fixed;
+  
+  max-height: 400px;
+  width: 400px;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatUp 6s ease-in-out infinite alternate;
+}
+
+.slideshow-container.left-fixed {
+  left: 60px;
+}
+
+.slideshow-container.right {
+  right: 60px;
+}
+
+.slideshow-image {
+  max-height: 400px;
+  width: auto;
+  opacity: 0;
+  transition: opacity 4s ease-in-out;
+}
+
+.slideshow-image.visible {
+  opacity: 0.4;
+}
+
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+@keyframes floatDown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+
+@keyframes floatLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20px); }
+}
+
+@keyframes floatRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes floatDiagonalLeft {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-20px, -20px); }
+}
+
+@keyframes floatDiagonalRight {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, -20px); }
+}
+
+.floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
+.floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
+.floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
+.floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
+.floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
+.floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
+
+
+
+
+
+</style>
 </head>
 
 <body>
-
+    
     <div id="game">
         <p>Loading story...</p>
-    </div>
-
-    <div id="comicSvgWrapper">
-        <svg width="800" height="1100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background-color: white;">
-            <defs>
-                <style>
-                    .title { font: bold 30px 'IM Fell English', serif; fill: black; text-anchor: middle; }
-                    .panel-border { stroke: black; stroke-width: 4px; fill: none; }
-                </style>
-            </defs>
-            <text x="400" y="50" class="title">My Stupid Saloon Adventure!</text>
-
-            <rect x="50" y="80" width="330" height="280" class="panel-border"/>
-            <image id="panel1" x="55" y="85" width="320" height="270" xlink:href="" />
-
-            <rect x="420" y="80" width="330" height="280" class="panel-border"/>
-            <image id="panel2" x="425" y="85" width="320" height="270" xlink:href="" />
-
-            <rect x="50" y="390" width="330" height="280" class="panel-border"/>
-            <image id="panel3" x="55" y="395" width="320" height="270" xlink:href="" />
-
-            <rect x="420" y="390" width="330" height="280" class="panel-border"/>
-            <image id="panel4" x="425" y="395" width="320" height="270" xlink:href="" />
-
-            <rect x="50" y="700" width="330" height="280" class="panel-border"/>
-            <image id="panel5" x="55" y="705" width="320" height="270" xlink:href="" />
-
-            <rect x="420" y="700" width="330" height="280" class="panel-border"/>
-            <image id="panel6" x="425" y="705" width="320" height="270" xlink:href="" />
-
-            <text x="400" y="1050" style="font: 12px sans-serif; text-anchor: middle;">Created with The Stupid Saloon Cyborg Band Generator</text>
-        </svg>
     </div>
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let buffers = {};
         let currentSource = null;
-        let multiAudioSources = {};
-        let multiAudioGains = {};
-        let currentMultiAudio = null;
-
+    
         let choiceMade = null;
         let isLoopingScene = false;
         let currentScene = null;
         let storyData = [];
-        let visitedImages = []; // Stores URLs of images encountered
+let visitedImages = [];
 
         function loadAudio(url) {
-            if (buffers[url]) {
-                return Promise.resolve(buffers[url]); // Return cached buffer if available
-            }
             return fetch(url)
-                .then(res => {
-                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status} for ${url}`);
-                    return res.arrayBuffer();
-                 })
-                .then(buf => audioContext.decodeAudioData(buf))
-                .then(decodedBuffer => {
-                     buffers[url] = decodedBuffer; // Cache the buffer
-                     return decodedBuffer;
-                 })
-                 .catch(e => {
-                     console.error(`Failed to load or decode audio: ${url}`, e);
-                     return null; // Return null on failure
-                 });
+                .then(res => res.arrayBuffer())
+                .then(buf => audioContext.decodeAudioData(buf));
         }
 
-
         async function playAudio(name, loop, onEnded) {
-            stopAudio(); // Stop any currently playing audio first
+            stopAudio();
             const buffer = buffers[name];
-            if (!buffer) {
-                console.warn(`Audio buffer not found or not loaded for: ${name}`);
-                if (onEnded) onEnded(); // Call onEnded immediately if no buffer
-                return;
-            }
+            if (!buffer) return;
             const source = audioContext.createBufferSource();
             source.buffer = buffer;
             source.connect(audioContext.destination);
             source.loop = loop;
-
-            source.onended = () => {
-                 // Clean up reference
-                 if (currentSource === source) {
-                    currentSource = null;
-                 }
-                 // Remove waiting class from buttons
-                 document.querySelectorAll('.button.waiting').forEach(btn => {
-                    btn.classList.remove('waiting');
-                 });
-                 // Call the provided callback
-                 if (onEnded) {
-                    onEnded();
-                 }
-            };
-
+            if (onEnded) {
+    source.onended = () => {
+        document.querySelectorAll('.button.waiting').forEach(btn => {
+            btn.classList.remove('waiting');
+        });
+        onEnded();
+    };
+}
             source.start(0);
             currentSource = source;
         }
 
-
         function stopAudio() {
             if (currentSource) {
                 try {
-                    currentSource.onended = null; // Remove listener to prevent callback on manual stop
                     currentSource.stop();
-                } catch (e) {
-                    // Ignore errors if source already stopped
-                }
+                } catch (e) {}
                 currentSource.disconnect();
                 currentSource = null;
+    stopMultiAudio();
             }
-            stopMultiAudio(); // Also ensure multi-audio is stopped
         }
 
         function showScene(sceneId) {
@@ -327,475 +312,348 @@
                 return;
             }
             currentScene = scene;
-            // Track visited images (only add unique URLs)
-            if (scene.image && !visitedImages.includes(scene.image)) {
-                visitedImages.push(scene.image);
-                console.log("Tracked images:", visitedImages);
-            }
-
+    if (scene.image && !visitedImages.includes(scene.image)) {
+        visitedImages.push(scene.image);
+        console.log("Tracked image:", scene.image);
+    }
             let html = '';
 
-            // --- Image and Text ---
+            
             if (scene.image || scene.text) {
                 const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
+                const isFinal = !scene.choices || scene.choices.length === 0;
                 html += `
                     <div class="image-text-container">
-                        ${scene.image ? `<img src="${scene.image}" alt="Scene image" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
                         <div class="text-block">
-                            ${scene.scrollText === true
-                                ? `<div class="scrolling-container">
-                                    <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
-                                    <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div>
-                                    <div class="scrolling-inner">${cleanText}</div>
-                                   </div>`
-                                : cleanText}
-                        </div>
+  ${scene.scrollText === true
+    ? `<div class="scrolling-container">
+  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
+  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
+    : cleanText}
+</div>
                     </div>
                 `;
             }
 
-            // --- Choices ---
+
+
             if (scene.choices && scene.choices.length > 0) {
                 scene.choices.forEach(choice => {
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
+
+    // ✅ Properly placed comic button for endings
+    if (!scene.choices || scene.choices.length === 0) {
+        html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
+    }
+
+   
+
+    // ✅ Show download button on ending scenes
+    
+
+    
+
+    
+
+    
             }
 
-            // --- Download Comic Button (FIXED PLACEMENT) ---
-            // Check if this scene is an ending scene (no choices)
-            if (!scene.choices || scene.choices.length === 0) {
-                html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
-            }
+            
+if (scene.multiAudio) {
+    isLoopingScene = true;
+    playMultiAudio(scene.multiAudio, () => {
+        if (choiceMade) {
+            showScene(choiceMade);
+            choiceMade = null;
+        }
+    });
+    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
+        `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
+    ).join("");
+    html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+}
 
-            // --- Multi Audio Buttons ---
-            if (scene.multiAudio && Object.keys(scene.multiAudio).length > 0) {
-                const switcherButtons = Object.keys(scene.multiAudio).map(label =>
-                    `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
-                ).join("");
-                html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
-            }
+    document.getElementById("game").innerHTML = html;
+
+    if (scene.scrollText === true) {
+
+        const img1 = document.getElementById("slideshowImage1");
+        const img2 = document.getElementById("slideshowImage2");
+        if (visitedImages.length > 0 && img1 && img2) {
+            
+const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+function applyRandomFloatClass(img) {
+    floatClasses.forEach(cls => img.classList.remove(cls));
+    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+    img.classList.add(randomClass);
+}
 
 
-            // --- Update Game Area ---
-            document.getElementById("game").innerHTML = html;
+function randomizePosition(container) {
+    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
+    container.style.top = top + '%';
+}
 
-            // --- Handle Audio ---
-            if (scene.multiAudio && Object.keys(scene.multiAudio).length > 0) {
-                isLoopingScene = true; // Multi-audio always loops tracks internally
-                playMultiAudio(scene.multiAudio); // Removed onEnded callback here, handled in handleChoice
-            } else if (scene.audio) {
+let slideshowIndex = 0;
+            setInterval(() => {
+                const src = visitedImages[slideshowIndex % visitedImages.length];
+                const isEven = slideshowIndex % 2 === 0;
+                if (isEven) {
+                    img1.src = src;
+                    applyRandomFloatClass(img1);
+                    randomizePosition(img1.parentElement);
+                    img1.classList.add("visible");
+                    img2.classList.remove("visible");
+                } else {
+                    img2.src = src;
+                    applyRandomFloatClass(img2);
+                    randomizePosition(img2.parentElement);
+                    img2.classList.add("visible");
+                    img1.classList.remove("visible");
+                }
+                slideshowIndex++;
+            }, 4000);
+        }
+
+
+const container = document.querySelector('.scrolling-container');
+        const inner = document.querySelector('.scrolling-inner');
+        if (container && inner) {
+            const distance = inner.scrollHeight + container.clientHeight;
+            inner.style.transform = 'translateY(0px)';
+            inner.style.transition = `transform ${distance / 50}s linear`;
+            requestAnimationFrame(() => {
+                inner.style.transform = `translateY(-${distance}px)`;
+            });
+        }
+    }
+
+            if (scene.audio) {
                 isLoopingScene = scene.loopAudio;
                 playAudio(scene.audio, scene.loopAudio, () => {
-                    // This callback now only runs if audio finishes *naturally*
                     if (choiceMade) {
                         showScene(choiceMade);
                         choiceMade = null;
                     }
                 });
-            } else {
-                 isLoopingScene = false; // No audio for this scene
-                 stopAudio(); // Ensure any previous audio stops
-            }
-
-            // --- Handle Scrolling Text / Slideshow ---
-            if (scene.scrollText === true) {
-                setupScrollingTextAndSlideshow();
             }
         }
-
-        function setupScrollingTextAndSlideshow() {
-            const img1 = document.getElementById("slideshowImage1");
-            const img2 = document.getElementById("slideshowImage2");
-
-            if (visitedImages.length > 0 && img1 && img2) {
-                const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
-
-                function applyRandomFloatClass(img) {
-                    img.className = 'slideshow-image'; // Reset classes first
-                    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
-                    img.classList.add(randomClass);
-                }
-
-                function randomizePosition(container) {
-                   if (container) {
-                       const top = Math.floor(Math.random() * 60) + 10; // Adjusted range
-                       container.style.top = top + '%';
-                   }
-                }
-
-                let slideshowIndex = 0;
-                let intervalId = setInterval(() => {
-                   if (visitedImages.length === 0) return; // Stop if no images
-
-                    const src = visitedImages[slideshowIndex % visitedImages.length];
-                    const isEven = slideshowIndex % 2 === 0;
-
-                    if (isEven && img1) {
-                        img1.src = src;
-                        applyRandomFloatClass(img1);
-                        randomizePosition(img1.parentElement);
-                        img1.classList.add("visible");
-                        if (img2) img2.classList.remove("visible");
-                    } else if (img2) {
-                        img2.src = src;
-                        applyRandomFloatClass(img2);
-                        randomizePosition(img2.parentElement);
-                        img2.classList.add("visible");
-                        if (img1) img1.classList.remove("visible");
-                    }
-                    slideshowIndex++;
-                }, 4000);
-
-                // Clear interval when leaving the scene? Consider adding cleanup logic if needed.
-            }
-
-            // Scrolling text setup
-            const container = document.querySelector('.scrolling-container');
-            const inner = document.querySelector('.scrolling-inner');
-            if (container && inner) {
-                // Reset scroll position
-                inner.style.transition = 'none';
-                inner.style.transform = 'translateY(0px)';
-
-                // Calculate distance and duration
-                const distance = inner.scrollHeight - container.clientHeight;
-                 // Ensure minimum duration even for short text
-                const duration = Math.max(10, distance / 30); // Pixels per second
-
-                // Force reflow before applying transition
-                void inner.offsetWidth;
-
-                // Start scrolling animation
-                 inner.style.transition = `transform ${duration}s linear`;
-                 inner.style.transform = `translateY(-${distance}px)`;
-            }
-        }
-
 
         function handleChoice(nextId) {
-            const selectedChoice = currentScene.choices.find(c => c.next === nextId);
-            choiceMade = nextId; // Store the next scene ID
+    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
 
-             // Add waiting class to the clicked button
-             const buttons = document.querySelectorAll(".button");
-             buttons.forEach(btn => {
-                  if (btn.textContent === selectedChoice?.label) {
-                      btn.classList.add("waiting");
-                  } else {
-                      btn.classList.remove("waiting"); // Remove from others
-                  }
-             });
+    if (isLoopingScene) {
+        choiceMade = nextId;
 
+        const buttons = document.querySelectorAll(".button");
+        buttons.forEach(btn => {
+            if (btn.textContent === selectedChoice?.label) {
+                btn.classList.add("waiting");
+            }
+        });
 
-            if (isLoopingScene) {
-                // --- Handling transition FROM looping scenes ---
-                if (currentSource) { // If single looping audio is playing
-                    currentSource.loop = false; // Stop looping, let it play out
-                     // onended callback of playAudio will handle showing the next scene
-                } else if (currentMultiAudio) { // If multi-audio is playing
-                    // Fade out all tracks smoothly
-                    const fadeDuration = 0.5; // seconds
-                    for (let label in multiAudioGains) {
-                        multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, fadeDuration / 3); // Faster fade start
-                    }
-                    // Wait for fade-out, then stop and transition
-                    setTimeout(() => {
-                        stopMultiAudio();
-                        if (choiceMade) { // Check again in case something changed
-                           showScene(choiceMade);
-                           choiceMade = null;
-                        }
-                    }, fadeDuration * 1000);
-                } else {
-                     // Should not happen if isLoopingScene is true, but as fallback:
-                     showScene(choiceMade);
-                     choiceMade = null;
-                }
-            } else {
-                // --- Handling transition FROM non-looping scenes ---
-                // Stop any non-looping audio immediately and go to the next scene
-                stopAudio(); // Includes stopping multi-audio just in case
+        if (currentSource) {
+            currentSource.loop = false;
+            return; // Let the normal audio finish and trigger the transition
+        }
+
+        if (currentMultiAudio) {
+            // Fade out multi-audio and go to next scene after short pause
+            for (let label in multiAudioGains) {
+                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
+            }
+
+            setTimeout(() => {
+                stopMultiAudio();
                 showScene(choiceMade);
                 choiceMade = null;
-            }
+            }, 1000);
+
+            return;
         }
+    }
+
+    showScene(nextId);
+}
 
 
-        function preloadImages(imageUrls) {
-            imageUrls.forEach(url => {
-                if(url){ // Only preload if URL is not empty
-                   const img = new Image();
-                   img.src = url;
-                }
-            });
-        }
+        
+function preloadImages(imageUrls) {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
 
-        async function loadStory() {
+
+async function loadStory() {
             try {
                 const res = await fetch("story.json");
-                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 storyData = await res.json();
 
-                // --- Preload Images ---
-                const imageUrls = storyData
-                    .filter(scene => scene.image)
-                    .map(scene => scene.image);
-                preloadImages(imageUrls);
+// Preload images
+const imageUrls = storyData
+    .filter(scene => scene.image)
+    .map(scene => scene.image);
+preloadImages(imageUrls);
 
-                // --- Preload Audio ---
-                const audioUrlsToLoad = new Set();
-                storyData.forEach(scene => {
-                    if (scene.audio) audioUrlsToLoad.add(scene.audio);
-                    if (scene.multiAudio) {
-                        Object.values(scene.multiAudio).forEach(url => audioUrlsToLoad.add(url));
-                    }
-                });
 
-                const audioLoadPromises = [...audioUrlsToLoad].map(url => loadAudio(url));
-                await Promise.all(audioLoadPromises); // Wait for all audio to be fetched and decoded
+                const urls = [];
 
-                // --- Display Start Scene ---
-                const startScene = storyData.find(s => s.name === "START");
-                if (!startScene) throw new Error("START scene not found in story.json");
+storyData.forEach(scene => {
+  if (scene.audio) urls.push(scene.audio);
+  if (scene.multiAudio) {
+    for (let key in scene.multiAudio) {
+      urls.push(scene.multiAudio[key]);
+    }
+  }
+});
 
-                const startText = (startScene.text || 'Welcome adventurer...')
+const uniqueUrls = [...new Set(urls)];
+for (let url of uniqueUrls) {
+    buffers[url] = await loadAudio(url);
+}
+
+                const start = storyData.find(s => s.name === "START");
+
+                const startText = (start?.text || 'Welcome adventurer...')
                     .replace(/\n/g, '<br>')
-                    .replace(/\[\[.*?\]\]/g, ''); // Remove choice markers for initial display
+                    .replace(/\[\[.*?\]\]/g, '');
 
                 document.getElementById("game").innerHTML = `
-                    <div class="image-text-container">
-                        ${startScene.image ? `<img src="${startScene.image}" alt="Start image" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-                        <div class="text-block">${startText}</div>
-                    </div>
-                    <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-                `;
+  <div class="image-text-container">
+    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+    <div class="text-block">${startText}</div>
+  </div>
+  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+`;
             } catch (err) {
-                document.getElementById("game").innerHTML = `<p>❌ Failed to load or parse story.json<br>${err.message}</p>`;
+                document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
                 console.error(err);
             }
         }
 
         function startScene() {
-            // Find the scene linked from the START node's first choice
-            const startData = storyData.find(s => s.name === "START");
-            const firstSceneId = startData?.choices?.[0]?.next || "scene1"; // Fallback needed?
-            showScene(firstSceneId);
+            showScene("BEGIN YOUR ADVENTURE");
         }
 
-        // --- Multi Audio Functions ---
-
-        async function playMultiAudio(multiAudioMap) {
-            stopAudio(); // Stop regular audio first
-            stopMultiAudio(); // Stop any previous multi-audio
-
-            multiAudioSources = {};
-            multiAudioGains = {};
-            currentMultiAudio = null; // Reset flag
-
-            const labels = Object.keys(multiAudioMap || {});
-            if (labels.length === 0) return;
-
-            const loadPromises = labels.map(label => {
-                 const url = multiAudioMap[label];
-                 // Use already loaded buffers if possible
-                 if (buffers[url]) {
-                     return Promise.resolve({ label, buffer: buffers[url] });
-                 } else {
-                     // Attempt to load if not already loaded (should be preloaded, but as fallback)
-                     console.warn(`Multi-audio track not preloaded, loading now: ${url}`);
-                     return loadAudio(url).then(buffer => ({ label, buffer }));
-                 }
-            });
+        loadStory();
+    
+let multiAudioSources = {};
+let multiAudioGains = {};
+let currentMultiAudio = null;
 
 
-            try {
-                const results = await Promise.all(loadPromises);
-                 const now = audioContext.currentTime;
+async function playMultiAudio(multiAudioMap, onEnded) {
+    stopAudio(); // stop regular audio
+    stopMultiAudio(); // stop any previous multiaudio
 
-                results.forEach(({ label, buffer }) => {
-                     if (!buffer) {
-                         console.error(`Buffer missing for multi-audio track: ${label}`);
-                         return; // Skip this track if buffer failed to load
-                     }
-                    const source = audioContext.createBufferSource();
-                    source.buffer = buffer;
-                    source.loop = true;
 
-                    const gainNode = audioContext.createGain();
-                    gainNode.gain.setValueAtTime(0, now); // Start silent
 
-                    source.connect(gainNode).connect(audioContext.destination);
-                    source.start(now); // Start all sources simultaneously
+    multiAudioSources = {};
+    multiAudioGains = {};
 
-                    multiAudioSources[label] = source;
-                    multiAudioGains[label] = gainNode;
-                });
+    const labels = Object.keys(multiAudioMap || {});
+    if (labels.length === 0) return;
 
-                 // Fade in the first track
-                 const firstTrackLabel = labels[0];
-                 if (multiAudioGains[firstTrackLabel]) {
-                    multiAudioGains[firstTrackLabel].gain.setTargetAtTime(1, now, 0.05); // Quick fade-in
-                 }
+    const now = audioContext.currentTime;
+    const startTime = now;
+    const promises = [];
 
-                 currentMultiAudio = true; // Set flag indicating multi-audio is active
+    for (let label of labels) {
+        const url = multiAudioMap[label];
+        const promise = loadAudio(url).then(buffer => {
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
 
-            } catch (error) {
-                 console.error("Error setting up multi-audio:", error);
-                 stopMultiAudio(); // Clean up on error
-            }
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 0;
+
+            source.connect(gainNode).connect(audioContext.destination);
+            multiAudioSources[label] = source;
+            multiAudioGains[label] = gainNode;
+        });
+        promises.push(promise);
+    }
+
+    await Promise.all(promises);
+
+    Object.values(multiAudioSources).forEach(src => src.start(0));
+    currentMultiAudio = true;
+    const firstTrack = Object.keys(multiAudioSources)[0];
+    if (firstTrack) {
+        multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+    }
+
+    if (onEnded) {
+        // Attach ended callback to all sources
+        Object.values(multiAudioSources).forEach(source => {
+            source.onended = onEnded;
+        });
+    }
+}
+
+
+function stopMultiAudio() {
+    for (let label in multiAudioSources) {
+        try { multiAudioSources[label].stop(); } catch (e) {}
+        multiAudioSources[label].disconnect();
+    }
+    multiAudioSources = {};
+    multiAudioGains = {};
+    currentMultiAudio = null;
+}
+
+function switchToTrack(label) {
+    if (!multiAudioGains[label]) return;
+    for (let l in multiAudioGains) {
+        multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
+    }
+}
+
+
+window.downloadComic = async function downloadComic() {
+    const svg = document.querySelector("#comicSvgWrapper svg");
+    const panels = Array.from(svg.querySelectorAll("image[id^='panel']"));
+
+    panels.forEach((panel, i) => {
+        if (visitedImages[i]) {
+            panel.setAttribute("href", visitedImages[i]);
+        } else {
+            panel.removeAttribute("href");
         }
+    });
 
+    const canvas = document.createElement("canvas");
+    canvas.width = 2048;
+    canvas.height = 2860;
+    const ctx = canvas.getContext("2d");
 
-        function stopMultiAudio() {
-            for (let label in multiAudioSources) {
-                try {
-                    multiAudioSources[label].stop();
-                    multiAudioSources[label].disconnect();
-                } catch (e) {}
-            }
-            multiAudioSources = {};
-            multiAudioGains = {};
-            currentMultiAudio = null;
-        }
+    await canvg.Canvg.fromString(ctx, svg.outerHTML).render();
 
-        function switchToTrack(label) {
-            if (!currentMultiAudio || !multiAudioGains[label]) return; // Only switch if multi-audio is active
-            const now = audioContext.currentTime;
-            const fadeTime = 0.1; // Short crossfade
-            for (let l in multiAudioGains) {
-                multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, now, fadeTime);
-            }
-        }
+    const imgData = canvas.toDataURL("image/png");
 
-        // --- Download Comic Function ---
-        window.downloadComic = async function downloadComic() {
-            console.log("Attempting to download comic...");
-            const svgWrapper = document.getElementById("comicSvgWrapper");
-            const svgElement = svgWrapper ? svgWrapper.querySelector("svg") : null;
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    const img = await pdfDoc.embedPng(imgData);
+    const page = pdfDoc.addPage([img.width, img.height]);
+    page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
 
-            if (!svgElement) {
-                console.error("SVG comic template element (#comicSvgWrapper svg) not found!");
-                alert("Sorry, the comic template SVG is missing from the page. Cannot generate PDF.");
-                return;
-            }
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "your-adventure-comic.pdf";
+    link.click();
+};
 
-            const panels = Array.from(svgElement.querySelectorAll("image[id^='panel']"));
-            console.log(`Found ${panels.length} panels in SVG template.`);
-            console.log("Visited images for comic:", visitedImages);
+</script>
 
-
-            // Populate SVG panels with visited images
-            panels.forEach((panel, i) => {
-                const panelId = panel.getAttribute("id");
-                if (visitedImages[i]) {
-                    panel.setAttribute("xlink:href", visitedImages[i]); // Use xlink:href for <image> in SVG 1.1
-                    console.log(`Setting ${panelId} href to: ${visitedImages[i]}`);
-                } else {
-                    // Optionally clear or set a default placeholder if image is missing
-                    panel.removeAttribute("xlink:href");
-                    console.log(`No image for ${panelId} (index ${i})`);
-                     // Example: Fill with grey if missing
-                     // const rect = panel.previousElementSibling; // Assuming rect precedes image
-                     // if (rect && rect.tagName.toLowerCase() === 'rect') {
-                     //    rect.setAttribute('fill', '#cccccc');
-                     // }
-                }
-            });
-
-             // Get the updated SVG markup as a string
-             // Need to handle xlink:href correctly for Canvg
-             const svgString = new XMLSerializer().serializeToString(svgElement)
-                                            .replace(/xmlns:xlink=/g, 'xmlns=') // Canvg workaround
-                                            .replace(/xlink:href=/g, 'href='); // Canvg expects href
-
-            const canvas = document.createElement("canvas");
-            // Use SVG dimensions for canvas to maintain aspect ratio initially
-            const svgWidth = svgElement.getAttribute("width");
-            const svgHeight = svgElement.getAttribute("height");
-            canvas.width = svgWidth ? parseInt(svgWidth) : 800;   // Default fallback size
-            canvas.height = svgHeight ? parseInt(svgHeight) : 1100; // Default fallback size
-            const ctx = canvas.getContext("2d");
-
-
-            try {
-                 console.log("Rendering SVG to Canvas with Canvg...");
-                 // Ensure Canvg is loaded (Check network tab or script tags)
-                 if (typeof Canvg === 'undefined') {
-                      throw new Error("Canvg library is not loaded.");
-                 }
-                 const v = await Canvg.from(ctx, svgString);
-                 await v.render();
-                 console.log("SVG rendering complete.");
-
-                 const imgData = canvas.toDataURL("image/png");
-                 console.log("Canvas data URL generated.");
-
-                 // Ensure PDFLib is loaded
-                 if (typeof PDFLib === 'undefined') {
-                      throw new Error("pdf-lib library is not loaded.");
-                 }
-                 const pdfDoc = await PDFLib.PDFDocument.create();
-                 const pngImage = await pdfDoc.embedPng(imgData);
-
-                 // Add page matching the canvas/image dimensions
-                 const page = pdfDoc.addPage([pngImage.width, pngImage.height]);
-                 page.drawImage(pngImage, {
-                    x: 0,
-                    y: 0,
-                    width: pngImage.width,
-                    height: pngImage.height,
-                 });
-                 console.log("PDF page created and image drawn.");
-
-                 const pdfBytes = await pdfDoc.save();
-                 console.log("PDF saved to bytes.");
-
-                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
-                 const link = document.createElement("a");
-                 link.href = URL.createObjectURL(blob);
-                 link.download = "your-adventure-comic.pdf";
-                 link.click();
-                 URL.revokeObjectURL(link.href); // Clean up blob URL
-                 console.log("Download initiated.");
-
-            } catch (error) {
-                console.error("Error generating or downloading PDF comic:", error);
-                alert(`Failed to generate comic PDF. Error: ${error.message}`);
-            }
-        };
-
-        // --- Load External Libraries & Start ---
-        function loadScript(src) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.body.appendChild(script);
-            });
-        }
-
-        async function initialize() {
-           try {
-                console.log("Loading libraries...");
-                await Promise.all([
-                     loadScript("https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"),
-                     loadScript("https://cdn.jsdelivr.net/npm/canvg@4.0.1/lib/umd.min.js") // Use specific version of Canvg v4
-                ]);
-                console.log("Libraries loaded.");
-                console.log("Loading story...");
-                await loadStory(); // Load story data after libraries are ready
-                console.log("Story loaded. Initialization complete.");
-           } catch (error) {
-               console.error("Failed to load libraries or story:", error);
-               document.getElementById("game").innerHTML = `<p>❌ Failed to initialize game. Check console for errors.</p>`;
-           }
-        }
-
-        // Start the game initialization process
-        initialize();
-
-    </script>
+<script src="https://unpkg.com/pdf-lib"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
 
 </body>
+
 </html>
