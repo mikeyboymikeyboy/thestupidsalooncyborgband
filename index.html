@@ -835,11 +835,22 @@ window.downloadComic = async function downloadComic() {
         ];
 
         for (let i = 0; i < panelCoords.length; i++) {
-            const panel = panelCoords[i];
-            const img = new Image();
-            img.src = blobUrls[i];
-            await new Promise(resolve => {
-                img.onload = () => {
+    const panel = panelCoords[i];
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = blobUrls[i];
+    console.log("Loading image for panel", i, img.src);
+    await new Promise(resolve => {
+        img.onload = () => {
+            console.log("Drawing panel", i);
+            ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
+            resolve();
+        };
+        img.onerror = () => {
+            console.warn("Failed to load image for panel", i, img.src);
+            resolve();
+        };
+    });
                     ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
                     resolve();
                 };
