@@ -469,40 +469,25 @@
 
             document.getElementById("game").innerHTML = html;
 
-            if (scene.scrollText === true) {
-                const img1 = document.getElementById("slideshowImage1");
-                const img2 = document.getElementById("slideshowImage2");
-                if (visitedImages.length > 0 && img1 && img2) {
-                    const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
-                    function applyRandomFloatClass(img) {
-                        floatClasses.forEach(cls => img.classList.remove(cls));
-                        const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
-                        img.classList.add(randomClass);
-                    }
+            
+if (scene.scrollText === true) {
+  html += `
+    <div class="scrolling-container">
+      <div class="scrolling-inner">${cleanText}</div>
+    </div>
+  `;
+} else {
+  html += cleanText;
+}
 
-                    function randomizePosition(container) {
-                        const top = Math.floor(Math.random() * 70) + 10;
-                        container.style.top = top + '%';
-                    }
+// ✅ Always append comic/audio buttons at the end if it's an ending
+if (!scene.choices || scene.choices.length === 0) {
+  html += `
+    <div class="button comic-download" onclick="downloadComic()">📄 Download Your Adventure Comic</div>
+    <div class="button audio-download" onclick="downloadAudioJourney()">🎵 Download Your Sonic Journey</div>
+  `;
+}
 
-                    let slideshowIndex = 0;
-                    setInterval(async () => {
-                        const imageUrl = visitedImages[slideshowIndex % visitedImages.length];
-                        const blobUrl = await loadImageAsBlob(imageUrl);
-                        const isEven = slideshowIndex % 2 === 0;
-                        if (isEven) {
-                            img1.src = blobUrl;
-                            applyRandomFloatClass(img1);
-                            randomizePosition(img1.parentElement);
-                            img1.classList.add("visible");
-                            img2.classList.remove("visible");
-                        } else {
-                            img2.src = blobUrl;
-                            applyRandomFloatClass(img2);
-                            randomizePosition(img2.parentElement);
-                            img2.classList.add("visible");
-                            img1.classList.remove("visible");
-                        }
                         slideshowIndex++;
                     }, 4000);
                 }
