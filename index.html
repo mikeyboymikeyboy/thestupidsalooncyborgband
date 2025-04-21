@@ -738,7 +738,23 @@
                     return;
                 }
 
-                const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
+                
+async function loadImageAsBlob(url) {
+    try {
+        const response = await fetch(url, {
+            mode: 'cors',
+            credentials: 'omit'
+        });
+        if (!response.ok) throw new Error("Failed to fetch image");
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+    } catch (err) {
+        console.error("Error while loading image", url, err);
+        return "";
+    }
+}
+const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
+
                 
                 const svg = document.querySelector("#comicSvgWrapper svg");
                 const panels = Array.from(svg.querySelectorAll("image"));
@@ -805,6 +821,8 @@
     </script>
 
 
+
+
 <script>
 window.downloadComic = async function downloadComic() {
     console.log("Generating comic with images:", visitedImages);
@@ -817,7 +835,13 @@ window.downloadComic = async function downloadComic() {
             return;
         }
 
-        const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
+        // Load all images as Blobs (for cross-origin safety)
+        const blobUrls = await Promise.all(journeyImages.map(async (url) => {
+            const response = await fetch(url, { mode: 'cors' });
+            const blob = await response.blob();
+            return URL.createObjectURL(blob);
+        }));
+
         const canvas = document.getElementById('comicCanvas');
         canvas.width = 2048;
         canvas.height = 2860;
@@ -825,7 +849,6 @@ window.downloadComic = async function downloadComic() {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Define positions for each panel image
         const panelCoords = [
             { x: -76, y: 169, width: 1110, height: 992 },
             { x: 436, y: 170, width: 1756, height: 993 },
@@ -834,27 +857,23 @@ window.downloadComic = async function downloadComic() {
             { x: -184, y: 1922, width: 2431, height: 1022 },
         ];
 
+        // Ensure each image is drawn only after it loads
         for (let i = 0; i < panelCoords.length; i++) {
-    const panel = panelCoords[i];
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = blobUrls[i];
-    console.log("Loading image for panel", i, img.src);
-    await new Promise(resolve => {
-        img.onload = () => {
-            console.log("Drawing panel", i);
-            ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
-            resolve();
-        };
-        img.onerror = () => {
-            console.warn("Failed to load image for panel", i, img.src);
-            resolve();
-        };
-    });
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = blobUrls[i];
+            const panel = panelCoords[i];
+
+            await new Promise((resolve) => {
+                img.onload = () => {
+                    console.log("Drawing panel", i);
                     ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
                     resolve();
                 };
-                img.onerror = resolve;
+                img.onerror = () => {
+                    console.warn("Failed to load image for panel", i);
+                    resolve();
+                };
             });
         }
 
@@ -892,6 +911,7 @@ window.downloadComic = async function downloadComic() {
 };
 </script>
 </body>
+
 
 
 </html>
