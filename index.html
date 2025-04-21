@@ -742,8 +742,6 @@
                 
                 const svg = document.querySelector("#comicSvgWrapper svg");
                 const panels = Array.from(svg.querySelectorAll("image"));
-                const textElements = Array.from(svg.querySelectorAll(".comic-text"));
-                
                 panels.forEach(panel => panel.removeAttribute("href"));
                 
                 const panelOrder = [0, 1, 3, 2, 4];
@@ -755,8 +753,7 @@
                         const scene = storyData.find(s => s.text === journeyTexts[journeyIndex]);
                         let text = scene?.comicText || journeyTexts[journeyIndex].split('.')[0];
                         text = text.length > 50 ? text.substring(0, 47) + '...' : text;
-                        textElements[panelIndex].textContent = text;
-                    }
+                        }
                 });
 
                 const canvas = document.getElementById('comicCanvas');
