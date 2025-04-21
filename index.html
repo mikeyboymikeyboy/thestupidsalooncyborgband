@@ -232,26 +232,7 @@
             100% { box-shadow: 0 0 20px #3defffaa; }
         }
 
-        .comic-text {
-            font-family: 'IM Fell English', serif;
-            font-size: 24px;
-            fill: white;
-            text-anchor: middle;
-            dominant-baseline: middle;
-            text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
-        }
-
-        .text-bg {
-            fill: rgba(0,0,0,0.6);
-            rx: 8;
-            ry: 8;
-        }
-
-        .text-container {
-            transform-box: fill-box;
-            transform-origin: center;
-        }
-    </style>
+        </style>
 </head>
 <body>
     <div id="game">
@@ -282,27 +263,6 @@
             <image x="1183" y="1027" width="939" height="1118" clip-path="url(#panel3)" preserveAspectRatio="xMidYMid slice" crossorigin="anonymous" />
             <image x="-101" y="1014" width="1442" height="1291" clip-path="url(#panel4)" preserveAspectRatio="xMidYMid slice" crossorigin="anonymous" />
             <image x="-184" y="1922" width="2431" height="1022" clip-path="url(#panel5)" preserveAspectRatio="xMidYMid slice" crossorigin="anonymous" />
-
-            <g class="text-container" transform="translate(400, 1000)">
-                <rect class="text-bg" x="-200" y="-40" width="400" height="80" />
-                <text class="comic-text" x="0" y="0"></text>
-            </g>
-            <g class="text-container" transform="translate(1200, 1000)">
-                <rect class="text-bg" x="-200" y="-40" width="400" height="80" />
-                <text class="comic-text" x="0" y="0"></text>
-            </g>
-            <g class="text-container" transform="translate(1600, 1800)">
-                <rect class="text-bg" x="-200" y="-40" width="400" height="80" />
-                <text class="comic-text" x="0" y="0"></text>
-            </g>
-            <g class="text-container" transform="translate(500, 1800)">
-                <rect class="text-bg" x="-200" y="-40" width="400" height="80" />
-                <text class="comic-text" x="0" y="0"></text>
-            </g>
-            <g class="text-container" transform="translate(1024, 2700)">
-                <rect class="text-bg" x="-200" y="-40" width="400" height="80" />
-                <text class="comic-text" x="0" y="0"></text>
-            </g>
 
             <g class="panel-shadow" fill="url(#inkTexture)" stroke="black" stroke-width="15">
                 <polygon points="17,1079 17,639 18,254 497,252 537,252 538,253 541,259 601,381 808,802 926,1042 942,1075 942,1079"/>
@@ -856,99 +816,6 @@
         loadStory();
     </script>
 
-<script>
-window.downloadComic = async function downloadComic() {
-    console.log("Generating comic with images:", visitedImages);
-
-    try {
-        const journeyImages = visitedImages.slice(0, 5);
-        const journeyTexts = visitedTexts.slice(0, 5);
-
-        if (journeyImages.length === 0) {
-            alert("No images available from your journey. Try playing through the story first!");
-            return;
-        }
-
-        const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
-        const canvas = document.getElementById('comicCanvas');
-        canvas.width = 2048;
-        canvas.height = 2860;
-        const ctx = canvas.getContext("2d");
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Define positions for each panel image and caption
-        const panelCoords = [
-            { x: -76, y: 169, width: 1110, height: 992, textPos: [400, 1150] },
-            { x: 436, y: 170, width: 1756, height: 993, textPos: [1200, 1150] },
-            { x: -101, y: 1014, width: 1442, height: 1291, textPos: [500, 1900] },
-            { x: 1183, y: 1027, width: 939, height: 1118, textPos: [1600, 1900] },
-            { x: -184, y: 1922, width: 2431, height: 1022, textPos: [1024, 2700] },
-        ];
-
-        for (let i = 0; i < panelCoords.length; i++) {
-            const panel = panelCoords[i];
-            const img = new Image();
-            img.src = blobUrls[i];
-            await new Promise(resolve => {
-                img.onload = () => {
-                    ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
-                    resolve();
-                };
-                img.onerror = resolve;
-            });
-
-            const text = journeyTexts[i]
-                ? journeyTexts[i].replace(/\[\[.*?\]\]/g, '').split('.')[0].slice(0, 60)
-                : '';
-            const [tx, ty] = panel.textPos;
-
-            // Draw yellow box
-            ctx.fillStyle = 'yellow';
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = 4;
-            ctx.fillRect(tx - 200, ty - 30, 400, 60);
-            ctx.strokeRect(tx - 200, ty - 30, 400, 60);
-
-            // Draw black comic text
-            ctx.fillStyle = 'black';
-            ctx.font = 'bold 28px "Bangers", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(text, tx, ty);
-        }
-
-        const imgData = canvas.toDataURL("image/png");
-
-        const pdfDoc = await PDFLib.PDFDocument.create();
-        const img = await pdfDoc.embedPng(imgData);
-        const pageWidth = 495;
-        const page = pdfDoc.addPage([pageWidth, pageWidth * (canvas.height / canvas.width)]);
-
-        page.drawImage(img, {
-            x: 0,
-            y: 0,
-            width: pageWidth,
-            height: pageWidth * (canvas.height / canvas.width)
-        });
-
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "your-adventure-comic.pdf";
-        link.click();
-
-        URL.revokeObjectURL(link.href);
-        blobUrls.forEach(url => URL.revokeObjectURL(url));
-
-        console.log("Comic generated and downloaded successfully!");
-    } catch (error) {
-        console.error("Error generating comic:", error);
-        alert("Sorry, there was an error generating your comic. Please try again.");
-    }
-};
-</script>
 </body>
 
 </html>
