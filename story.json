@@ -33,10 +33,11 @@
         "next": "DRUM SOLO"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/intro.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/intro.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/intro.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "GUITAR SOLO",
@@ -54,7 +55,7 @@
         "next": "GO ORDER A DRINK"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/guitarsolo.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/guitarsolo.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/guitar_solo_robot.png",
     "loopAudio": true,
     "multiAudio": {},
@@ -76,10 +77,11 @@
         "next": "PIANOFY"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/drumsolo.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/drumsolo.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/drum_solo_robot.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "LETS GO DOWN",
@@ -97,10 +99,11 @@
         "next": "DOWN THE HOLE"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/downwardriff.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/downwardriff.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/downwardriff.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "PIANOFY",
@@ -114,7 +117,7 @@
         "next": "CHECK OUT THE GUY WITH 6 ARMS"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/pianofy.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/pianofy.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/pianosolo.png",
     "loopAudio": true,
     "multiAudio": {},
@@ -140,9 +143,9 @@
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/6arms.png",
     "loopAudio": true,
     "multiAudio": {
-      "guitar": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-guitar.mp3",
-      "keyboards": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-keyboards.mp3",
-      "saxophone": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-sax.mp3"
+      "guitar": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-guitar.wav",
+      "keyboards": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-keyboards.wav",
+      "saxophone": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/soloswitch/soloswitch-sax.wav"
     },
     "scrollText": false
   },
@@ -162,10 +165,11 @@
         "next": "NAH"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/epictunnel.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/epictunnel.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/dig1.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "KEEP DIGGING?",
@@ -179,10 +183,11 @@
         "next": "BEGIN YOUR ADVENTURE"
       }
     ],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/keepdigging.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/keepdigging.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/dig2.png",
     "loopAudio": true,
-    "multiAudio": {}
+    "multiAudio": {},
+    "scrollText": false
   },
   {
     "id": "NAH",
@@ -191,7 +196,7 @@
     "x": 242.28571210588726,
     "y": 348.1714194161551,
     "choices": [],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.wav",
     "image": "",
     "loopAudio": false,
     "multiAudio": {},
@@ -204,7 +209,7 @@
     "x": 635.1428549630301,
     "y": 282.4571337018694,
     "choices": [],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/leavethesaloon.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/leavethesaloon.wav",
     "image": "",
     "loopAudio": true,
     "multiAudio": {},
@@ -217,7 +222,7 @@
     "x": 397.99999782017295,
     "y": 269.59999084472656,
     "choices": [],
-    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.mp3",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.wav",
     "image": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/fullband.png",
     "loopAudio": true,
     "multiAudio": {},
@@ -230,7 +235,7 @@
     "x": 9,
     "y": 225,
     "choices": [],
-    "audio": "",
+    "audio": "https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/nah.wav",
     "image": "",
     "loopAudio": false,
     "multiAudio": {},
