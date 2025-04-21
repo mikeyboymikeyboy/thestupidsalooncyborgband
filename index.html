@@ -776,12 +776,7 @@
 
                 // Removed scaling logic for full-page comic layout
 
-                page.drawImage(img, {
-                    x,
-                    y,
-                    width: imgWidth,
-                    height: imgHeight
-                });
+                
 
                 const pdfBytes = await pdfDoc.save();
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
