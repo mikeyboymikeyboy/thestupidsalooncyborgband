@@ -777,11 +777,11 @@
                 // Removed scaling logic for full-page comic layout
 
                 page.drawImage(img, {
-    x: 0,
-    y: 0,
-    width: pageWidth,
-    height: pageHeight
-});
+                    x,
+                    y,
+                    width: imgWidth,
+                    height: imgHeight
+                });
 
                 const pdfBytes = await pdfDoc.save();
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -809,6 +809,83 @@
         loadStory();
     </script>
 
+
+<script>
+window.downloadComic = async function downloadComic() {
+    console.log("Generating comic with images:", visitedImages);
+
+    try {
+        const journeyImages = visitedImages.slice(0, 5);
+
+        if (journeyImages.length === 0) {
+            alert("No images available from your journey. Try playing through the story first!");
+            return;
+        }
+
+        const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
+        const canvas = document.getElementById('comicCanvas');
+        canvas.width = 2048;
+        canvas.height = 2860;
+        const ctx = canvas.getContext("2d");
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Define positions for each panel image
+        const panelCoords = [
+            { x: -76, y: 169, width: 1110, height: 992 },
+            { x: 436, y: 170, width: 1756, height: 993 },
+            { x: -101, y: 1014, width: 1442, height: 1291 },
+            { x: 1183, y: 1027, width: 939, height: 1118 },
+            { x: -184, y: 1922, width: 2431, height: 1022 },
+        ];
+
+        for (let i = 0; i < panelCoords.length; i++) {
+            const panel = panelCoords[i];
+            const img = new Image();
+            img.src = blobUrls[i];
+            await new Promise(resolve => {
+                img.onload = () => {
+                    ctx.drawImage(img, panel.x, panel.y, panel.width, panel.height);
+                    resolve();
+                };
+                img.onerror = resolve;
+            });
+        }
+
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const img = await pdfDoc.embedPng(imgData);
+
+        const pageWidth = 495;  // 6.875 inches
+        const pageHeight = 752; // 10.438 inches
+        const page = pdfDoc.addPage([pageWidth, pageHeight]);
+
+        page.drawImage(img, {
+            x: 0,
+            y: 0,
+            width: pageWidth,
+            height: pageHeight
+        });
+
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "your-adventure-comic.pdf";
+        link.click();
+
+        URL.revokeObjectURL(link.href);
+        blobUrls.forEach(url => URL.revokeObjectURL(url));
+
+        console.log("Comic generated and downloaded successfully!");
+    } catch (error) {
+        console.error("Error generating comic:", error);
+        alert("Sorry, there was an error generating your comic. Please try again.");
+    }
+};
+</script>
 </body>
+
 
 </html>
