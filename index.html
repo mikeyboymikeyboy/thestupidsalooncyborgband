@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>The Stupid Saloon Cyborg Band</title>
@@ -27,7 +26,7 @@
             color: white;
             text-align: center;
             padding: 2em;
-font-size: 1.5em;
+            font-size: 1.5em;
         }
 
         img {
@@ -85,175 +84,163 @@ font-size: 1.5em;
             }
         }
     
-.image-text-container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2em;
-  margin-bottom: 1.5em;
-  flex-wrap: wrap;
-}
-.image-text-container img {
-  max-width: 100%;
-  height: auto;
-}
-.text-block {
-  max-width: 600px;
-  text-align: left;
-}
+        .image-text-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2em;
+            margin-bottom: 1.5em;
+            flex-wrap: wrap;
+        }
+        .image-text-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .text-block {
+            max-width: 600px;
+            text-align: left;
+        }
 
+        @media (max-width: 768px) {
+            .image-text-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .text-block {
+                text-align: center;
+            }
+        }
 
-@media (max-width: 768px) {
-  .image-text-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .text-block {
-    text-align: center;
-  }
-}
+        @media (max-width: 768px) {
+            body {
+                font-size: 1.875em;
+            }
+            .image-text-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2.5em;
+            }
+            .text-block {
+                text-align: center;
+            }
+            .button {
+                padding: 12px 20px;
+                font-size: 1.25em;
+            }
+        }
 
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+        .fade-in.loaded {
+            opacity: 0.4;
+        }
 
-@media (max-width: 768px) {
-  body {
-    font-size: 1.875em; /* 25% bigger than original 1.5em */
-  }
-  .image-text-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5em;
-  }
-  .text-block {
-    text-align: center;
-  }
-  .button {
-    padding: 12px 20px;
-    font-size: 1.25em;
-  }
-}
+        .scrolling-container {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            margin: 2em auto;
+        }
 
+        .scrolling-inner {
+            position: relative;
+            text-align: center;
+            white-space: pre-line;
+        }
 
-.fade-in {
-  opacity: 0;
-  transition: opacity 0.8s ease-in;
-}
-.fade-in.loaded {
-  opacity: 0.4;
-}
+        .scrolling-preview {
+            position: absolute;
+            left: 10px;
+            z-index: 5;
+            pointer-events: none;
+        }
 
+        .scrolling-preview img {
+            max-height: 200px;
+            border: 2px solid red;
+            opacity: 0.4;
+        }
 
+        .slideshow-container {
+            position: fixed;
+            max-height: 400px;
+            width: 400px;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp 6s ease-in-out infinite alternate;
+        }
 
+        .slideshow-container.left-fixed {
+            left: 60px;
+        }
 
-.scrolling-container {
-  height: 300px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  margin: 2em auto;
-}
+        .slideshow-container.right {
+            right: 60px;
+        }
 
-.scrolling-inner {
-  position: relative;
-  text-align: center;
-  white-space: pre-line;
-}
-}
+        .slideshow-image {
+            max-height: 400px;
+            width: auto;
+            opacity: 0;
+            transition: opacity 4s ease-in-out;
+        }
 
+        .slideshow-image.visible {
+            opacity: 0.4;
+        }
 
-.scrolling-preview {
-  position: absolute;
-  
-  left: 10px;
-  z-index: 5;
-  pointer-events: none;
-}
+        @keyframes floatUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
 
-.scrolling-preview img {
-  max-height: 200px;
-  border: 2px solid red;
-  opacity: 0.4;
-}
+        @keyframes floatDown {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
 
+        @keyframes floatLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-20px); }
+        }
 
+        @keyframes floatRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
+        }
 
+        @keyframes floatDiagonalLeft {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-20px, -20px); }
+        }
 
+        @keyframes floatDiagonalRight {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, -20px); }
+        }
 
+        .floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
+        .floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
+        .floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
+        .floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
+        .floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
+        .floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
 
+        .comic-download {
+            margin-top: 2em;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-
-.slideshow-container {
-  position: fixed;
-  
-  max-height: 400px;
-  width: 400px;
-  pointer-events: none;
-  z-index: 0;
-  animation: floatUp 6s ease-in-out infinite alternate;
-}
-
-.slideshow-container.left-fixed {
-  left: 60px;
-}
-
-.slideshow-container.right {
-  right: 60px;
-}
-
-.slideshow-image {
-  max-height: 400px;
-  width: auto;
-  opacity: 0;
-  transition: opacity 4s ease-in-out;
-}
-
-.slideshow-image.visible {
-  opacity: 0.4;
-}
-
-
-@keyframes floatUp {
-  0% { transform: translateY(0); }
-@keyframes floatDown {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(20px); }
-}
-
-@keyframes floatLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-20px); }
-}
-
-@keyframes floatRight {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(20px); }
-}
-
-@keyframes floatDiagonalLeft {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-20px, -20px); }
-}
-
-@keyframes floatDiagonalRight {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(20px, -20px); }
-}
-
-.floatUp         { animation: floatUp 6s ease-in-out infinite alternate; }
-.floatDown       { animation: floatDown 6s ease-in-out infinite alternate; }
-.floatLeft       { animation: floatLeft 6s ease-in-out infinite alternate; }
-.floatRight      { animation: floatRight 6s ease-in-out infinite alternate; }
-.floatDiagonalLeft  { animation: floatDiagonalLeft 6s ease-in-out infinite alternate; }
-.floatDiagonalRight { animation: floatDiagonalRight 6s ease-in-out infinite alternate; }
-
-
-
-
-
-</style>
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #3defff55; }
+            100% { box-shadow: 0 0 20px #3defffaa; }
+        }
+    </style>
 </head>
-
 <body>
-    
     <div id="game">
         <p>Loading story...</p>
     </div>
@@ -261,12 +248,42 @@ font-size: 1.5em;
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let buffers = {};
         let currentSource = null;
-    
         let choiceMade = null;
         let isLoopingScene = false;
         let currentScene = null;
         let storyData = [];
-let visitedImages = [];
+        let visitedImages = [];
+        let imageCache = new Map();
+
+        async function loadImageAsBlob(url) {
+            if (imageCache.has(url)) {
+                return imageCache.get(url);
+            }
+
+            try {
+                const response = await fetch(url, {
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = blobUrl;
+                });
+                
+                imageCache.set(url, blobUrl);
+                return blobUrl;
+            } catch (error) {
+                console.error('Error loading image:', error);
+                return null;
+            }
+        }
 
         function loadAudio(url) {
             return fetch(url)
@@ -283,13 +300,13 @@ let visitedImages = [];
             source.connect(audioContext.destination);
             source.loop = loop;
             if (onEnded) {
-    source.onended = () => {
-        document.querySelectorAll('.button.waiting').forEach(btn => {
-            btn.classList.remove('waiting');
-        });
-        onEnded();
-    };
-}
+                source.onended = () => {
+                    document.querySelectorAll('.button.waiting').forEach(btn => {
+                        btn.classList.remove('waiting');
+                    });
+                    onEnded();
+                };
+            }
             source.start(0);
             currentSource = source;
         }
@@ -301,150 +318,117 @@ let visitedImages = [];
                 } catch (e) {}
                 currentSource.disconnect();
                 currentSource = null;
-    stopMultiAudio();
+                stopMultiAudio();
             }
         }
 
-        function showScene(sceneId) {
+        async function showScene(sceneId) {
             const scene = storyData.find(s => s.id === sceneId || s.name === sceneId);
             if (!scene) {
                 document.getElementById("game").innerHTML = `<p>❌ Scene not found: ${sceneId}</p>`;
                 return;
             }
             currentScene = scene;
-    if (scene.image && !visitedImages.includes(scene.image)) {
-        visitedImages.push(scene.image);
-        console.log("Tracked image:", scene.image);
-    }
+            if (scene.image && !visitedImages.includes(scene.image)) {
+                visitedImages.push(scene.image);
+                await loadImageAsBlob(scene.image);
+            }
             let html = '';
-
             
             if (scene.image || scene.text) {
                 const cleanText = scene.text ? scene.text.replace(/\[\[.*?\]\]/g, '') : '';
                 const isFinal = !scene.choices || scene.choices.length === 0;
+                const imageUrl = scene.image ? await loadImageAsBlob(scene.image) : '';
+                
                 html += `
                     <div class="image-text-container">
-                        ${scene.image ? `<img src="${scene.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
+                        ${imageUrl ? `<img src="${imageUrl}" alt="" class="fade-in" crossOrigin="anonymous" onload="this.classList.add('loaded')">` : ''}
                         <div class="text-block">
-  ${scene.scrollText === true
-    ? `<div class="scrolling-container">
-  <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" src=""></div>
-  <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" src=""></div><div class="scrolling-inner">${cleanText}</div></div>`
-    : cleanText}
-</div>
+                            ${scene.scrollText === true
+                                ? `<div class="scrolling-container">
+                                    <div class="slideshow-container left-fixed"><img id="slideshowImage1" class="slideshow-image" crossOrigin="anonymous" src=""></div>
+                                    <div class="slideshow-container right"><img id="slideshowImage2" class="slideshow-image" crossOrigin="anonymous" src=""></div>
+                                    <div class="scrolling-inner">${cleanText}</div>
+                                  </div>`
+                                : cleanText}
+                        </div>
                     </div>
                 `;
             }
-
-
 
             if (scene.choices && scene.choices.length > 0) {
                 scene.choices.forEach(choice => {
                     html += `<div class="button" onclick="handleChoice('${choice.next}')">${choice.label}</div>`;
                 });
-
-// ✅ Single correct placement of comic button for endings
-if (!scene.choices || scene.choices.length === 0) {
-}
-
-// ✅ Single correct placement of comic button for ending scenes
-if (!scene.choices || scene.choices.length === 0) {
-    html += `<div class="button" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
-}
-
-// ✅ Comic button shown on endings (no choices)
-if (!scene.choices || scene.choices.length === 0) {
-}
-
-// ✅ Correctly injected comic button outside choices block
-if (!scene.choices || scene.choices.length === 0) {
-}
-
-    // ✅ Properly placed comic button for endings
-    if (!scene.choices || scene.choices.length === 0) {
-    }
-
-   
-
-    // ✅ Show download button on ending scenes
-    
-
-    
-
-    
-
-    
+            } else {
+                html += `<div class="button comic-download" onclick="downloadComic()">📄 Download Your Adventure Comic</div>`;
             }
 
-            
-if (scene.multiAudio) {
-    isLoopingScene = true;
-    playMultiAudio(scene.multiAudio, () => {
-        if (choiceMade) {
-            showScene(choiceMade);
-            choiceMade = null;
-        }
-    });
-    const switcherButtons = Object.keys(scene.multiAudio).map(label =>
-        `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
-    ).join("");
-    html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
-}
+            if (scene.multiAudio) {
+                isLoopingScene = true;
+                playMultiAudio(scene.multiAudio, () => {
+                    if (choiceMade) {
+                        showScene(choiceMade);
+                        choiceMade = null;
+                    }
+                });
+                const switcherButtons = Object.keys(scene.multiAudio).map(label =>
+                    `<button class='button' onclick="switchToTrack('${label}')">Switch to ${label}</button>`
+                ).join("");
+                html += "<div style='margin-top:1em'>" + switcherButtons + "</div>";
+            }
 
-    document.getElementById("game").innerHTML = html;
+            document.getElementById("game").innerHTML = html;
 
-    if (scene.scrollText === true) {
+            if (scene.scrollText === true) {
+                const img1 = document.getElementById("slideshowImage1");
+                const img2 = document.getElementById("slideshowImage2");
+                if (visitedImages.length > 0 && img1 && img2) {
+                    const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
+                    function applyRandomFloatClass(img) {
+                        floatClasses.forEach(cls => img.classList.remove(cls));
+                        const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
+                        img.classList.add(randomClass);
+                    }
 
-        const img1 = document.getElementById("slideshowImage1");
-        const img2 = document.getElementById("slideshowImage2");
-        if (visitedImages.length > 0 && img1 && img2) {
-            
-const floatClasses = ['floatUp', 'floatDown', 'floatLeft', 'floatRight', 'floatDiagonalLeft', 'floatDiagonalRight'];
-function applyRandomFloatClass(img) {
-    floatClasses.forEach(cls => img.classList.remove(cls));
-    const randomClass = floatClasses[Math.floor(Math.random() * floatClasses.length)];
-    img.classList.add(randomClass);
-}
+                    function randomizePosition(container) {
+                        const top = Math.floor(Math.random() * 70) + 10;
+                        container.style.top = top + '%';
+                    }
 
-
-function randomizePosition(container) {
-    const top = Math.floor(Math.random() * 70) + 10; // between 10% and 80%
-    container.style.top = top + '%';
-}
-
-let slideshowIndex = 0;
-            setInterval(() => {
-                const src = visitedImages[slideshowIndex % visitedImages.length];
-                const isEven = slideshowIndex % 2 === 0;
-                if (isEven) {
-                    img1.src = src;
-                    applyRandomFloatClass(img1);
-                    randomizePosition(img1.parentElement);
-                    img1.classList.add("visible");
-                    img2.classList.remove("visible");
-                } else {
-                    img2.src = src;
-                    applyRandomFloatClass(img2);
-                    randomizePosition(img2.parentElement);
-                    img2.classList.add("visible");
-                    img1.classList.remove("visible");
+                    let slideshowIndex = 0;
+                    setInterval(async () => {
+                        const imageUrl = visitedImages[slideshowIndex % visitedImages.length];
+                        const blobUrl = await loadImageAsBlob(imageUrl);
+                        const isEven = slideshowIndex % 2 === 0;
+                        if (isEven) {
+                            img1.src = blobUrl;
+                            applyRandomFloatClass(img1);
+                            randomizePosition(img1.parentElement);
+                            img1.classList.add("visible");
+                            img2.classList.remove("visible");
+                        } else {
+                            img2.src = blobUrl;
+                            applyRandomFloatClass(img2);
+                            randomizePosition(img2.parentElement);
+                            img2.classList.add("visible");
+                            img1.classList.remove("visible");
+                        }
+                        slideshowIndex++;
+                    }, 4000);
                 }
-                slideshowIndex++;
-            }, 4000);
-        }
 
-
-const container = document.querySelector('.scrolling-container');
-        const inner = document.querySelector('.scrolling-inner');
-        if (container && inner) {
-            const distance = inner.scrollHeight + container.clientHeight;
-            inner.style.transform = 'translateY(0px)';
-            inner.style.transition = `transform ${distance / 50}s linear`;
-            requestAnimationFrame(() => {
-                inner.style.transform = `translateY(-${distance}px)`;
-            });
-        }
-    }
+                const container = document.querySelector('.scrolling-container');
+                const inner = document.querySelector('.scrolling-inner');
+                if (container && inner) {
+                    const distance = inner.scrollHeight + container.clientHeight;
+                    inner.style.transform = 'translateY(0px)';
+                    inner.style.transition = `transform ${distance / 50}s linear`;
+                    requestAnimationFrame(() => {
+                        inner.style.transform = `translateY(-${distance}px)`;
+                    });
+                }
+            }
 
             if (scene.audio) {
                 isLoopingScene = scene.loopAudio;
@@ -458,79 +442,73 @@ const container = document.querySelector('.scrolling-container');
         }
 
         function handleChoice(nextId) {
-    const selectedChoice = currentScene.choices.find(c => c.next === nextId);
+            const selectedChoice = currentScene.choices.find(c => c.next === nextId);
 
-    if (isLoopingScene) {
-        choiceMade = nextId;
+            if (isLoopingScene) {
+                choiceMade = nextId;
 
-        const buttons = document.querySelectorAll(".button");
-        buttons.forEach(btn => {
-            if (btn.textContent === selectedChoice?.label) {
-                btn.classList.add("waiting");
+                const buttons = document.querySelectorAll(".button");
+                buttons.forEach(btn => {
+                    if (btn.textContent === selectedChoice?.label) {
+                        btn.classList.add("waiting");
+                    }
+                });
+
+                if (currentSource) {
+                    currentSource.loop = false;
+                    return;
+                }
+
+                if (currentMultiAudio) {
+                    for (let label in multiAudioGains) {
+                        multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
+                    }
+
+                    setTimeout(() => {
+                        stopMultiAudio();
+                        showScene(choiceMade);
+                        choiceMade = null;
+                    }, 1000);
+
+                    return;
+                }
             }
-        });
 
-        if (currentSource) {
-            currentSource.loop = false;
-            return; // Let the normal audio finish and trigger the transition
+            showScene(nextId);
         }
 
-        if (currentMultiAudio) {
-            // Fade out multi-audio and go to next scene after short pause
-            for (let label in multiAudioGains) {
-                multiAudioGains[label].gain.setTargetAtTime(0, audioContext.currentTime, 0.2);
-            }
-
-            setTimeout(() => {
-                stopMultiAudio();
-                showScene(choiceMade);
-                choiceMade = null;
-            }, 1000);
-
-            return;
+        async function preloadImages(imageUrls) {
+            await Promise.all(imageUrls.map(loadImageAsBlob));
         }
-    }
 
-    showScene(nextId);
-}
-
-
-        
-function preloadImages(imageUrls) {
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
-    });
-}
-
-
-async function loadStory() {
+        async function loadStory() {
             try {
-                const res = await fetch("story.json");
+                const res = await fetch("/story.json");
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
                 storyData = await res.json();
 
-// Preload images
-const imageUrls = storyData
-    .filter(scene => scene.image)
-    .map(scene => scene.image);
-preloadImages(imageUrls);
-
+                const imageUrls = storyData
+                    .filter(scene => scene.image)
+                    .map(scene => scene.image);
+                await preloadImages(imageUrls);
 
                 const urls = [];
 
-storyData.forEach(scene => {
-  if (scene.audio) urls.push(scene.audio);
-  if (scene.multiAudio) {
-    for (let key in scene.multiAudio) {
-      urls.push(scene.multiAudio[key]);
-    }
-  }
-});
+                storyData.forEach(scene => {
+                  if (scene.audio) urls.push(scene.audio);
+                  if (scene.multiAudio) {
+                    for (let key in scene.multiAudio) {
+                      urls.push(scene.multiAudio[key]);
+                    }
+                  }
+                });
 
-const uniqueUrls = [...new Set(urls)];
-for (let url of uniqueUrls) {
-    buffers[url] = await loadAudio(url);
-}
+                const uniqueUrls = [...new Set(urls)];
+                for (let url of uniqueUrls) {
+                    buffers[url] = await loadAudio(url);
+                }
 
                 const start = storyData.find(s => s.name === "START");
 
@@ -538,13 +516,15 @@ for (let url of uniqueUrls) {
                     .replace(/\n/g, '<br>')
                     .replace(/\[\[.*?\]\]/g, '');
 
+                const startImage = start?.image ? await loadImageAsBlob(start.image) : '';
+
                 document.getElementById("game").innerHTML = `
-  <div class="image-text-container">
-    ${start?.image ? `<img src="${start.image}" alt="" class="fade-in" onload="this.classList.add('loaded')">` : ''}
-    <div class="text-block">${startText}</div>
-  </div>
-  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
-`;
+                  <div class="image-text-container">
+                    ${startImage ? `<img src="${startImage}" alt="" class="fade-in" crossOrigin="anonymous" onload="this.classList.add('loaded')">` : ''}
+                    <div class="text-block">${startText}</div>
+                  </div>
+                  <div class="button" onclick="startScene()">BEGIN YOUR ADVENTURE</div>
+                `;
             } catch (err) {
                 document.getElementById("game").innerHTML = `<p>❌ Failed to load story.json<br>${err}</p>`;
                 console.error(err);
@@ -557,156 +537,163 @@ for (let url of uniqueUrls) {
 
         loadStory();
     
-let multiAudioSources = {};
-let multiAudioGains = {};
-let currentMultiAudio = null;
+        let multiAudioSources = {};
+        let multiAudioGains = {};
+        let currentMultiAudio = null;
 
+        async function playMultiAudio(multiAudioMap, onEnded) {
+            stopAudio();
+            stopMultiAudio();
 
-async function playMultiAudio(multiAudioMap, onEnded) {
-    stopAudio(); // stop regular audio
-    stopMultiAudio(); // stop any previous multiaudio
+            multiAudioSources = {};
+            multiAudioGains = {};
 
+            const labels = Object.keys(multiAudioMap || {});
+            if (labels.length === 0) return;
 
+            const now = audioContext.currentTime;
+            const startTime = now;
+            const promises = [];
 
-    multiAudioSources = {};
-    multiAudioGains = {};
+            for (let label of labels) {
+                const url = multiAudioMap[label];
+                const promise = loadAudio(url).then(buffer => {
+                    const source = audioContext.createBufferSource();
+                    source.buffer = buffer;
+                    source.loop = true;
 
-    const labels = Object.keys(multiAudioMap || {});
-    if (labels.length === 0) return;
+                    const gainNode = audioContext.createGain();
+                    gainNode.gain.value = 0;
 
-    const now = audioContext.currentTime;
-    const startTime = now;
-    const promises = [];
+                    source.connect(gainNode).connect(audioContext.destination);
+                    multiAudioSources[label] = source;
+                    multiAudioGains[label] = gainNode;
+                });
+                promises.push(promise);
+            }
 
-    for (let label of labels) {
-        const url = multiAudioMap[label];
-        const promise = loadAudio(url).then(buffer => {
-            const source = audioContext.createBufferSource();
-            source.buffer = buffer;
-            source.loop = true;
+            await Promise.all(promises);
 
-            const gainNode = audioContext.createGain();
-            gainNode.gain.value = 0;
+            Object.values(multiAudioSources).forEach(src => src.start(0));
+            currentMultiAudio = true;
+            const firstTrack = Object.keys(multiAudioSources)[0];
+            if (firstTrack) {
+                multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
+            }
 
-            source.connect(gainNode).connect(audioContext.destination);
-            multiAudioSources[label] = source;
-            multiAudioGains[label] = gainNode;
-        });
-        promises.push(promise);
-    }
-
-    await Promise.all(promises);
-
-    Object.values(multiAudioSources).forEach(src => src.start(0));
-    currentMultiAudio = true;
-    const firstTrack = Object.keys(multiAudioSources)[0];
-    if (firstTrack) {
-        multiAudioGains[firstTrack].gain.setValueAtTime(1, audioContext.currentTime);
-    }
-
-    if (onEnded) {
-        // Attach ended callback to all sources
-        Object.values(multiAudioSources).forEach(source => {
-            source.onended = onEnded;
-        });
-    }
-}
-
-
-function stopMultiAudio() {
-    for (let label in multiAudioSources) {
-        try { multiAudioSources[label].stop(); } catch (e) {}
-        multiAudioSources[label].disconnect();
-    }
-    multiAudioSources = {};
-    multiAudioGains = {};
-    currentMultiAudio = null;
-}
-
-function switchToTrack(label) {
-    if (!multiAudioGains[label]) return;
-    for (let l in multiAudioGains) {
-        multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
-    }
-}
-
-
-window.downloadComic = async function downloadComic() {
-    const svg = document.querySelector("#comicSvgWrapper svg");
-    const panels = Array.from(svg.querySelectorAll("image[id^='panel']"));
-
-    panels.forEach((panel, i) => {
-        if (visitedImages[i]) {
-            panel.setAttribute("href", visitedImages[i]);
-        } else {
-            panel.removeAttribute("href");
+            if (onEnded) {
+                Object.values(multiAudioSources).forEach(source => {
+                    source.onended = onEnded;
+                });
+            }
         }
-    });
 
-    const canvas = document.createElement("canvas");
-    canvas.width = 2048;
-    canvas.height = 2860;
-    const ctx = canvas.getContext("2d");
+        function stopMultiAudio() {
+            for (let label in multiAudioSources) {
+                try { multiAudioSources[label].stop(); } catch (e) {}
+                multiAudioSources[label].disconnect();
+            }
+            multiAudioSources = {};
+            multiAudioGains = {};
+            currentMultiAudio = null;
+        }
 
-    await canvg.Canvg.fromString(ctx, svg.outerHTML).render();
+        function switchToTrack(label) {
+            if (!multiAudioGains[label]) return;
+            for (let l in multiAudioGains) {
+                multiAudioGains[l].gain.setTargetAtTime(l === label ? 1 : 0, audioContext.currentTime, 0.1);
+            }
+        }
 
-    const imgData = canvas.toDataURL("image/png");
+        window.downloadComic = async function downloadComic() {
+            console.log("Generating comic with images:", visitedImages);
+            
+            try {
+                const journeyImages = visitedImages.slice(0, 5);
+                
+                if (journeyImages.length === 0) {
+                    alert("No images available from your journey. Try playing through the story first!");
+                    return;
+                }
 
-    const pdfDoc = await PDFLib.PDFDocument.create();
-    const img = await pdfDoc.embedPng(imgData);
-    const page = pdfDoc.addPage([img.width, img.height]);
-    page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+                const blobUrls = await Promise.all(journeyImages.map(loadImageAsBlob));
+                
+                const svg = document.querySelector("#comicSvgWrapper svg");
+                const panels = Array.from(svg.querySelectorAll("image"));
+                
+                panels.forEach(panel => panel.removeAttribute("href"));
+                
+                // Map journey images to panels with corrected order
+                const panelOrder = [0, 1, 3, 2, 4]; // Swap indices 2 and 3 for correct order
+                panelOrder.forEach((journeyIndex, panelIndex) => {
+                    if (blobUrls[journeyIndex]) {
+                        panels[panelIndex].setAttribute("href", blobUrls[journeyIndex]);
+                    }
+                });
 
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "your-adventure-comic.pdf";
-    link.click();
-};
+                const canvas = document.createElement("canvas");
+                canvas.width = 2048;
+                canvas.height = 2860;
+                const ctx = canvas.getContext("2d");
 
-</script>
+                await canvg.Canvg.fromString(ctx, svg.outerHTML).render();
 
-<script src="https://unpkg.com/pdf-lib"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
+                const imgData = canvas.toDataURL("image/png");
 
-<div id="comicSvgWrapper" style="display: none;">
-<svg viewBox="0 0 2048 2860" width="1024">
-  <defs>
-    <pattern id="inkTexture" patternUnits="userSpaceOnUse" width="6" height="6">
-      <path d="M0,0 L6,6 M6,0 L0,6" stroke="#111" stroke-width="0.5"/>
-    </pattern>
+                const pdfDoc = await PDFLib.PDFDocument.create();
+                const img = await pdfDoc.embedPng(imgData);
+                const page = pdfDoc.addPage([img.width, img.height]);
+                page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
 
-    <clipPath id="panel1"><polygon points="17,1079 17,639 18,254 497,252 537,252 538,253 541,259 601,381 808,802 926,1042 942,1075 942,1079"/></clipPath>
-    <clipPath id="panel2"><polygon points="582,252 793,252 2046,253 2046,281 2044,1066 2043,1077 1947,1078 1712,1079 1208,1080 986,1080 962,1032 756,613 609,314 582,259"/></clipPath>
-    <clipPath id="panel3"><polygon points="1871,1120 2044,1120 2044,1962 1787,1992 1744,1997 1390,2038 1295,2049 1269,2052 1261,2052 1261,2050 1266,1225 1267,1124 1268,1123"/></clipPath>
-    <clipPath id="panel4"><polygon points="19,2197 19,2075 20,1123 1221,1121 1221,1203 1217,1935 1216,2055 965,2085 898,2093 40,2195 23,2197"/></clipPath>
-    <clipPath id="panel5"><polygon points="18,2859 18,2239 1233,2099 1390,2081 1643,2052 1992,2012 2027,2008 2036,2007 2044,2007 2044,2859"/></clipPath>
-  </defs>
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "your-adventure-comic.pdf";
+                link.click();
+                
+                URL.revokeObjectURL(link.href);
+                blobUrls.forEach(url => URL.revokeObjectURL(url));
+                
+                console.log("Comic generated and downloaded successfully!");
+            } catch (error) {
+                console.error("Error generating comic:", error);
+                alert("Sorry, there was an error generating your comic. Please try again.");
+            }
+        };
+    </script>
 
-  <!-- Correct image-to-panel mappings with preserved center alignment -->
-  <image href="https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/svgclip1.png"
-         x="-76" y="169" width="1110" height="992" clip-path="url(#panel1)" preserveAspectRatio="xMidYMid slice" />
-  <image href="https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/svgclip2.png"
-         x="436" y="170" width="1756" height="993" clip-path="url(#panel2)" preserveAspectRatio="xMidYMid slice" />
-  <image href="https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/svgclip3.png"
-         x="1183" y="1027" width="939" height="1118" clip-path="url(#panel3)" preserveAspectRatio="xMidYMid slice" />
-  <image href="https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/svgclip4.png"
-         x="-101" y="1014" width="1442" height="1291" clip-path="url(#panel4)" preserveAspectRatio="xMidYMid slice" />
-  <image href="https://emv33gymtveij3kw.public.blob.vercel-storage.com/chooseyourownadventure/svgclip5.png"
-         x="-184" y="1922" width="2431" height="1022" clip-path="url(#panel5)" preserveAspectRatio="xMidYMid slice" />
+    <script src="https://unpkg.com/pdf-lib"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.min.js"></script>
 
-  <!-- Borders -->
-  <g class="panel-shadow" fill="url(#inkTexture)" stroke="black" stroke-width="15">
-    <polygon points="17,1079 17,639 18,254 497,252 537,252 538,253 541,259 601,381 808,802 926,1042 942,1075 942,1079"/>
-    <polygon points="582,252 793,252 2046,253 2046,281 2044,1066 2043,1077 1947,1078 1712,1079 1208,1080 986,1080 962,1032 756,613 609,314 582,259"/>
-    <polygon points="1871,1120 2044,1120 2044,1962 1787,1992 1744,1997 1390,2038 1295,2049 1269,2052 1261,2052 1261,2050 1266,1225 1267,1124 1268,1123"/>
-    <polygon points="19,2197 19,2075 20,1123 1221,1121 1221,1203 1217,1935 1216,2055 965,2085 898,2093 40,2195 23,2197"/>
-    <polygon points="18,2859 18,2239 1233,2099 1390,2081 1643,2052 1992,2012 2027,2008 2036,2007 2044,2007 2044,2859"/>
-  </g>
+    <div id="comicSvgWrapper" style="display: none;">
+        <svg viewBox="0 0 2048 2860" width="1024">
+            <defs>
+                <pattern id="inkTexture" patternUnits="userSpaceOnUse" width="6" height="6">
+                    <path d="M0,0 L6,6 M6,0 L0,6" stroke="#111" stroke-width="0.5"/>
+                </pattern>
 
-</svg>
-</div>
+                <clipPath id="panel1"><polygon points="17,1079 17,639 18,254 497,252 537,252 538,253 541,259 601,381 808,802 926,1042 942,1075 942,1079"/></clipPath>
+                <clipPath id="panel2"><polygon points="582,252 793,252 2046,253 2046,281 2044,1066 2043,1077 1947,1078 1712,1079 1208,1080 986,1080 962,1032 756,613 609,314 582,259"/></clipPath>
+                <clipPath id="panel3"><polygon points="1871,1120 2044,1120 2044,1962 1787,1992 1744,1997 1390,2038 1295,2049 1269,2052 1261,2052 1261,2050 1266,1225 1267,1124 1268,1123"/></clipPath>
+                <clipPath id="panel4"><polygon points="19,2197 19,2075 20,1123 1221,1121 1221,1203 1217,1935 1216,2055 965,2085 898,2093 40,2195 23,2197"/></clipPath>
+                <clipPath id="panel5"><polygon points="18,2859 18,2239 1233,2099 1390,2081 1643,2052 1992,2012 2027,2008 2036,2007 2044,2007 2044,2859"/></clipPath>
+            </defs>
+
+            <image x="-76" y="169" width="1110" height="992" clip-path="url(#panel1)" preserveAspectRatio="xMidYMid slice" crossOrigin="anonymous" />
+            <image x="436" y="170" width="1756" height="993" clip-path="url(#panel2)" preserveAspectRatio="xMidYMid slice" crossOrigin="anonymous" />
+            <image x="1183" y="1027" width="939" height="1118" clip-path="url(#panel3)" preserveAspectRatio="xMidYMid slice" crossOrigin="anonymous" />
+            <image x="-101" y="1014" width="1442" height="1291" clip-path="url(#panel4)" preserveAspectRatio="xMidYMid slice" crossOrigin="anonymous" />
+            <image x="-184" y="1922" width="2431" height="1022" clip-path="url(#panel5)" preserveAspectRatio="xMidYMid slice" crossOrigin="anonymous" />
+
+            <g class="panel-shadow" fill="url(#inkTexture)" stroke="black" stroke-width="15">
+                <polygon points="17,1079 17,639 18,254 497,252 537,252 538,253 541,259 601,381 808,802 926,1042 942,1075 942,1079"/>
+                <polygon points="582,252 793,252 2046,253 2046,281 2044,1066 2043,1077 1947,1078 1712,1079 1208,1080 986,1080 962,1032 756,613 609,314 582,259"/>
+                <polygon points="1871,1120 2044,1120 2044,1962 1787,1992 1744,1997 1390,2038 1295,2049 1269,2052 1261,2052 1261,2050 1266,1225 1267,1124 1268,1123"/>
+                <polygon points="19,2197 19,2075 20,1123 1221,1121 1221,1203 1217,1935 1216,2055 965,2085 898,2093 40,2195 23,2197"/>
+                <polygon points="18,2859 18,2239 1233,2099 1390,2081 1643,2052 1992,2012 2027,2008 2036,2007 2044,2007 2044,2859"/>
+            </g>
+        </svg>
+    </div>
 </body>
-
 </html>
