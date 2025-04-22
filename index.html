@@ -49,8 +49,7 @@
     <script src="storyengine.js" type="module"></script>
     
     <script>
-        // Initialize the engine with the current skin
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('storyengine-loaded', function() {
             window.StoryEngine.init({
                 storyPath: 'story.json',
                 skin: 'western'
