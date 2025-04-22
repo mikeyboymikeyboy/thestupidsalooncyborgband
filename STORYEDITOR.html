@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <title>Creaturous Visual Editor - Twine Link Mode</title>
+  <style>
+    body {
+      font-size: 1.2em;
+      font-size: 1.2em;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.6em;
+    }
+    
+    #canvas {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: #e2d4b7;
+      background-image: url('parchment-bg.png');
+      background-repeat: repeat;
+      background-size: 300px 300px;
+    }
+    
+    .node {
+      position: absolute;
+      padding: 10px;
+      background: #faf5e9;
+      border: 3px solid #5e4a2f;
+      border-radius: 12px;
+      cursor: move;
+      min-width: 120px;
+      max-width: 200px;
+      font-size: 0.8em;
+      line-height: 1.4;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+      text-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3),
+                   0px 1px 1px rgba(0, 0, 0, 0.2),
+                  -1px 0px 1px rgba(0, 0, 0, 0.25),
+                   0px -1px 1px rgba(0, 0, 0, 0.2);
+      color: #2b1f14;
+    }
+    
+    .node:hover {
+      transform: scale(1.02);
+      z-index: 1;
+    }
+    
+    .node.selected {
+      box-shadow: 0 0 12px rgba(255, 228, 180, 0.6), 2px 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    #panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100%;
+      background: #ede1c9;
+      border-left: 1px solid #6e5b3c;
+      box-shadow: -3px 0 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      overflow-y: auto;
+    }
+    
+    input, textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      font-family: 'IM Fell English', serif;
+      color: #2e2b26;
+      background-color: #f9f6ef;
+      border: 1px solid #aaa;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    textarea {
+      background-color: #f9f6ef;
+      background-image: none;
+    }
+    
+    #toolbar {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+    
+    line, path {
+      stroke: #4b3d2b;
+      stroke-width: 2;
+      transition: stroke 0.3s ease;
+      fill: none;
+      filter: url(#handdrawn);
+    }
+    
+    path:hover, line:hover {
+      stroke: #d4a25a;
+    }
+  
+    input[type="checkbox"] {
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <input id="fileInput" type="file" />
+    <button onclick="addScene()">+ New Scene</button>
+    <button onclick="downloadJSON()">💾 Export JSON</button>
+  </div>
+  <div id="viewport">
+    <div id="canvas"></div>
+  </div>
+  <div id="panel" style="display:none;">
+    <label>Scene ID</label>
+    <input id="sceneId" readonly />
+    <label>Display Name</label>
+    <input id="sceneName" />
+    <label>Text</label>
+
+    <div style="display:flex; gap: 5px; margin-bottom: 5px;">
+      <button type="button" onclick="wrapTag('b')">Bold</button>
+      <button type="button" onclick="wrapTag('i')">Italic</button>
+      <button type="button" onclick="wrapTag('span', ' style=\"font-size:1.2em;\"')">Big</button>
+    </div>
+
+    <textarea id="sceneText" rows="6"></textarea>
+    <div style="margin-top: 10px;">
+      <input type="checkbox" id="scrollText">
+      <label for="scrollText">Scroll Text</label>
+    </div>
+    <hr style="margin: 10px 0;">
+    <hr style="margin: 10px 0;">
+
+    <button onclick="saveScene()">Save</button>
+    <button onclick="deleteScene()">Delete Scene</button>
+    <label>Audio URL</label>
+    <input id="audioInput" placeholder="https://example.com/audio.mp3" type="text" />
+    <audio controls id="audioPreview" style="width: 100%; margin-top: 5px;"></audio>
+    <div style="margin-top: 10px;">
+      <input type="checkbox" id="loopAudio">
+      <label for="loopAudio">Loop Audio</label>
+    </div>
+    <label>Image URL</label>
+    <input id="imageInput" placeholder="https://example.com/image.jpg" type="text" />
+    <img id="imagePreview" style="width: 100%; margin-top: 5px;" />
+    <h3 style="margin-top: 20px;">Multi-Track Audio (label & URL)</h3>
+    <div id="multiAudioContainer"></div>
+    <button onclick="addMultiAudioTrack()">+ Add Track</button>
+  </div>
+
+  <script>
+    function wrapTag(tag, extra = '') {
+      const textarea = document.getElementById("sceneText");
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const before = textarea.value.substring(0, start);
+      const selected = textarea.value.substring(start, end);
+      const after = textarea.value.substring(end);
+      const openTag = `<${tag}${extra}>`;
+      const closeTag = `</${tag}>`;
+      textarea.value = before + openTag + selected + closeTag + after;
+      textarea.focus();
+      textarea.selectionStart = start + openTag.length;
+      textarea.selectionEnd = end + openTag.length;
+    }
+  </script>
+
+  <script>
+    let data = [];
+    let selected = null;
+    const canvas = document.getElementById("canvas");
+
+    function addScene(x = 100, y = 100, id = null) {
+      const sceneId = id || ("scene" + (data.length + 1));
+      const newScene = {
+        id: sceneId,
+        name: sceneId,
+        text: "",
+        x,
+        y,
+        choices: [],
+        audio: "",
+        image: "",
+        loopAudio: false
+      };
+      data.push(newScene);
+      createNode(newScene);
+    }
+
+    function createNode(scene) {
+      const div = document.createElement("div");
+      div.className = "node";
+      div.style.left = scene.x + "px";
+      div.style.top = scene.y + "px";
+      div.textContent = scene.name;
+
+      div.onclick = () => {
+        document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+        div.classList.add('selected');
+        openPanel(scene.id);
+      };
+
+      canvas.appendChild(div);
+      scene._element = div;
+
+      div.onmousedown = function (e) {
+        const offsetX = e.offsetX;
+        const offsetY = e.offsetY;
+        document.onmousemove = function (e) {
+          const canvasOffset = canvas.getBoundingClientRect();
+          scene.x = (e.pageX - canvasOffset.left - offsetX) / scale;
+          scene.y = (e.pageY - canvasOffset.top - offsetY) / scale;
+          div.style.left = scene.x + "px";
+          div.style.top = scene.y + "px";
+          drawLines();
+        };
+        document.onmouseup = function () {
+          document.onmousemove = null;
+        };
+      };
+    }
+
+    function openPanel(id) {
+      selected = data.find(s => s.id === id);
+      document.getElementById("panel").style.display = "block";
+      document.getElementById("sceneId").value = selected.id;
+      document.getElementById("sceneName").value = selected.name;
+      document.getElementById("sceneText").value = selected.text;
+      document.getElementById("audioInput").value = selected.audio || "";
+      document.getElementById("audioPreview").src = selected.audio || "";
+      document.getElementById("imageInput").value = selected.image || "";
+      document.getElementById("imagePreview").src = selected.image || "";
+      document.getElementById("loopAudio").checked = !!selected.loopAudio;
+      document.getElementById("scrollText").checked = !!selected.scrollText;
+      document.getElementById("scrollText").addEventListener("change", saveScene);
+      loadMultiAudioToUI(selected.multiAudio);
+    }
+
+    function saveScene() {
+      selected.name = document.getElementById("sceneName").value;
+      selected.text = document.getElementById("sceneText").value;
+      selected.audio = document.getElementById("audioInput").value;
+      selected.image = document.getElementById("imageInput").value;
+      selected.loopAudio = document.getElementById("loopAudio").checked;
+      selected.multiAudio = getMultiAudioFromUI();
+      selected.scrollText = document.getElementById("scrollText").checked;
+      selected._element.textContent = selected.name;
+
+      const matches = [...selected.text.matchAll(/\[\[([^\]]+)\]\]/g)].map(m => m[1]);
+      selected.choices = matches.map(label => ({ label, next: label }));
+
+      for (const label of matches) {
+        if (!data.find(s => s.id === label)) {
+          addScene(selected.x + 200, selected.y + Math.random() * 100, label);
+        }
+      }
+      drawLines();
+    }
+
+    function deleteScene() {
+      if (!selected) return;
+      if (!confirm("Are you sure you want to delete this scene?")) return;
+      canvas.removeChild(selected._element);
+      data = data.filter(s => s.id !== selected.id);
+      selected = null;
+      document.getElementById("panel").style.display = "none";
+      drawLines();
+    }
+
+    function drawLines() {
+      document.querySelectorAll("svg").forEach(s => s.remove());
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("style", "position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;");
+      svg.innerHTML = `
+        <defs>
+          <filter id="handdrawn">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" result="turb"/>
+            <feDisplacementMap in="SourceGraphic" in2="turb" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+            <polygon points="0 0, 6 2, 0 4" fill="black"/>
+          </marker>
+        </defs>`;
+      canvas.appendChild(svg);
+
+      for (const scene of data) {
+        const rect1 = scene._element.getBoundingClientRect();
+        for (const choice of scene.choices) {
+          const target = data.find(s => s.id === choice.next);
+          if (!target) continue;
+          const rect2 = target._element.getBoundingClientRect();
+          const canvasOffset = canvas.getBoundingClientRect();
+          const x1 = (rect1.left + rect1.width / 2 - canvasOffset.left) / scale;
+          const y1 = (rect1.top + rect1.height / 2 - canvasOffset.top) / scale;
+          const x2 = (rect2.left + rect2.width / 2 - canvasOffset.left) / scale;
+          const y2 = (rect2.top + rect2.height / 2 - canvasOffset.top) / scale;
+          const cx = (x1 + x2) / 2;
+          const cy = Math.min(y1, y2) - 40;
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
+          path.setAttribute("marker-end", "url(#arrowhead)");
+          svg.appendChild(path);
+        }
+      }
+    }
+
+    function downloadJSON() {
+      const out = JSON.stringify(data.map(s => {
+        const { _element, ...rest } = s;
+        return rest;
+      }), null, 2);
+      const blob = new Blob([out], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "story.json";
+      a.click();
+    }
+
+    document.getElementById("fileInput").addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        data = JSON.parse(e.target.result);
+        canvas.innerHTML = "";
+        data.forEach(s => {
+          createNode(s);
+          if (!("audio" in s)) s.audio = "";
+          if (!("image" in s)) s.image = "";
+          if (!("loopAudio" in s)) s.loopAudio = false;
+          if (!("multiAudio" in s)) s.multiAudio = {};
+        });
+        drawLines();
+      };
+      reader.readAsText(file);
+    });
+
+    let scale = 1;
+    document.addEventListener("wheel", (e) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+        const delta = -e.deltaY * 0.001;
+        scale = Math.min(2, Math.max(0.25, scale + delta));
+        canvas.style.transform = `scale(${scale})`;
+        drawLines();
+      }
+    }, { passive: false });
+
+    let panOffsetX = 0;
+    let panOffsetY = 0;
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+
+    canvas.addEventListener("contextmenu", e => e.preventDefault());
+    canvas.addEventListener("mousedown", (e) => {
+      if (e.button === 2) {
+        isPanning = true;
+        panStartX = e.clientX;
+        panStartY = e.clientY;
+      }
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (isPanning) {
+        const dx = e.clientX - panStartX;
+        const dy = e.clientY - panStartY;
+        panStartX = e.clientX;
+        panStartY = e.clientY;
+        panOffsetX += dx;
+        panOffsetY += dy;
+        canvas.style.transform = `translate(${panOffsetX}px, ${panOffsetY}px) scale(${scale})`;
+        drawLines();
+      }
+    });
+    document.addEventListener("mouseup", (e) => {
+      if (e.button === 2) {
+        isPanning = false;
+      }
+    });
+
+    function addMultiAudioTrack(label = "", url = "") {
+      const container = document.getElementById("multiAudioContainer");
+      const wrapper = document.createElement("div");
+      wrapper.style.marginTop = "5px";
+      wrapper.innerHTML = `
+        <input placeholder="Label (e.g. guitar)" value="${label}" style="width:40%;display:inline-block;margin-right:5px;">
+        <input placeholder="Audio URL" value="${url}" style="width:55%;display:inline-block;">
+      `;
+      container.appendChild(wrapper);
+    }
+
+    function getMultiAudioFromUI() {
+      const container = document.getElementById("multiAudioContainer");
+      const inputs = container.querySelectorAll("input");
+      const result = {};
+      for (let i = 0; i < inputs.length; i += 2) {
+        const label = inputs[i].value.trim();
+        const url = inputs[i+1].value.trim();
+        if (label && url) result[label] = url;
+      }
+      return result;
+    }
+
+    function loadMultiAudioToUI(multiAudio) {
+      const container = document.getElementById("multiAudioContainer");
+      container.innerHTML = "";
+      if (!multiAudio) return;
+      for (let label in multiAudio) {
+        addMultiAudioTrack(label, multiAudio[label]);
+      }
+    }
+      
+    // === Autosave Handlers ===
+    function setupAutosave() {
+      const ids = ["sceneName", "sceneText", "audioInput", "imageInput", "loopAudio"];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("input", () => {
+            if (selected) saveScene();
+          });
+        }
+      }
+
+      const container = document.getElementById("multiAudioContainer");
+      const observer = new MutationObserver(() => {
+        if (selected) saveScene();
+      });
+      observer.observe(container, { childList: true, subtree: true });
+
+      container.addEventListener("input", () => {
+        if (selected) saveScene();
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", setupAutosave);
+    
+    // Initialize with a single scene
+    addScene();
+  </script>
+</body>
+</html>

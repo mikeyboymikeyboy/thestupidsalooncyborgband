@@ -2,7 +2,7 @@
   {
     "id": "scene1",
     "name": "START",
-    "text": "<b>This is the beginning of your adventure! </b>\n<br>When you make choices, the button will pulsate or glow.<br> When it does that you can just sit and jam out while the rest of the band get their shit together. <br>The whole vibe of this is to demonstrate the gapless, seamless audio transitions, <br> so it still sounds like you're listening to a complete song.\n\n[[BEGIN YOUR ADVENTURE]]",
+    "text": "<b>This is the beginning of your adventure! </b>\n<br>It's gonna be so fun for all of us YES<br> When it does that you can just sit and jam out while the rest of the band get their shit together. <br>The whole vibe of this is to demonstrate the gapless, seamless audio transitions, <br> so it still sounds like you're listening to a complete song.\n\n[[BEGIN YOUR ADVENTURE]]",
     "x": 33.7142835344587,
     "y": 11.02856227329799,
     "choices": [

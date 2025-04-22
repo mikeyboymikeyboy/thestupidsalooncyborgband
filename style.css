@@ -1,0 +1,103 @@
+/* Base styles for the game */
+body {
+    text-align: center;
+    padding: 2em;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-in;
+}
+
+.fade-in.loaded {
+    opacity: 1;
+}
+
+img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+.image-text-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+}
+
+.image-text-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.text-block {
+    max-width: 600px;
+    text-align: left;
+}
+
+.scrolling-container {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 2em auto;
+}
+
+.scrolling-inner {
+    position: relative;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.slideshow-container {
+    position: fixed;
+    max-height: 400px;
+    width: 400px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.slideshow-container.left-fixed {
+    left: 60px;
+}
+
+.slideshow-container.right {
+    right: 60px;
+}
+
+.slideshow-image {
+    max-height: 400px;
+    width: auto;
+    opacity: 0;
+    transition: opacity 4s ease-in-out;
+}
+
+.slideshow-image.visible {
+    opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 1.875em;
+    }
+    
+    .image-text-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5em;
+    }
+    
+    .text-block {
+        text-align: center;
+    }
+    
+    .button {
+        padding: 12px 20px;
+        font-size: 1.25em;
+    }
+}
